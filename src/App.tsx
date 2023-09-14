@@ -1,11 +1,12 @@
 import './App.css';
-import { MainContainer } from './Components/index.ts';
+import { Footer, MainContainer } from './Components/index.ts';
 
 function App() {
 
   return (
     <>
 <MainContainer></MainContainer>
+<Footer></Footer>
     </>
   );
 }
