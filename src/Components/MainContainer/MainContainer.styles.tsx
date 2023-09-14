@@ -16,3 +16,13 @@ export const ContainerContent = styled(Box)(() => ({
     flexWrap: 'wrap',
     justifyContent: 'center',
 }))
+
+const smallScreenStyles = `
+  @media (max-width: 1170px) {
+    ${Container} {
+      width: 100%;
+    }
+  }
+`;
+
+export default smallScreenStyles; 
