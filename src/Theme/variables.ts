@@ -8,3 +8,7 @@ export const colorVar: Record<string, string> = {
   inputBackground: "#433F47",
 };
 
+export const fontSizeVar: Record<string, string> = {
+  loginModalHeader: "48px",
+  loginModalDefault: "#FFFFFF",
+}
