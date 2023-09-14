@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import './App.css';
+import { LoginModal } from './Components/index.ts';
 
 function App() {
 
