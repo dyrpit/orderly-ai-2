@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import './App.css';
-import { LoginModal } from './Components/index.ts';
+import { Footer, LoginModal } from './Components/index.ts';
 
 function App() {
 
@@ -8,7 +8,6 @@ function App() {
     <>
       <div>NAVBAR SECTION</div>
       <Outlet />
-      <div>FOOTER SECTION</div>
     </>
   );
 }
