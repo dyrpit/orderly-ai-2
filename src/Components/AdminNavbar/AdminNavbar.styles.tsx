@@ -1,23 +1,26 @@
 import { Box, Button, TextField, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { fontSizeVar } from "../../Theme/variables";
+import { fontSizeVar, colorVar } from "../../Theme/variables";
 
 export const ANContainer = styled(Box)(({ theme: theme }) => ({
  backgroundColor: theme.palette.background.paper,
  width: "310px",
  height: "100%",
+ maxHeight: "100vh",
  padding: "30px 0 30px 0",
 }));
 
-export const ANContent = styled(Typography)(({ theme: theme }) => ({
- width: "100%",
+export const ANList = styled(List)(({ theme: theme }) => ({
+ width: "`calc(100% - 30px)`",
  display: "flex",
+ paddingLeft: "30px",
  flexDirection: "column",
- fontSize: theme.typography.fontSize,
- fontWeight: theme.typography.fontWeightMedium,
+ maxHeight: "100vh",
+ overflow: "auto",
+ color: fontSizeVar.loginModalDefault,
 }));
 
-export const ANList = styled(List)(({ theme: theme }) => ({
+export const ANListInner = styled(List)(({ theme: theme }) => ({
  width: "100%",
  display: "flex",
  paddingLeft: "30px",
@@ -25,12 +28,13 @@ export const ANList = styled(List)(({ theme: theme }) => ({
  color: fontSizeVar.loginModalDefault,
 }));
 
-export const ANListItem = styled(ListItem)(({ theme: theme }) => ({}))
+export const ANListItem = styled(ListItem)(({ theme: theme }) => ({
+ flexDirection: "column",
+}));
 
 export const ANListItemButton = styled(ListItemButton)(({ theme: theme }) => ({}));
 export const ANListItemIcon = styled(ListItemIcon)(({ theme: theme }) => ({}));
 export const ANListItemText = styled(ListItemText)(({ theme: theme }) => ({}));
-
 
 export const ANButton = styled(Button)(({ theme: theme }) => ({
  width: "200px",
@@ -39,8 +43,13 @@ export const ANButton = styled(Button)(({ theme: theme }) => ({
  backgroundColor: theme.palette.info.main,
  display: "flex",
  margin: "auto",
- color: fontSizeVar.loginModalDefault,
+ color: colorVar.textColor,
  "&:hover": {
   backgroundColor: theme.palette.info.dark,
  },
+}));
+
+export const ANCategoryDiv = styled("div")(({ theme: theme }) => ({
+ display: "flex",
+ flexDirection: "row",
 }));

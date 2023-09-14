@@ -1,92 +1,41 @@
-import { ANButton, ANContainer, ANContent, ANList, ANListItemButton, ANListItemIcon, ANListItemText } from "./AdminNavbar.styles";
-
-function getItems() {
- return {
-  list: [
-   {
-    id: 1,
-    title: "Google",
-    items: [
-     {
-      id: 1,
-      name: "Android",
-      subitems: [
-       {
-        id: 1,
-        name: "Nougat",
-       },
-       {
-        id: 2,
-        name: "Lollipop",
-       },
-      ],
-     },
-     {
-      id: 2,
-      name: "Chrome",
-     },
-    ],
-   },
-   {
-    id: 2,
-    title: "Apple",
-    items: [
-     {
-      id: 1,
-      name: "Mac",
-     },
-     {
-      id: 2,
-      name: "Iphone",
-      subitems: [
-       {
-        id: 1,
-        name: "Iphone 6",
-       },
-       {
-        id: 2,
-        name: "Iphone 10",
-       },
-      ],
-     },
-    ],
-   },
-   {
-    id: 3,
-    title: "Uber",
-    items: [
-     {
-      id: 1,
-      name: "Eats",
-     },
-     {
-      id: 2,
-      name: "Freight",
-     },
-    ],
-   },
-  ],
- };
-}
+import { ANButton, ANContainer, ANList, ANListItem, ANListInner, ANListItemButton, ANCategoryDiv, ANListItemText } from "./AdminNavbar.styles";
+import Fade from "@mui/material/Fade";
+import { useState } from "react";
+import { AdminNavbarInnerList } from "../AdminNavbarInnerList/AdminNavbarInnerList";
 
 export function AdminNavbar() {
- const items = getItems();
+ const [isListVisible, setListVisible] = useState(false);
+ const [randomItemsCount, setRandomItemsCount] = useState(0);
+ const toggleListVisibility = () => {
+  if (isListVisible) generateRandomItems();
+  setListVisible(!isListVisible);
+ };
+
+ const generateRandomItems = () => {
+  const randomCount = Math.floor(Math.random() * 10) + 1;
+  setRandomItemsCount(randomCount);
+ };
+
+
+
+ const generateRandomSubitems = () => {
+  return Array.from({ length: randomItemsCount }).map((_, index) => ({
+   id: index,
+   name: `Subitem ${index + 1}`,
+  }));
+ };
+
  return (
   <ANContainer>
-   <ANContent>
-    <ANButton
-     onClick={() => {
-      alert("Clicked!");
-     }}>
-     Edit Elements
-    </ANButton>
+   <ANButton onClick={toggleListVisibility}>Categories</ANButton>
+   <Fade in={isListVisible} unmountOnExit>
     <ANList>
-     <ANListItemButton>
-      <ANListItemText primary="ChatBots"></ANListItemText>
-     </ANListItemButton>
+     <AdminNavbarInnerList></AdminNavbarInnerList>
+     <AdminNavbarInnerList></AdminNavbarInnerList>
+     <AdminNavbarInnerList></AdminNavbarInnerList>
     </ANList>
-    <ANButton>Edit Users</ANButton>
-   </ANContent>
+   </Fade>
+   <ANButton>Edit Users</ANButton>
   </ANContainer>
  );
 }
