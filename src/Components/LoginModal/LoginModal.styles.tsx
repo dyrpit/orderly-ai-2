@@ -1,71 +1,74 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { fontSizeVar } from "../../Theme/variables";
 
-export const ModalContainer = styled(Box)(({theme: any}) => ({
-    backgroundColor: "#352F44",
+export const LoginModalContainer = styled(Box)(({theme: theme}) => ({
+    backgroundColor: theme.palette.background.default,
     width: "828px",
     height: "500px",
 }))
 
-export const ModalHeader = styled(Typography)(({ theme: any }) => ({
+export const ModalHeader = styled(Typography)(({ theme: theme }) => ({
   width: "278px",
   height: "60px",
-  color: "#DBD8E3",
-  fontSize: "48px",
+  color: theme.palette.text.primary,
+  fontSize: fontSizeVar.loginModalHeader,
   padding: "30px 0px 30px 0px",
   textAlign: "center",
   margin: "auto",
-  fontWeight: 700,
+  fontWeight: theme.typography.fontWeightBold,
 }));
 
-export const ModalSubHeader = styled(Typography)(({ theme: any }) => ({
+export const ModalSubHeader = styled(Typography)(({ theme: theme }) => ({
   width: "288px",
   height: "20px",
-  color: "#DBD8E399",
+  color: theme.palette.text.secondary,
   textAlign: "center",
   padding: "0px 0px 30px 0px",
   margin: "auto",
-  fontSize: "16px",
-  fontStyle: "normal",
-  fontWeight: 600,
-  lineHeight: "normal",
+  fontSize: theme.typography.fontSize,
+  fontWeight: theme.typography.fontWeightMedium,
 }));
 
-export const ModalInput = styled(TextField)(({ theme: any }) => ({
+export const ModalInput = styled(TextField)(({ theme: theme }) => ({
   width: "512px",
   height: "60px",
   borderRadius: "14px",
-  background: "#3D3A40",
+  background: theme.palette.info.dark,
   display: "flex",
   margin: "auto",
   marginBottom: "30px",
   justifyContent: "center",
   "& input": {
-    color: "#FFFFFF",
+    color: fontSizeVar.loginModalDefault,
     marginLeft: "20px",
     marginRight: "20px",
   }
 }));
 
-export const ModalButton = styled(Button)(({ theme: any }) => ({
+export const ModalButton = styled(Button)(({ theme: theme }) => ({
   width: "200px",
   height: "60px",
   borderRadius: "15px",
-  backgroundColor: "#605287",
+  backgroundColor: theme.palette.info.main,
   display: "flex",
   margin: "auto",
-  color: "#FFFFFF",
+  color: fontSizeVar.loginModalDefault,
+  "&:hover": {
+    backgroundColor: theme.palette.info.dark,
+  }
 }));
 
-export const ModalFooter = styled(Typography)(({ theme: any }) => ({
+export const ModalFooter = styled(Typography)(({ theme: theme }) => ({
   width: "768px",
   height: "32px",
   textAlign: "center",
   margin: "auto",
-  color: "#8E8E93",
+  color: theme.palette.text.secondary,
+  fontSize: theme.typography.fontSize,
   padding: "30px 0px 30px 0px",
   "& a": {
-    color: "#DBD8E3",
+    color: theme.palette.text.primary,
     textDecoration: "none",
   },
 }));
