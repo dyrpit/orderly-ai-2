@@ -5,8 +5,12 @@ export const StyledNavBarContainer = styled(AppBar)(({ theme }) => ({
   width: "100%",
   height: "70px",
   backgroundColor: theme.palette.background.paper,
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
+  display: "grid",
+  gridTemplateColumns: "1fr 4fr 1fr",
+  justifyContent: "center",
   alignItems: "center",
+  [theme.breakpoints.down('laptop')]: {
+    backgroundColor: "red",
+    maxWidth: "100%"
+  },
 }));
