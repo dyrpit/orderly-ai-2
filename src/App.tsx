@@ -1,12 +1,23 @@
-import './App.css';
-import { Footer, MainContainer } from './Components/index.ts';
+import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom';
+import Home from './Pages/Home';
+import Products from './Pages/Products';
+import Admin from './Pages/Admin';
+import RootLayout from './Layout/RootLayout';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<RootLayout/>}>
+          <Route path='/' element={<Home/>}></Route>
+          <Route path='Products' element={<Products/>}></Route>
+          <Route path='Admin' element={<Admin/>}></Route>
+    </Route>
+  )
+)
 
 function App() {
-
   return (
     <>
-<MainContainer></MainContainer>
-<Footer></Footer>
+      <RouterProvider router={router}/>
     </>
   );
 }
