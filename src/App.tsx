@@ -3,6 +3,6 @@ import "./App.css";
 import { AdminNavbar, LoginModal } from "./Components";
 
 function App() {
-  return <><LoginModal/></>;
+ return <></>;
 }
 export default App;
