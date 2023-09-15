@@ -1,18 +1,7 @@
-import { Outlet } from 'react-router-dom';
-import './App.css';
-// import { LoginModal, } from './Components/index.ts';
-import { AdminNavbar } from "./Components/index.ts";
+import { Outlet } from "react-router-dom";
+import "./App.css";
 
 function App() {
-
-  return (
-    <>
-      {/* <div>NAVBAR SECTION</div>
-      <Outlet />
-      <div>FOOTER SECTION</div> */}
-      <AdminNavbar></AdminNavbar>
-    </>
-  );
-}
+  return <></>;
 
 export default App;
