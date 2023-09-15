@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import { colorVar } from "./variables";
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
