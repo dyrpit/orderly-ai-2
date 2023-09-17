@@ -31,6 +31,7 @@ export const theme = createTheme({
   },
   typography: {
     fontSize: 16,
+    fontFamily: "Montserrat",
     fontWeightBold: 700,
     fontWeightMedium: 600,
     fontWeightRegular: 400,

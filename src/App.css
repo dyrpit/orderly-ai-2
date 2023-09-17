@@ -2,3 +2,14 @@
   margin: 0 auto;
   box-sizing: border-box;
 }
+
+#description {
+  padding: 10px 0;
+  width: 600px;
+  font-size: 18px;
+}
+
+iframe {
+  width: 533px;
+  height: 300px;
+}
