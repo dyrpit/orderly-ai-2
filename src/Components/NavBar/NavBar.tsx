@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavbarContainer, Switch } from "../../ui";
-import { LogoContainer, NavBarIcons } from "../../ui/NavBarIcons/NavBarIcons";
+import { LogoContainer, Menu } from "../Menu/Menu";
 
 export const NavBar = () => {
   const [checked, setChecked] = useState(false);
@@ -8,7 +8,7 @@ export const NavBar = () => {
     <NavbarContainer>
       <LogoContainer />
       <Switch checked={checked} onChange={e => setChecked(e.target.checked)} />
-      <NavBarIcons />
+      <Menu />
     </NavbarContainer>
   );
 };

@@ -10,7 +10,6 @@ export const StyledNavBarContainer = styled(AppBar)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   [theme.breakpoints.down('laptop')]: {
-    backgroundColor: "red",
     maxWidth: "100%"
   },
 }));
