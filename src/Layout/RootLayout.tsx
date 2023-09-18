@@ -11,7 +11,6 @@ export default function RootLayout() {
                     <Outlet></Outlet>
                 </main>
             </MainContainer>
-            <Footer></Footer>
         </div>
     )
 }

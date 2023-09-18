@@ -8,7 +8,7 @@
     {
       "email": "regular@regular.com",
       "password": "Regular123!",
-      "role": "regular"
+      "role": "user"
     },
     {
       "email": "user@user.com",
