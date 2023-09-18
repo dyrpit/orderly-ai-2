@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Footer, MainContainer } from '../Components';
+import { AdminContent, Footer, MainContainer } from '../Components';
 import Breadcrumbs from '../Components/Breadcrumps';
 import { NavBar } from '../Components/NavBar/NavBar';
 
@@ -8,10 +8,9 @@ export default function RootLayout() {
         <div className="RootLayout">
             <NavBar />
             <MainContainer>
-                <main>
-                    <Breadcrumbs />
-                    <Outlet></Outlet>
-                </main>
+                <AdminContent />
+                <Breadcrumbs />
+                <Outlet></Outlet>
             </MainContainer>
             <Footer></Footer>
         </div>

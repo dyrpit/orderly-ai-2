@@ -9,7 +9,7 @@ export const StyledLabel = styled(InputLabel)(({ theme }) => ({
 }));
 export const StyledInput = styled(TextField)(({ theme }) => ({
   backgroundColor: theme.palette.info.main,
-  width: "80%",
+  width: "100%",
   height: "36px",
   borderRadius: "10px",
   [`& .${inputClasses.root}`]: {
