@@ -60,6 +60,13 @@ export const ModalInput = styled(TextField)(({ theme: theme }) => ({
   },
 }));
 
+export const ModalErrorMessage = styled(Typography)(({ theme: theme }) => ({
+  width: "512px",
+  height: "30px",
+  fontSize: "12px",
+  color: "red",
+}));
+
 export const ModalButton = styled(Button)(({ theme: theme }) => ({
   width: "200px",
   height: "60px",
