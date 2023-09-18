@@ -12,3 +12,5 @@ export const fontSizeVar: Record<string, string> = {
   loginModalHeader: "48px",
   loginModalDefault: "#FFFFFF",
 }
+
+

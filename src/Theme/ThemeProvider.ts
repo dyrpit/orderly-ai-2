@@ -1,6 +1,6 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import { colorVar } from "./variables";
-declare module '@mui/material/styles' {
+declare module "@mui/material/styles" {
   interface BreakpointOverrides {
     xs: false;
     sm: false;
@@ -21,13 +21,13 @@ export const theme = createTheme({
     },
     text: {
       primary: colorVar.textColor,
-      secondary: colorVar.textColorDark
+      secondary: colorVar.textColorDark,
     },
     info: {
       main: colorVar.smallAccent,
       light: colorVar.smallAccentLight,
-      dark: colorVar.inputBackground
-    }
+      dark: colorVar.inputBackground,
+    },
   },
   typography: {
     fontSize: 16,
