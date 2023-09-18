@@ -3,6 +3,7 @@ import Home from './Pages/Home';
 import Products from './Pages/Products';
 import Admin from './Pages/Admin';
 import RootLayout from './Layout/RootLayout';
+import NotFound from './Pages/NotFound';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -10,6 +11,7 @@ const router = createBrowserRouter(
           <Route path='/' element={<Home/>}></Route>
           <Route path='Products' element={<Products/>}></Route>
           <Route path='Admin' element={<Admin/>}></Route>
+          <Route path='*' element={<NotFound />} />
     </Route>
   )
 )

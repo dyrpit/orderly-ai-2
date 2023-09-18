@@ -5,7 +5,6 @@ import Breadcrumbs from '../Components/Breadcrumps'
 export default function RootLayout() {
     return(
         <div className="RootLayout">
-            
             <MainContainer>
                 <main>
                 <Breadcrumbs />
