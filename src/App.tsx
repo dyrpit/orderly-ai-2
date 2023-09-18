@@ -6,13 +6,14 @@ import RootLayout from "./Layout/RootLayout";
 import NotFound from "./Pages/NotFound";
 import { LoginModal, RegisterModal } from "./Components";
 import "./App.css";
+import { AdminPage } from "./Pages";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route path="/" element={<Home />}></Route>
       <Route path="Products" element={<Products />}></Route>
-      <Route path="Admin" element={<Admin />}></Route>
+      <Route path="Admin" element={<AdminPage />}></Route>
       <Route path="Login" element={<LoginModal />}></Route>
       <Route path="Register" element={<RegisterModal />}></Route>
       <Route path="*" element={<NotFound />} />

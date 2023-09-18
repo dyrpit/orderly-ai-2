@@ -5,9 +5,10 @@ import { styled } from "@mui/material/styles";
 export const Container = styled(Box)(({ theme }) => ({
   backgroundColor: colorVar.mainBackground,
   display: "flex",
-  width: "1170px",
+  maxWidth: "1170px",
   marginLeft: "auto",
   marginRight: "auto",
+  flexDirection: "column",
   [theme.breakpoints.down("laptop")]: {
     width: "100%",
     display: "flex",
