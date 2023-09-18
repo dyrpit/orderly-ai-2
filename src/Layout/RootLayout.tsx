@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { Footer, MainContainer } from '../Components'
-import Breadcrumbs from '../Components/Breadcrumps'
+import Breadcrumbs from '../Components/Breadcrumbs/Breadcrumps'
 
 export default function RootLayout() {
     return(

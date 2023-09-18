@@ -5,6 +5,7 @@ import Admin from './Pages/Admin';
 import RootLayout from './Layout/RootLayout';
 import NotFound from './Pages/NotFound';
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout/>}>
