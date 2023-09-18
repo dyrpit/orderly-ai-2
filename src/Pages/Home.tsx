@@ -1,12 +1,10 @@
-import { MainContainer } from '../Components';
-import { NavBar } from '../Components/NavBar/NavBar';
-
 function Home() {
   return (
-    <>
-      <NavBar />
-      <MainContainer></MainContainer>
-    </>
+    <div>
+      {/* <NavBar /> */}
+      {/* <MainContainer>
+      </MainContainer> */}
+    </div>
   );
 }
 

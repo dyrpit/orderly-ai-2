@@ -1,10 +1,8 @@
 import { Grid } from "@mui/material";
 import { Input, Label } from "../../ui";
 import { StyledAdminContentContainer, StyledGridContainer, StyledGridItemCentered, StyledName } from "./AdminContent.styles";
-import { StyledIconButton, StyledNavBarIconsContainer } from "../../ui/NavBarIcons/NavBarIcons.styles";
-import "./../../../public/assets/clarity_check-line.png";
-import "./../../../public/assets/clarity_trash-line.png";
-import "./../../../public/assets/clarity_close-line.png";
+import { StyledIconButton, StyledIconButtonContainer } from "../Menu/Menu.styles";
+
 export const AdminContent = () => {
   return (
     <StyledAdminContentContainer>
@@ -13,17 +11,17 @@ export const AdminContent = () => {
           <StyledName>ChatGPT</StyledName>
         </Grid>
         <Grid item laptop={5} tablet={12} mobile={12}  >
-          <StyledNavBarIconsContainer>
+          <StyledIconButtonContainer>
             <StyledIconButton>
-              <img src="/assets/clarity_check-line.png" />
+              <img src="../../../src/assets/clarity_check-line.png" />
             </StyledIconButton>
             <StyledIconButton>
-              <img src="/assets/clarity_trash-line.png" />
+              <img src="../../../src/assets/clarity_trash-line.png" />
             </StyledIconButton>
             <StyledIconButton>
-              <img src="/assets/clarity_close-line.png" />
+              <img src="../../../src/assets/clarity_close-line.png" />
             </StyledIconButton>
-          </StyledNavBarIconsContainer>
+          </StyledIconButtonContainer>
         </Grid>
         <Grid item laptop={5} desktop={5} tablet={12} mobile={12}>
           <Label htmlFor="category">Category:</Label>
