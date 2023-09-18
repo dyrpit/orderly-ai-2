@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import './App.css';
+import { AdminContent } from './Components';
 
 function App() {
 
@@ -7,6 +8,7 @@ function App() {
     <>
       <div>NAVBAR SECTION</div>
       <Outlet />
+      <AdminContent />
     </>
   );
 }
