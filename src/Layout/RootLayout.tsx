@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router-dom'
 import { Footer, MainContainer } from '../Components'
 import Breadcrumbs from '../Components/Breadcrumbs/Breadcrumps'
-import { AdminNavbar } from '../Components/AdminNavbar/AdminNavbar'
+import { NavBar } from '../Components/NavBar/NavBar'
+
 
 export default function RootLayout() {
     return(
         <div className="RootLayout">
+            <NavBar></NavBar>
             <MainContainer>
                 <main>
                 <Breadcrumbs />
