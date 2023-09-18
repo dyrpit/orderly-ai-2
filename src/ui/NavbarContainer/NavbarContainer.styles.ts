@@ -16,7 +16,7 @@ export const StyledNavBarContainer = styled(Box)(({ theme }) => ({
 export const NavbarContainerWrapper = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "70px",
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.background.paper,
   display: "flex",
   justifyContent: "center"
 }));

@@ -57,7 +57,7 @@ export const AdminContent = () => {
           }} id="description" multiline
           />
         </Grid>
-        <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={6} mobile={12} display={"flex"}>
+        <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={12} mobile={12} display={"flex"}>
           <Grid item laptop={6} desktop={6} tablet={6} mobile={12}  >
             <Box>
               <iframe src='https://www.youtube.com/embed/E7wJTI-1dvQ'
