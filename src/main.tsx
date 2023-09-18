@@ -7,30 +7,32 @@ import { ThemeProvider } from "@emotion/react";
 import { theme } from "./Theme/ThemeProvider.ts";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        path: "/admin",
-        element: <AdminPage />,
-        handle: {
-          crumb: () => "admin panel",
-        },
-      },
-      {
-        path: "/product",
-        element: <ProductPage />,
-        handle: {
-          crumb: () => "product page",
-        },
-      },
-    ],
-  },
+ {
+  path: "/",
+  element: <App />,
+  children: [
+   {
+    path: "/admin",
+    element: <AdminPage />,
+    handle: {
+     crumb: () => "admin panel",
+    },
+   },
+   {
+    path: "/product",
+    element: <ProductPage />,
+    handle: {
+     crumb: () => "product page",
+    },
+   },
+  ],
+ },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
+ <ThemeProvider theme={theme}>
   <React.StrictMode>
-    <App />
+   <App />
   </React.StrictMode>
+ </ThemeProvider>,
 );
