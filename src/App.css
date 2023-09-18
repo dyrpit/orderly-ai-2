@@ -3,3 +3,26 @@ body {
  margin: 0 auto;
  background-color: #2e283c;
 }
+
+#description {
+  padding: 10px 0;
+  width: 600px;
+  font-size: 18px;
+}
+
+iframe {
+  width: 533px;
+  height: 300px;
+}
+
+@media (max-width: 640px) {
+  #description {
+    padding: 10px 0;
+    width: 200px;
+    font-size: 14px;
+  }
+  iframe {
+    width: 200px;
+    height: 70px;
+  }
+}
