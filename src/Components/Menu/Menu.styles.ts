@@ -50,6 +50,9 @@ export const StyledLogoContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("laptop")]: {
     width: "110px",
   },
+  [theme.breakpoints.down("tablet")]: {
+    width: "70px",
+  },
 }));
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
