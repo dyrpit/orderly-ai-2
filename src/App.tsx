@@ -5,25 +5,26 @@ import Admin from "./Pages/Admin";
 import RootLayout from "./Layout/RootLayout";
 import NotFound from "./Pages/NotFound";
 import { LoginModal, RegisterModal } from "./Components";
+import "./App.css";
 
 const router = createBrowserRouter(
- createRoutesFromElements(
-  <Route path="/" element={<RootLayout />}>
-   <Route path="/" element={<Home />}></Route>
-   <Route path="Products" element={<Products />}></Route>
-   <Route path="Admin" element={<Admin />}></Route>
-   <Route path="Login" element={<LoginModal />}></Route>
-   <Route path="Register" element={<RegisterModal />}></Route>
-   <Route path="*" element={<NotFound />} />
-  </Route>,
- ),
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route path="/" element={<Home />}></Route>
+      <Route path="Products" element={<Products />}></Route>
+      <Route path="Admin" element={<Admin />}></Route>
+      <Route path="Login" element={<LoginModal />}></Route>
+      <Route path="Register" element={<RegisterModal />}></Route>
+      <Route path="*" element={<NotFound />} />
+    </Route>,
+  ),
 );
 
 function App() {
- return (
-  <>
-   <RouterProvider router={router}  />
-  </>
- );
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 export default App;
