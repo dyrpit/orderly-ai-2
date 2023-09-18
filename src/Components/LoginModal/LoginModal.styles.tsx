@@ -11,6 +11,9 @@ export const LoginModalContainer = styled(Box)(({ theme: theme }) => ({
   [theme.breakpoints.down("tablet")]: {
     width: "100%",
   },
+  "& form": {
+    width: "100%",
+  },
 }));
 
 export const ModalHeader = styled(Typography)(({ theme: theme }) => ({
@@ -23,6 +26,9 @@ export const ModalHeader = styled(Typography)(({ theme: theme }) => ({
   textAlign: "center",
   margin: "auto",
   fontWeight: theme.typography.fontWeightBold,
+  [theme.breakpoints.down("tablet")]: {
+    width: "100%",
+  },
 }));
 
 export const ModalSubHeader = styled(Typography)(({ theme: theme }) => ({
@@ -35,6 +41,9 @@ export const ModalSubHeader = styled(Typography)(({ theme: theme }) => ({
   margin: "auto",
   fontSize: theme.typography.fontSize,
   fontWeight: theme.typography.fontWeightMedium,
+  [theme.breakpoints.down("tablet")]: {
+    width: "100%",
+  },
 }));
 
 export const ModalInput = styled(TextField)(({ theme: theme }) => ({
@@ -46,11 +55,18 @@ export const ModalInput = styled(TextField)(({ theme: theme }) => ({
   margin: "auto",
   marginBottom: "30px",
   justifyContent: "center",
+  [theme.breakpoints.down("tablet")]: {
+    width: "100%",
+  },
   "& input": {
     width: "472px",
-    marginLeft: "20px",
-    marginRight: "20px",
     overflow: "hidden",
+    [theme.breakpoints.down("tablet")]: {
+      width: "100%",
+    },
+  },
+  "& fieldset": {
+    border: "none",
   },
   [theme.breakpoints.down("tablet")]: {
     width: "100%",
@@ -65,6 +81,9 @@ export const ModalErrorMessage = styled(Typography)(({ theme: theme }) => ({
   height: "30px",
   fontSize: "12px",
   color: "red",
+  [theme.breakpoints.down("tablet")]: {
+    width: "100%",
+  },
 }));
 
 export const ModalButton = styled(Button)(({ theme: theme }) => ({

@@ -1,98 +1,71 @@
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import {
-  ModalHeader,
-  ModalFooter,
-  ModalSubHeader,
-  ModalInput,
-  ModalButton,
   LoginModalContainer,
+  ModalButton,
   ModalErrorMessage,
+  ModalFooter,
+  ModalHeader,
+  ModalInput,
+  ModalSubHeader,
 } from "./LoginModal.styles";
-import { useState, useRef, useEffect } from "react";
-import usersData from "../../Data/users.json";
 
 export function LoginModal() {
-  const [email, setEmail] = useState(String);
-  const [password, setPassword] = useState(String);
-  const [success, setSuccess] = useState(false);
-  const [showEmailErrorMessage, setShowEmailErrorMessage] = useState(false);
-  const [showPasswordErrorMessage, setShowPasswordErrorMessage] =
-    useState(false);
-  const errors = [
-    {
-      name: "emailError",
-      errorMessage:
-        "Email should be 2-30 characters and should contain domain!",
-      // Do zmiany ten pattern
-      pattern: "^[A-Za-z0-9._-]{1,30}@[A-Za-z0-9.-]+.[A-Za-z]{1,30}$",
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
     },
-    {
-      name: "passwordError",
-      errorMessage: "Password should be 2-20 characters!",
-      pattern: "^.{1,20}$",
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .max(25, "Email must be 25 characters or less.")
+        .email("Invalid email address.")
+        .required("Required"),
+      password: Yup.string()
+        .max(25, "Password must be 25 characters or less.")
+        .min(8, "Password must be minimum 8 characters.")
+        .required("Required"),
+    }),
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
     },
-  ];
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    emailHandleErrors();
-    passwordHandleErrors();
-    const enteredEmail = email;
-    const enteredPassword = password;
-
-    const foundUser = usersData.users.find((user) => {
-      return user.email === enteredEmail && user.password === enteredPassword;
-    });
-
-    if (showEmailErrorMessage === false && showPasswordErrorMessage === false) {
-      if (foundUser) {
-        alert("Logged as: " + foundUser.role);
-      } else {
-        alert("Wrong email or passowrd!");
-      }
-    }
-  }
-  function emailHandleErrors() {
-    const emailPattern = new RegExp(errors[0].pattern);
-    const isValidEmail = emailPattern.test(email);
-    setShowEmailErrorMessage(!isValidEmail);
-  }
-  function passwordHandleErrors() {
-    const passwordPattern = new RegExp(errors[1].pattern);
-    const isValidPassword = passwordPattern.test(password);
-    setShowPasswordErrorMessage(!isValidPassword);
-  }
-
+  });
   return (
     <LoginModalContainer>
       <ModalHeader>Sign In</ModalHeader>
       <ModalSubHeader>Welcome back. Sign in to continue</ModalSubHeader>
-      <form onClick={handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <ModalInput
+          id="email"
+          name="email"
+          type="email"
           placeholder="Email"
-          variant="standard"
-          InputProps={{ disableUnderline: true }}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          value={email}
-        ></ModalInput>
-        {showEmailErrorMessage && (
-          <ModalErrorMessage>{errors[0].errorMessage}</ModalErrorMessage>
-        )}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+        />
+        <ModalErrorMessage>
+          {formik.touched.email && formik.errors.email ? (
+            <div>{formik.errors.email}</div>
+          ) : null}
+        </ModalErrorMessage>
+
         <ModalInput
-          placeholder="Password"
-          variant="standard"
-          InputProps={{ disableUnderline: true }}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
+          id="password"
+          name="password"
           type="password"
-          value={password}
-        ></ModalInput>
-        {showPasswordErrorMessage && (
-          <ModalErrorMessage>{errors[1].errorMessage}</ModalErrorMessage>
-        )}
-        <ModalButton>Sign In</ModalButton>
+          placeholder="Password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.password}
+        />
+        <ModalErrorMessage>
+          {formik.touched.password && formik.errors.password ? (
+            <div>{formik.errors.password}</div>
+          ) : null}
+        </ModalErrorMessage>
+
+        <ModalButton type="submit">Submit</ModalButton>
       </form>
       <ModalFooter>
         Don't have an account?{" "}
