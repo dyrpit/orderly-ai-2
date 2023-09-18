@@ -6,3 +6,5 @@ export * from "./ModalFooter/ModalFooter.styles";
 export * from "./ModalHeader/ModalHeader.styles";
 export * from "./ModalInput/ModalInput.styles";
 export * from "./ModalSubHeader/ModalSubHeader.styles";
+export * from "./Input/Input";
+export * from "./NavbarContainer/NavbarContainer.styles";

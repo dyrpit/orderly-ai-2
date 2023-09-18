@@ -29,6 +29,11 @@ export const StyledIconButton = styled(IconButton)({
   padding: "2px"
 });
 
+export const StyledIconButtonContainer = styled(IconButton)({
+  display: "flex",
+  justifyContent: "space-between"
+});
+
 export const StyledIconButtonMenu = styled(IconButton)(({ theme }) => ({
   display: "none",
   [theme.breakpoints.down('laptop')]: {
