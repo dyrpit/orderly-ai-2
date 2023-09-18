@@ -1,6 +1,7 @@
-import { Box, Button, TextField, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Box, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { fontSizeVar, colorVar } from "../../Theme/variables";
+import { fontSizeVar } from "../../Theme/variables";
+import { StyledButton } from "../../ui";
 
 export const ANContainer = styled(Box)(({ theme: theme }) => ({
  backgroundColor: theme.palette.background.paper,
@@ -14,9 +15,10 @@ export const ANContainer = styled(Box)(({ theme: theme }) => ({
  gap: "20px",
  alignItems: "center", // Center items vertically
  textAlign: "center",
+ borderRadius: "15px",
 }));
 
-export const ANList = styled(List)(({ theme: theme }) => ({
+export const ANList = styled(List)(() => ({
  width: "100%",
  maxWidth: "200px",
  display: "flex",
@@ -26,27 +28,18 @@ export const ANList = styled(List)(({ theme: theme }) => ({
  color: fontSizeVar.loginModalDefault,
 }));
 
-
-export const ANListItem = styled(ListItem)(({ theme: theme }) => ({
+export const ANListItem = styled(ListItem)(() => ({
  flexDirection: "column",
 }));
 
-export const ANListItemIcon = styled(ListItemIcon)(({ theme: theme }) => ({}));
-export const ANListItemText = styled(ListItemText)(({ theme: theme }) => ({}));
+export const ANListItemIcon = styled(ListItemIcon)(({ }) => ({}));
+export const ANListItemText = styled(ListItemText)(({ }) => ({}));
 
-export const ANButton = styled(Button)(({ theme: theme }) => ({
- width: "200px",
- height: "60px",
- borderRadius: "15px",
- backgroundColor: theme.palette.info.main,
- display: "flex",
- color: colorVar.textColor,
- "&:hover": {
-  backgroundColor: theme.palette.info.dark,
- },
+export const ANButton = styled(StyledButton)(({ }) => ({
+ margin: "0",
 }));
 
-export const ANCategoryDiv = styled("div")(({ theme: theme }) => ({
+export const ANCategoryDiv = styled("div")(({ }) => ({
  display: "flex",
  flexDirection: "row",
 }));

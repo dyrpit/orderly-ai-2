@@ -1,6 +1,12 @@
+import { MainContainer, UsersEdit } from "../Components";
+import { AdminNavbar } from "../Components/AdminNavbar/AdminNavbar";
+
 function Admin() {
     return (
-      <h3>Lorem ipsum ad populum </h3>
+      <MainContainer>
+        <AdminNavbar></AdminNavbar>
+        <UsersEdit></UsersEdit>
+      </MainContainer>
     );
   }
   

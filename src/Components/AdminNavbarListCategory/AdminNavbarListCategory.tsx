@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { ANArrow, ANList, ANListItem, ANListItemContainer, ANTitle, ANTitleContainer, AdminNavbarListContainer } from "./AdminNavbarListCategory.styles";
+import { Fade } from "@mui/material";
 
 interface AdminNavbarListCategoryProps {
-  category:string;
-  elements:string[];
+ category: string;
+ elements: string[];
 }
 
-
-export function AdminNavbarListCategory({ category, elements }: AdminNavbarListCategoryProps) {
+export function AdminNavbarListCategory({ category }: AdminNavbarListCategoryProps) {
  const [isActive, setIsActive] = useState(false);
 
  const [listDataElements, setListDataElements] = useState<string[]>([]);
- const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
- const [selectedElement, setSelectedElement] = useState<string | null>(null);
 
  const toggleActive = () => {
   setIsActive(!isActive);
@@ -40,7 +38,9 @@ export function AdminNavbarListCategory({ category, elements }: AdminNavbarListC
     <ANList>
      <ANListItemContainer>
       {listDataElements.map((value, index) => (
-       <ANListItem key={index}>{value}</ANListItem>
+       <Fade in={true} unmountOnExit>
+        <ANListItem key={index}>{value}</ANListItem>
+       </Fade>
       ))}
      </ANListItemContainer>
     </ANList>
