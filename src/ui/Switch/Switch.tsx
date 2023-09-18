@@ -1,8 +1,13 @@
 import { StyledSwitch } from "./Switch.styles";
-import { SwitchProps as MUISwitchProps } from "@mui/material";
+import { Box, SwitchProps as MUISwitchProps } from "@mui/material";
 
 type SwitchProps = MUISwitchProps;
 
 export const Switch = (props: SwitchProps) => {
-  return <StyledSwitch {...props} />;
+  return (
+    <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <StyledSwitch {...props} />
+    </Box>
+  );
+
 };

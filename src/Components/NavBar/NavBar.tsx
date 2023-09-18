@@ -7,7 +7,7 @@ export const NavBar = () => {
   return (
     <NavbarContainer>
       <LogoContainer />
-      <Switch checked={checked} onChange={e => setChecked(e.target.checked)} />
+      <Switch checked={checked} onChange={(e) => setChecked(e.target.checked)} />
       <Menu />
     </NavbarContainer>
   );
