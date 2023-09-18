@@ -1,2 +1,3 @@
+export * from "./NavbarContainer/NavbarContainer";
 export * from "./Switch/Switch";
-export * from "./NavBarContainer/NavBarContainer";
+export * from "../Components/Menu/Menu";
