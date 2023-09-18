@@ -21,15 +21,15 @@ import List from "@mui/material/List";
 const optionButtons = [
   {
     name: "Import",
-    img: "assets/clarity_import-line.png",
+    img: "../../../src/assets/clarity_import-line.png",
   },
   {
     name: "Export",
-    img: "assets/clarity_export-line.png",
+    img: "../../../src/assets/clarity_export-line.png",
   },
   {
     name: "Login",
-    img: "assets/clarity_avatar-line.png",
+    img: "../../../src/assets/clarity_avatar-line.png",
   },
 ];
 
