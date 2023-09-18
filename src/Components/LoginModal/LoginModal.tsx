@@ -68,10 +68,7 @@ export function LoginModal() {
         <ModalButton type="submit">Submit</ModalButton>
       </form>
       <ModalFooter>
-        Don't have an account?{" "}
-        <a href="#">
-          <b>Create account</b>
-        </a>
+        Don't have an account? <a href="#"><b>Create account</b></a>
       </ModalFooter>
     </LoginModalContainer>
   );
