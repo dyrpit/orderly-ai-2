@@ -1,28 +1,37 @@
-import { ANButton, ANContainer, ANList, ANListItem, ANListInner, ANListItemButton, ANCategoryDiv, ANListItemText } from "./AdminNavbar.styles";
+import { ANButton, ANContainer, ANList } from "./AdminNavbar.styles";
 import Fade from "@mui/material/Fade";
 import { useState } from "react";
-import { AdminNavbarInnerList } from "../AdminNavbarInnerList/AdminNavbarInnerList";
+import { AdminNavbarListCategory } from "../AdminNavbarListCategory/AdminNavbarListCategory";
 
 export function AdminNavbar() {
  const [isListVisible, setListVisible] = useState(false);
- const [randomItemsCount, setRandomItemsCount] = useState(0);
+ const [listDataCategories, setListDataCategories] = useState<string[]>([]);
+
  const toggleListVisibility = () => {
-  if (isListVisible) generateRandomItems();
+  if (!isListVisible) generateRandomCategories();
   setListVisible(!isListVisible);
  };
 
- const generateRandomItems = () => {
-  const randomCount = Math.floor(Math.random() * 10) + 1;
-  setRandomItemsCount(randomCount);
+ const generateRandomCategories = () => {
+  const items: string[] = [];
+  const randomInteger = Math.floor(Math.random() * (10 - 1) + 1);
+
+  for (let i = 1; i <= randomInteger; i++) {
+   items.push(`Category ${i}`);
+  }
+  setListDataCategories(items);
+  console.log(items);
  };
 
+ const generateRandomElements = () => {
+  const elements: string[] = [];
+  const randomInteger = Math.floor(Math.random() * (10 - 1) + 1);
 
-
- const generateRandomSubitems = () => {
-  return Array.from({ length: randomItemsCount }).map((_, index) => ({
-   id: index,
-   name: `Subitem ${index + 1}`,
-  }));
+  for (let i = 1; i <= randomInteger; i++) {
+   const category = `Category ${i}`;
+   elements.push(category);
+  }
+  return elements;
  };
 
  return (
@@ -30,9 +39,9 @@ export function AdminNavbar() {
    <ANButton onClick={toggleListVisibility}>Categories</ANButton>
    <Fade in={isListVisible} unmountOnExit>
     <ANList>
-     <AdminNavbarInnerList></AdminNavbarInnerList>
-     <AdminNavbarInnerList></AdminNavbarInnerList>
-     <AdminNavbarInnerList></AdminNavbarInnerList>
+     {listDataCategories.map((item, index) => (
+      <AdminNavbarListCategory key={index} category={item} elements={generateRandomElements()}/>
+     ))}
     </ANList>
    </Fade>
    <ANButton>Edit Users</ANButton>
