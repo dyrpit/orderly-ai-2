@@ -9,10 +9,10 @@ export default function RootLayout() {
             <NavBar />
             <MainContainer>
                 <main>
-                    <Breadcrumbs />
                     <Outlet></Outlet>
                 </main>
             </MainContainer>
+            <Footer />
         </div>
     );
 }

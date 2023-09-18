@@ -9,7 +9,7 @@ export const Container = styled(Box)(({ theme }) => ({
  width: "1170px",
  marginLeft: "auto",
  marginRight: "auto",
- [theme.breakpoints.down("laptop")]: {
+ [theme.breakpoints.down("desktop")]: {
   width: "100%",
  },
 }));
