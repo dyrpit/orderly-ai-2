@@ -31,6 +31,7 @@ export const theme = createTheme({
   },
   typography: {
     fontSize: 16,
+    fontFamily: "Montserrat",
     fontWeightBold: 700,
     fontWeightMedium: 600,
     fontWeightRegular: 400,
@@ -40,7 +41,7 @@ export const theme = createTheme({
       mobile: 0,
       tablet: 640,
       laptop: 1024,
-      desktop: 1200,
+      desktop: 1170,
     },
   },
 });

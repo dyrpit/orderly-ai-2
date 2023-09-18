@@ -6,8 +6,8 @@ export const RegisterModalContainer = styled(Box)(({ theme: theme }) => ({
   display: "flex",
   flexDirection: "column",
   width: "828px",
-  height: "579px",
+  height: "679px",
   [theme.breakpoints.down("tablet")]: {
-    width: "100%",
+    maxWidth: "100%",
   },
 }));
