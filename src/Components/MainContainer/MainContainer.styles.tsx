@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 export const Container = styled(Box)(() => ({
     backgroundColor: colorVar.mainBackground,
     display: 'flex',
-    width: "1170px",
+    width: "fit",
     height: '100vh',
     marginLeft: 'auto',
     marginRight: 'auto',

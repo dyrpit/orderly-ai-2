@@ -8,7 +8,7 @@ export const BreadcrumbsContainer = styled("div")({
   alignItems: "center",
   justifyContent: "center",
   padding: "10px",
-  width: "100%",
+  width: "fit-content",
   color: theme.palette.text.primary,
   borderRadius: "10px",
   background: theme.palette.background.paper,
