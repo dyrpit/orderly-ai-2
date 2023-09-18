@@ -9,7 +9,8 @@ export const Container = styled(Box)(() => ({
     height: '100vh',
     marginLeft: 'auto',
     marginRight: 'auto',
-    padding: '20px'
+    padding: '20px',
+    paddingTop: '100px',
 }))
 
 export const ContainerContent = styled(Box)(() => ({

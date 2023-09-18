@@ -7,7 +7,6 @@ import NotFound from "./Pages/NotFound";
 import { LoginModal, RegisterModal } from "./Components";
 import "./App.css";
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>

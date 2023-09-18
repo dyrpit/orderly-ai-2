@@ -1,9 +1,8 @@
-import { MainContainer } from '../Components';
-import { NavBar } from '../Components/NavBar/NavBar';
+import { Category } from "../Components";
 
 function Home() {
   return (
-1
+    <Category></Category>
   );
 }
 
