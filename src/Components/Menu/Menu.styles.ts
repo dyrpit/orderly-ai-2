@@ -24,7 +24,7 @@ export const StyledMenuButton = styled(IconButton)(({ theme }) => ({
 }));
 
 export const StyledIconButton = styled(IconButton)({
-  width: "30%%",
+  width: "30%",
   height: "100%",
   padding: "2px",
 });
