@@ -3,7 +3,10 @@ import { useVariable } from "./useVariable"; // Renamed from useUser
 
 type VariableContextType = {
  value: number; // Updated from User
- handleValueChange: () => void; // Updated from User
+ handleValueChange: VoidFunction; // Updated from User
+
+ editUsersVisible: boolean;
+ handleEditUserVisible: VoidFunction;
 };
 
 type VariableContextProviderProps = {
@@ -12,7 +15,9 @@ type VariableContextProviderProps = {
 
 export const VariableContext = createContext<VariableContextType>({
  value: 0,
- handleValueChange: () => {},
+ handleValueChange: () => null,
+ editUsersVisible: false,
+ handleEditUserVisible: () => null,
 });
 
 export const VariableContextProvider = ({ children }: VariableContextProviderProps) => {

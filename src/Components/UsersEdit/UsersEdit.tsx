@@ -16,7 +16,7 @@ export function UsersEdit() {
   <UsersEditContainer>
    <UsersEditList>
     {users.map((user) => (
-     <UsersEditListRow key={user.id}>
+     <UsersEditListRow key={user.email}>
       <UsersEditListItem>
        Email: {user.email}
        <UsersEditCheckbox control={<Checkbox color="primary" />} label="Admin" labelPlacement="end" />
