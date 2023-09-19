@@ -3,7 +3,6 @@ import { Footer, MainContainer } from '../Components';
 import Breadcrumbs from '../Components/Breadcrumbs/Breadcrumps';
 import { NavBar } from '../Components/NavBar/NavBar';
 
-
 export default function RootLayout() {
     return (
         <div className="RootLayout">

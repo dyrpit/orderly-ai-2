@@ -2,7 +2,6 @@ import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { theme } from "../../Theme/ThemeProvider";
 
-
 export const BreadcrumbsContainer = styled("div")({
   display: "flex",
   alignItems: "center",

@@ -1,6 +1,8 @@
+import { Category } from "../Components";
+
 function Home() {
   return (
-1
+    <Category></Category>
   );
 }
 

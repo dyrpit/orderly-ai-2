@@ -2,6 +2,7 @@ import { colorVar } from "../../Theme/variables";
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
+<<<<<<< HEAD
 export const Container = styled(Box)(({ theme }) => ({
   backgroundColor: colorVar.mainBackground,
   display: "flex",
@@ -15,6 +16,18 @@ export const Container = styled(Box)(({ theme }) => ({
     justifyContent: "center"
   },
 }));
+=======
+export const Container = styled(Box)(() => ({
+    backgroundColor: colorVar.mainBackground,
+    display: 'flex',
+    width: "1170px",
+    height: '100vh',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    padding: '20px',
+    paddingTop: '100px',
+}))
+>>>>>>> 7976d481f2f9f62d43e4bc0885a0ca2ded8bd164
 
 export const ContainerContent = styled(Box)(() => ({
   display: "flex",

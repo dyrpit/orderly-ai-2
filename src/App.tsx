@@ -8,7 +8,6 @@ import { LoginModal, RegisterModal } from "./Components";
 import "./App.css";
 import { AdminPage } from "./Pages";
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
