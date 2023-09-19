@@ -3,11 +3,14 @@ import { Box } from "@mui/material";
 import { theme } from "../../Theme/ThemeProvider";
 
 export const CategoryBoxContainer = styled(Box)(() => ({
-    background: 'red',
     borderRadius: '20px',
     width: '470px',
     height: '300px',
     margin: '20px',
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     [theme.breakpoints.down("tablet")]: {
         width: "100vw",
       },

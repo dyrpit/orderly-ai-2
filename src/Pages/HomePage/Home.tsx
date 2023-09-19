@@ -3,7 +3,7 @@ import "./Home.css";
 
 function Home() {
   return (
-    <Category></Category>
+    <Category/>
   );
 }
 

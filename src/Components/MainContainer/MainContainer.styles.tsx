@@ -7,10 +7,11 @@ export const Container = styled(Box)(({ theme }) => ({
   display: "flex",
   maxWidth: "1170px",
   marginLeft: "auto",
+  width: "1170px",
   marginRight: "auto",
   flexDirection: "row",
   flexWrap: "wrap",
-  [theme.breakpoints.down("laptop")]: {
+  [theme.breakpoints.down("mobile")]: {
     width: "100%",
     display: "flex",
     justifyContent: "center"
@@ -19,7 +20,6 @@ export const Container = styled(Box)(({ theme }) => ({
 
 export const ContainerContent = styled(Box)(() => ({
   display: "flex",
-  
   flexDirection: "row",
   justifyContent: "center",
 }));

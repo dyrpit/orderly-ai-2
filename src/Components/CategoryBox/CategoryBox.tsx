@@ -6,6 +6,14 @@ interface CategoryProps {
   title: string;
   description: string;
 }
+function generateRandomColor() {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
 export function Category() {
   const [categories, setCategories] = useState<CategoryProps[]>([]);
@@ -25,7 +33,7 @@ export function Category() {
     <div>
       {categories.map((category, index) => (
         <Link to="/Products" key={index}>
-          <CategoryBoxContainer>
+          <CategoryBoxContainer style={{ backgroundColor: generateRandomColor() }}>
             <CategoryBoxContent>
               <div className="Title">{category.title}</div>
               <div className="Desc">{category.description}</div>
