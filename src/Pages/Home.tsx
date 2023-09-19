@@ -1,11 +1,11 @@
 function Home() {
-  return (
-    <div>
-      {/* <NavBar /> */}
-      {/* <MainContainer>
+ return (
+  <div>
+   {/* <NavBar /> */}
+   {/* <MainContainer>
       </MainContainer> */}
-    </div>
-  );
+  </div>
+ );
 }
 
 export default Home;
