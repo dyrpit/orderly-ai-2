@@ -26,5 +26,4 @@ const smallScreenStyles = `
     }
   }
 `;
-
 export default smallScreenStyles;
