@@ -1,64 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { useContext } from "react";
 import { UsersEditCheckbox, UsersEditButton, UsersEditContainer, UsersEditList, UsersEditListItem, UsersEditListRow } from "./UsersEdit.styles";
 import { Checkbox } from "@mui/material";
+import { UserContext } from "../../Context/userContext/UserContextProvider";
 
-interface UserData {
- id: number;
- email: string;
- role: string;
-}
+
 
 export function UsersEdit() {
- const [userData, setUserData] = useState<UserData[]>([]);
+  const { users } = useContext(UserContext); // Rename contextUserData to avoid conflicts\
 
- // Use an object to store admin status for each user by their ID
- const [isAdmin, setIsAdmin] = useState<{ [key: number]: boolean }>({});
-
- useEffect(() => {
-  // Fetch the JSON data from the file
-  fetch("/src/Data/users.json") // Adjust the path as needed
-   .then((response) => response.json())
-   .then((data) => {
-    // Once data is fetched, update the state with the JSON data
-    setUserData(data.users);
-   })
-   .catch((error) => {
-    console.error("Error fetching JSON data:", error);
-   });
- }, []);
-
- const handleCheckboxChange = (userId: number) => {
-  // Create a new object to update the isAdmin state while preserving the existing values
-  setIsAdmin((prevIsAdmin) => ({
-   ...prevIsAdmin,
-   [userId]: !prevIsAdmin[userId], // Toggle admin status for the specific user
-  }));
- };
-
- const saveUserDataToJson = () => {
-  const updatedUserData = userData.map((user) => ({
-   ...user,
-   role: isAdmin[user.id] ? "admin" : "user",
-  }));
-  console.log(updatedUserData);
-
-  // You can now send updatedUserData to your server for further processing and saving
-  // Example: fetch("/api/saveUserData", { method: "POST", body: JSON.stringify(updatedUserData) })
- };
+  const test = () => {
+    console.log(users); // Use localUserData
+  }
 
  return (
   <UsersEditContainer>
    <UsersEditList>
-    {userData.map((user) => (
+    {users.map((user) => (
      <UsersEditListRow key={user.id}>
       <UsersEditListItem>
        Email: {user.email}
-       <UsersEditCheckbox control={<Checkbox defaultChecked={isAdmin[user.id]} color="primary" onChange={() => handleCheckboxChange(user.id)} />} label="Admin" labelPlacement="end" />
+       <UsersEditCheckbox control={<Checkbox color="primary" />} label="Admin" labelPlacement="end" />
       </UsersEditListItem>
      </UsersEditListRow>
     ))}
    </UsersEditList>
-   <UsersEditButton onClick={saveUserDataToJson}>Save to JSON</UsersEditButton>
+   <UsersEditButton onClick={test}>Save to JSON</UsersEditButton>
   </UsersEditContainer>
  );
 }
