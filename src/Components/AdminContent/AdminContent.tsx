@@ -69,6 +69,5 @@ export const AdminContent = () => {
         </Grid>
       </StyledGridContainer>
     </StyledAdminContentContainer >
-
   );
 };
