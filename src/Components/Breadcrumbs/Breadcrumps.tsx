@@ -16,9 +16,9 @@ export default function Breadcrumbs() {
     return (
       <CrumbContainer key={crumb}>
         {isLastCrumb ? (
-          <span>{crumb}/</span>
+          <span>{crumb}</span>
         ) : (
-          <StyledLink to={path}>{crumb}/</StyledLink>
+          <StyledLink to={path}>{crumb} {" > "}</StyledLink>
         )}
       </CrumbContainer>
     );
@@ -27,7 +27,7 @@ export default function Breadcrumbs() {
   return (
     <BreadcrumbsContainer>
       <CrumbContainer>
-        <StyledLink to="/">Home/</StyledLink>
+        <StyledLink to="/">Home {" > "}</StyledLink>
       </CrumbContainer>
       {breadcrumbElements}
     </BreadcrumbsContainer>

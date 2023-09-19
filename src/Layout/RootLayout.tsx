@@ -6,8 +6,9 @@ import { NavBar } from '../Components/NavBar/NavBar';
 export default function RootLayout() {
     return (
         <div className="RootLayout">
+            <NavBar />
             <MainContainer>
-                <Breadcrumbs />
+            <Breadcrumbs />
                 <Outlet />
             </MainContainer>
             <Footer></Footer>
