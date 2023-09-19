@@ -3,11 +3,12 @@ import { fontSizeVar } from "../../Theme/variables";
 
 export const UsersEditContainer = styled(Box)(({ theme: theme }) => ({
  width: "100%",
- height: "100%",
+ height: "fit-content",
  maxHeight: "880px",
  backgroundColor: theme.palette.background.paper,
  borderRadius: "15px",
- padding: "30px",
+ margin: "10px",
+ padding: "0px",
 }));
 
 export const UsersEditList = styled(List)(() => ({
@@ -19,21 +20,24 @@ export const UsersEditList = styled(List)(() => ({
  color: fontSizeVar.loginModalDefault,
 }));
 
+export const UsersEditListRow = styled(Typography)(({ theme: theme }) => ({
+ display: "flex",
+ verticalAlign: "center",
+ textAlign: "center"
+}));
+
 export const UsersEditListItem = styled(ListItem)(() => ({
  flexDirection: "column",
  alignItems: "flex-start",
+ overflowWrap: "break-word",
+ wordBreak: "break-all",
  width: "100%",
-}));
-
-export const UsersEditListRow = styled(Typography)(({ theme : theme }) => ({
- display: "flex",
- flexDirection: "row",
- justifyContent: "space-between",
- alignItems: "center", // Vertically center-align items
- width: "100%",
+ flexBasis: "200%",
 }));
 
 export const UsersEditCheckbox = styled(FormControlLabel)(({}) => ({
  alignSelf: "flex-end", // Stick the checkbox to the right
  width: "100%",
+ margin: "auto 0 auto 0",
+ paddingRight: "10px"
 }));
