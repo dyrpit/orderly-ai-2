@@ -1,5 +1,5 @@
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from "react-router-dom";
-import Home from "./Pages/Home";
+import Home from "./Pages/HomePage/Home";
 import Products from "./Pages/Products";
 import RootLayout from "./Layout/RootLayout";
 import NotFound from "./Pages/NotFound";

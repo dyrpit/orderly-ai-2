@@ -6,3 +6,5 @@ export * from "./MainContainer/MainContainer";
 export * from "./SignButtons/SignIn";
 export * from "./TopBar/TopBar";
 export * from "./Breadcrumbs/Breadcrumbs";
+export * from "./UsersEdit/UsersEdit";
+export * from "./CategoryBox/CategoryBox";
