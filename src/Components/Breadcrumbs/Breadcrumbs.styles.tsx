@@ -20,4 +20,10 @@ export const CrumbContainer = styled("div")({
 export const StyledLink = styled(Link)({
   textDecoration: "none",
   color: theme.palette.text.primary,
+  transition: "color 0.2s, font-weight 0.2s",
+
+  "&:hover": {
+    color: 'white', 
+    fontWeight: "bold",
+  },
 });
