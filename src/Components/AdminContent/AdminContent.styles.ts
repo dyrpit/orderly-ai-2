@@ -27,7 +27,5 @@ export const StyledGridContainer = styled(Grid)({
   [theme.breakpoints.down("tablet")]: {
     display: "flex",
     flexDirection: "column",
-
   }
 });
-

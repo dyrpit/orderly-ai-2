@@ -1,12 +1,11 @@
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import Home from "./Pages/Home";
 import Products from "./Pages/Products";
-import Admin from "./Pages/Admin";
 import RootLayout from "./Layout/RootLayout";
 import NotFound from "./Pages/NotFound";
 import { LoginModal, RegisterModal } from "./Components";
-import "./App.css";
 import { AdminPage } from "./Pages";
+import "./App.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
