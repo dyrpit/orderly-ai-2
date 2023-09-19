@@ -4,4 +4,5 @@ export * from './Footer/Footer';
 export * from './AdminContent/AdminContent';
 export * from "./MainContainer/MainContainer";
 export * from "./UsersEdit/UsersEdit"
+export * from './CategoryBox/CategoryBox';
 

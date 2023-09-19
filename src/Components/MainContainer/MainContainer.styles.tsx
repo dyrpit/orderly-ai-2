@@ -1,7 +1,6 @@
 import { colorVar } from "../../Theme/variables";
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { theme } from "../../Theme/ThemeProvider";
 
 export const Container = styled(Box)(({ theme }) => ({
   backgroundColor: colorVar.mainBackground,
@@ -9,7 +8,8 @@ export const Container = styled(Box)(({ theme }) => ({
   maxWidth: "1170px",
   marginLeft: "auto",
   marginRight: "auto",
-  flexDirection: "column",
+  flexDirection: "row",
+  flexWrap: "wrap",
   [theme.breakpoints.down("laptop")]: {
     width: "100%",
     display: "flex",
@@ -19,7 +19,8 @@ export const Container = styled(Box)(({ theme }) => ({
 
 export const ContainerContent = styled(Box)(() => ({
   display: "flex",
-  flexWrap: "wrap",
+  
+  flexDirection: "row",
   justifyContent: "center",
 }));
 
