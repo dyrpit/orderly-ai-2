@@ -1,5 +1,6 @@
+import { useContext } from "react";
+import { OrderAiContext } from "../../Context/ContextProvider";
 import { CustomButton } from "../../ui";
-
 export function SignIn() {
  const signInStyles = {
   display: "flex",
@@ -7,9 +8,13 @@ export function SignIn() {
   scale: "0.8",
   marginLeft: "auto",
  };
+ const { handleSignInClick } = useContext(OrderAiContext);
+
  return (
   <>
-   <CustomButton sx={signInStyles}>Sign In</CustomButton>
+   <CustomButton sx={signInStyles} onClick={handleSignInClick}>
+    Sign In
+   </CustomButton>
   </>
  );
 }

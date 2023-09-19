@@ -2,9 +2,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { LoginModalContainer } from "./LoginModal.styles";
 import { StyledButton } from "../../ui/StyledButton/StyledButton.styles";
-import { ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader } from "../../ui";
+import { ModalCloseContainer, ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader } from "../../ui";
+import { useContext } from "react";
+import { OrderAiContext } from "../../Context/ContextProvider";
 
 export function LoginModal() {
+ const { handleSignInClick, changeModal } = useContext(OrderAiContext);
  const formik = useFormik({
   initialValues: {
    email: "",
@@ -20,6 +23,13 @@ export function LoginModal() {
  });
  return (
   <LoginModalContainer>
+   <ModalCloseContainer
+    onClick={() => {
+     handleSignInClick();
+     changeModal("none");
+    }}>
+    <img src="../../../src/assets/clarity_close-line.png"></img>
+   </ModalCloseContainer>
    <ModalHeader>Sign In</ModalHeader>
    <ModalSubHeader>Welcome back. Sign in to continue</ModalSubHeader>
    <form onSubmit={formik.handleSubmit}>
@@ -33,7 +43,10 @@ export function LoginModal() {
    </form>
    <ModalFooter>
     Don't have an account?{" "}
-    <a href="#">
+    <a
+     onClick={() => {
+      changeModal("Sign Up");
+     }}>
      <b>Create account</b>
     </a>
    </ModalFooter>
