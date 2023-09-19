@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { StyledNavBarContainer } from "./NavbarContainer.styles";
+import { NavbarContainerWrapper, StyledNavBarContainer } from "./NavbarContainer.styles";
 
 type NavbarContainerProps = {
   children: ReactNode;
@@ -7,8 +7,10 @@ type NavbarContainerProps = {
 
 export const NavbarContainer = ({ children }: NavbarContainerProps) => {
   return (
-    <StyledNavBarContainer>
-      {children}
-    </StyledNavBarContainer>
+    <NavbarContainerWrapper>
+      <StyledNavBarContainer>
+        {children}
+      </StyledNavBarContainer>
+    </NavbarContainerWrapper>
   );
 };

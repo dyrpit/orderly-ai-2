@@ -6,9 +6,9 @@
       "role": "admin"
     },
     {
-      "email": "regular@regular.com",
+      "email": "regul123123123123123ar@regular.com",
       "password": "Regular123!",
-      "role": "regular"
+      "role": "user"
     },
     {
       "email": "user@user.com",
