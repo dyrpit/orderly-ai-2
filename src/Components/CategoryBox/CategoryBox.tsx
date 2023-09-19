@@ -1,20 +1,38 @@
+import React, { useState, useEffect } from "react";
 import { CategoryBoxContainer, CategoryBoxContent } from "./CategoryBox.style";
 import { Link } from "react-router-dom";
 
-type CategoryProps = {
-  title: string; 
+interface CategoryProps {
+  title: string;
   description: string;
-};
+}
 
-export function Category({ title, description }: CategoryProps) {
+export function Category() {
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
+
+  useEffect(() => {
+    fetch("/src/Data/Categories.json") 
+      .then((response) => response.json())
+      .then((data) => {
+        setCategories(data);
+        console.error("Poprawne wczytanie danych");
+      })
+      .catch((error) => {
+        console.error("Błąd podczas wczytywania danych z JSON:", error);
+      });
+  }, []);
   return (
-    <Link to="/Products">
-      <CategoryBoxContainer>
-        <CategoryBoxContent>
-          <div className="Title">{title}</div>
-          <div className="Desc">{description}</div>
-        </CategoryBoxContent>
-      </CategoryBoxContainer>
-    </Link>
+    <div>
+      {categories.map((category, index) => (
+        <Link to="/Products" key={index}>
+          <CategoryBoxContainer>
+            <CategoryBoxContent>
+              <div className="Title">{category.title}</div>
+              <div className="Desc">{category.description}</div>
+            </CategoryBoxContent>
+          </CategoryBoxContainer>
+        </Link>
+      ))}
+    </div>
   );
 }

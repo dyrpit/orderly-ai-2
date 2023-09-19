@@ -8,7 +8,9 @@ export const CategoryBoxContainer = styled(Box)(() => ({
     width: '470px',
     height: '300px',
     margin: '20px',
-    
+    [theme.breakpoints.down("tablet")]: {
+        width: "100vw",
+      },
 }))
 
 export const CategoryBoxContent= styled(Box)(() => ({
