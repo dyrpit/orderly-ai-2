@@ -1,13 +1,12 @@
 import { Category } from "../../Components";
 import "./Home.css";
+import categoriesData from "./categories.json";
 
 function Home() {
-  const numberOfCategories = 6;
 
-  const categoryComponents = [];
-  for (let i = 0; i < numberOfCategories; i++) {
-    categoryComponents.push(<Category key={i} />);
-  }
+  const categoryComponents = categoriesData.map((category, index) => (
+    <Category key={index} title={category.title} description={category.description} />
+  ));
 
   return <div className="categories">{categoryComponents}</div>;
 }

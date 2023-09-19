@@ -1,0 +1,28 @@
+
+[
+    {
+      "title": "Kategoria 1",
+      "description": "Opis kategorii 1"
+    },
+    {
+      "title": "Kategoria 2",
+      "description": "Opis kategorii 2"
+    },
+    {
+        "title": "Kategoria 3",
+        "description": "Opis kategorii 3"
+      },
+      {
+        "title": "Kategoria 4",
+        "description": "Opis kategorii 4"
+      },
+      {
+        "title": "Kategoria 5",
+        "description": "Opis kategorii 5"
+      },
+      {
+        "title": "Kategoria 6",
+        "description": "Opis kategorii 6"
+      }
+
+  ]
