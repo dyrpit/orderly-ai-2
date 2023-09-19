@@ -10,7 +10,6 @@ export const ANContainer = styled(Box)(({ theme: theme }) => ({
  height: `calc(100vh - 140px)`,
  maxHeight: "100%",
  padding: "30px 0 30px 0",
- margin: "10px",
  display: "flex",
  flexDirection: "column",
  gap: "20px",

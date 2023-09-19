@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { UsersEditCheckbox, UsersEditContainer, UsersEditList, UsersEditListItem, UsersEditListRow } from "./UsersEdit.styles";
+import { UsersEditCheckbox, UsersEditButton, UsersEditContainer, UsersEditList, UsersEditListItem, UsersEditListRow } from "./UsersEdit.styles";
 import { Checkbox } from "@mui/material";
 
 interface UserData {
@@ -47,20 +47,18 @@ export function UsersEdit() {
  };
 
  return (
-  <div>
-   <UsersEditContainer>
-    <UsersEditList>
-     {userData.map((user) => (
-      <UsersEditListRow key={user.id}>
-       <UsersEditListItem>
-        Email: {user.email}
-        <UsersEditCheckbox control={<Checkbox defaultChecked={isAdmin[user.id]} color="primary" onChange={() => handleCheckboxChange(user.id)} />} label="Admin" labelPlacement="end" />
-       </UsersEditListItem>
-      </UsersEditListRow>
-     ))}
-    </UsersEditList>
-   </UsersEditContainer>
-   <button onClick={saveUserDataToJson}>Save to JSON</button>
-  </div>
+  <UsersEditContainer>
+   <UsersEditList>
+    {userData.map((user) => (
+     <UsersEditListRow key={user.id}>
+      <UsersEditListItem>
+       Email: {user.email}
+       <UsersEditCheckbox control={<Checkbox defaultChecked={isAdmin[user.id]} color="primary" onChange={() => handleCheckboxChange(user.id)} />} label="Admin" labelPlacement="end" />
+      </UsersEditListItem>
+     </UsersEditListRow>
+    ))}
+   </UsersEditList>
+   <UsersEditButton onClick={saveUserDataToJson}>Save to JSON</UsersEditButton>
+  </UsersEditContainer>
  );
 }

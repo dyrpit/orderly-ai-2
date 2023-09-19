@@ -1,5 +1,6 @@
 import { Box, Checkbox, FormControlLabel, List, ListItem, Typography, styled } from "@mui/material";
 import { fontSizeVar } from "../../Theme/variables";
+import { StyledButton } from "../../ui";
 
 export const UsersEditContainer = styled(Box)(({ theme: theme }) => ({
  width: "100%",
@@ -7,7 +8,6 @@ export const UsersEditContainer = styled(Box)(({ theme: theme }) => ({
  maxHeight: "880px",
  backgroundColor: theme.palette.background.paper,
  borderRadius: "15px",
- margin: "10px",
  padding: "0px",
 }));
 
@@ -23,7 +23,7 @@ export const UsersEditList = styled(List)(() => ({
 export const UsersEditListRow = styled(Typography)(({ theme: theme }) => ({
  display: "flex",
  verticalAlign: "center",
- textAlign: "center"
+ textAlign: "center",
 }));
 
 export const UsersEditListItem = styled(ListItem)(() => ({
@@ -39,5 +39,9 @@ export const UsersEditCheckbox = styled(FormControlLabel)(({}) => ({
  alignSelf: "flex-end", // Stick the checkbox to the right
  width: "100%",
  margin: "auto 0 auto 0",
- paddingRight: "10px"
+ paddingRight: "10px",
+}));
+
+export const UsersEditButton = styled(StyledButton)(({ theme: theme }) => ({
+    
 }));
