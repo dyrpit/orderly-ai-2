@@ -36,11 +36,12 @@ export function AdminNavbar() {
 
  return (
   <ANContainer>
+   <ANButton>Add Category</ANButton>
    <ANButton onClick={toggleListVisibility}>Categories</ANButton>
    <Fade in={isListVisible} unmountOnExit>
     <ANList>
      {listDataCategories.map((item, index) => (
-      <AdminNavbarListCategory key={index} category={item} elements={generateRandomElements()}/>
+      <AdminNavbarListCategory key={index} category={item} elements={generateRandomElements()} />
      ))}
     </ANList>
    </Fade>
