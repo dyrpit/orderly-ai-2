@@ -6,14 +6,14 @@ export const StyledSwitch = styled(Switch)(({ theme, checked }) => ({
   height: '55px',
   padding: 8,
   [`${theme.breakpoints.down('tablet')}`]: {
-    width: '160px',
+    width: '100px',
   },
 
   [`& .${switchClasses.checked}`]: {
     transform: "translateX(195px)",
     opacity: 1,
     [`${theme.breakpoints.down('tablet')}`]: {
-      transform: "translateX(110px)",
+      transform: "translateX(60px)",
     },
     [`& + .${switchClasses.track}`]: {
       backgroundColor: theme.palette.info.main
@@ -35,7 +35,7 @@ export const StyledSwitch = styled(Switch)(({ theme, checked }) => ({
       width: '250px',
       textAlign: 'center',
       [`${theme.breakpoints.down('tablet')}`]: {
-        width: '150px',
+        width: '100px',
         content: "'AI'",
       },
     },

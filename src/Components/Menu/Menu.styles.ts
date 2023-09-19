@@ -24,7 +24,7 @@ export const StyledMenuButton = styled(IconButton)(({ theme }) => ({
 }));
 
 export const StyledIconButton = styled(IconButton)({
-  width: "30%%",
+  width: "30%",
   height: "100%",
   padding: "2px",
 });
@@ -49,6 +49,9 @@ export const StyledLogoContainer = styled(Box)(({ theme }) => ({
   alignItems: "center",
   [theme.breakpoints.down("laptop")]: {
     width: "110px",
+  },
+  [theme.breakpoints.down("tablet")]: {
+    width: "70px",
   },
 }));
 
