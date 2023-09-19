@@ -4,8 +4,8 @@ import Products from "./Pages/Products";
 import RootLayout from "./Layout/RootLayout";
 import NotFound from "./Pages/NotFound";
 import { LoginModal, RegisterModal } from "./Components";
-import "./App.css";
 import { AdminPage } from "./Pages";
+import "./App.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
