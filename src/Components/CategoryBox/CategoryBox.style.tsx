@@ -5,9 +5,10 @@ import { theme } from "../../Theme/ThemeProvider";
 export const CategoryBoxContainer = styled(Box)(() => ({
     background: 'red',
     borderRadius: '20px',
-    width: '450px',
+    width: '470px',
     height: '300px',
     margin: '20px',
+    
 }))
 
 export const CategoryBoxContent= styled(Box)(() => ({

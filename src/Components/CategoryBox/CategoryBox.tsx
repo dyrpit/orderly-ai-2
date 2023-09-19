@@ -7,7 +7,8 @@ export function Category(){
             <Link to="/Products"> 
                 <CategoryBoxContainer>
                     <CategoryBoxContent>
-                        <div>123</div>
+                        <div className="Tittle"></div>
+                        <div className="Desc"></div>
                     </CategoryBoxContent>
                 </CategoryBoxContainer>
             </Link>
