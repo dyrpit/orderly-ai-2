@@ -18,8 +18,8 @@ export const StyledName = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("laptop")]: {
     fontSize: "40px"
   }
-
 }));
+
 export const StyledGridContainer = styled(Grid)({
   display: "flex",
   justifyContent: "space-between",
