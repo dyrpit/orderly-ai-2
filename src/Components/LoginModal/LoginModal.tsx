@@ -2,12 +2,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { LoginModalContainer } from "./LoginModal.styles";
 import { StyledButton } from "../../ui/StyledButton/StyledButton.styles";
-import { ModalCloseContainer, ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader } from "../../ui";
+import { ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader } from "../../ui";
 import { useContext } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
+import Modal from "@mui/material/Modal";
 
 export function LoginModal() {
- const { handleSignInClick, changeModal } = useContext(OrderAiContext);
+ const { changeModal, handleModalClose, isModalOpen } = useContext(OrderAiContext);
  const formik = useFormik({
   initialValues: {
    email: "",
@@ -22,34 +23,29 @@ export function LoginModal() {
   },
  });
  return (
-  <LoginModalContainer>
-   <ModalCloseContainer
-    onClick={() => {
-     handleSignInClick();
-     changeModal("none");
-    }}>
-    <img src="../../../src/assets/clarity_close-line.png"></img>
-   </ModalCloseContainer>
-   <ModalHeader>Sign In</ModalHeader>
-   <ModalSubHeader>Welcome back. Sign in to continue</ModalSubHeader>
-   <form onSubmit={formik.handleSubmit}>
-    <ModalInput id="email" name="email" type="email" placeholder="Email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
-    <ModalErrorMessage>{formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}</ModalErrorMessage>
+  <Modal open={isModalOpen} onClose={handleModalClose}>
+   <LoginModalContainer>
+    <ModalHeader>Sign In</ModalHeader>
+    <ModalSubHeader>Welcome back. Sign in to continue</ModalSubHeader>
+    <form onSubmit={formik.handleSubmit}>
+     <ModalInput id="email" name="email" type="email" placeholder="Email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
+     <ModalErrorMessage>{formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}</ModalErrorMessage>
 
-    <ModalInput id="password" name="password" type="password" placeholder="Password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} />
-    <ModalErrorMessage>{formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}</ModalErrorMessage>
+     <ModalInput id="password" name="password" type="password" placeholder="Password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} />
+     <ModalErrorMessage>{formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}</ModalErrorMessage>
 
-    <StyledButton type="submit">Submit</StyledButton>
-   </form>
-   <ModalFooter>
-    Don't have an account?{" "}
-    <a
-     onClick={() => {
-      changeModal("Sign Up");
-     }}>
-     <b>Create account</b>
-    </a>
-   </ModalFooter>
-  </LoginModalContainer>
+     <StyledButton type="submit">Submit</StyledButton>
+    </form>
+    <ModalFooter>
+     Don't have an account?{" "}
+     <a
+      onClick={() => {
+       changeModal("Sign Up");
+      }}>
+      <b>Create account</b>
+     </a>
+    </ModalFooter>
+   </LoginModalContainer>
+  </Modal>
  );
 }

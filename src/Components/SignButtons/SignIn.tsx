@@ -8,11 +8,16 @@ export function SignIn() {
   scale: "0.8",
   marginLeft: "auto",
  };
- const { handleSignInClick } = useContext(OrderAiContext);
+ const { handleModalOpen, changeModal } = useContext(OrderAiContext);
 
  return (
   <>
-   <CustomButton sx={signInStyles} onClick={handleSignInClick}>
+   <CustomButton
+    sx={signInStyles}
+    onClick={() => {
+     handleModalOpen();
+     changeModal("Sign In");
+    }}>
     Sign In
    </CustomButton>
   </>

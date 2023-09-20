@@ -16,16 +16,15 @@ export const BreadcrumbsContainer = styled("div")({
   marginTop: "10px",
 });
 
-export const CrumbContainer = styled("div")({
-});
+export const CrumbContainer = styled("div")({});
 
 export const StyledLink = styled(Link)({
-  textDecoration: "none",
-  color: theme.palette.text.primary,
-  transition: "color 0.2s, font-weight 0.2s",
+ textDecoration: "none",
+ color: theme.palette.text.primary,
+ transition: "color 0.2s, font-weight 0.2s",
 
-  "&:hover": {
-    color: 'white', 
-    fontWeight: "bold",
-  },
+ "&:hover": {
+  color: "white",
+  fontWeight: "bold",
+ },
 });
