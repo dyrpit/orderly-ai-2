@@ -21,10 +21,17 @@ export const CategoryBoxContainer = styled(Box)(() => ({
     [theme.breakpoints.down("tablet")]: {
         width: "100vw",
       },
+      
 }))
 
 export const CategoryBoxContent= styled(Box)(() => ({
     padding: '20px',
     color: theme.palette.text.primary,
-    
+    textDecoration: 'none',
+  '& h1, & h3': {
+    textDecoration: 'none',
+  },
+  '& a': {
+    textDecoration: 'none',
+  },
 }))
