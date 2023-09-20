@@ -1,8 +1,8 @@
 import { ANButton, ANContainer, ANList } from "./AdminNavbar.styles";
 import Fade from "@mui/material/Fade";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { AdminNavbarListCategory } from "../AdminNavbarListCategory/AdminNavbarListCategory";
-import { OrderAiContext } from "../../Context/ContextProvider";
+import { Link } from "react-router-dom";
 
 export function AdminNavbar() {
    const [isListVisible, setListVisible] = useState(false);
@@ -35,14 +35,9 @@ export function AdminNavbar() {
       return elements;
    };
 
-   const { handleEditUserVisible } = useContext(OrderAiContext);
-   const toggleeditUsersVisible = () => {
-      handleEditUserVisible();
-   };
-
    return (
       <ANContainer>
-         <ANButton>Add Category</ANButton>
+         <Link to='/admin/add'><ANButton>Add Category</ANButton></Link>
          <ANButton onClick={toggleListVisibility}>Categories</ANButton>
          <Fade in={isListVisible} unmountOnExit>
             <ANList>
@@ -51,7 +46,7 @@ export function AdminNavbar() {
                ))}
             </ANList>
          </Fade>
-         <ANButton onClick={toggleeditUsersVisible}>Edit Users</ANButton>
+         <Link to='/admin/edit'><ANButton>Edit Users</ANButton></Link>
       </ANContainer>
    );
 }

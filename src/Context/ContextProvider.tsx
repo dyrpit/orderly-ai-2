@@ -9,13 +9,11 @@ type OrderAiContextType = {
   categories: Category[] | null;
   products: ProductType[];
   users: User[];
-  editUsersVisible: boolean;
   showHideLoginButtons: VoidFunction;
   changeModal: (element: string) => void;
   handleCategoryChange: VoidFunction;
   handleItemChange: () => void;
   handleUserChange: () => void;
-  handleEditUserVisible: VoidFunction;
   handleModalOpen: VoidFunction;
   handleModalClose: VoidFunction;
 };
@@ -31,13 +29,11 @@ export const OrderAiContext = createContext<OrderAiContextType>({
   categories: [],
   products: [],
   users: [],
-  editUsersVisible: false,
   showHideLoginButtons: () => null,
   changeModal: () => null,
   handleCategoryChange: () => null,
   handleItemChange: () => { },
   handleUserChange: () => { },
-  handleEditUserVisible: () => null,
   handleModalOpen: () => null,
   handleModalClose: () => null,
 });
