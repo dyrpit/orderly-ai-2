@@ -1,9 +1,8 @@
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from "react-router-dom";
-import Home from "./Pages/Home";
 import RootLayout from "./Layout/RootLayout";
 import NotFound from "./Pages/NotFound";
 import { LoginModal, RegisterModal } from "./Components";
-import { AdminPage, ProductPage } from "./Pages";
+import { AdminPage, Home, ProductPage } from "./Pages";
 import "./App.css";
 
 const router = createBrowserRouter(

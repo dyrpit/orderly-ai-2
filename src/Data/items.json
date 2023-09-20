@@ -1,0 +1,36 @@
+{
+ "items": [
+  {
+   "category": "Narzędzia do uczenia maszynowego",
+   "name": "TensorFlow",
+   "link": "https://www.tensorflow.org/",
+   "type": "darmowa",
+   "youtubeDemo": "https://www.youtube.com/watch?v=qlPaKqlCfc8",
+   "description": "Platforma do uczenia maszynowego stworzona przez Google."
+  },
+  {
+   "category": "Narzędzia do uczenia maszynowego",
+   "name": "PyTorch",
+   "link": "https://pytorch.org/",
+   "type": "darmowa",
+   "youtubeDemo": "https://www.youtube.com/watch?v=Z6vJOKdLRag",
+   "description": "Biblioteka do uczenia maszynowego dla Pythona."
+  },
+  {
+   "category": "Przetwarzanie języka naturalnego",
+   "name": "spaCy",
+   "link": "https://spacy.io/",
+   "type": "darmowa",
+   "youtubeDemo": "https://www.youtube.com/watch?v=THduWAnG97k",
+   "description": "Biblioteka do przetwarzania języka naturalnego."
+  },
+  {
+   "category": "Robotyka",
+   "name": "ROS (Robot Operating System)",
+   "link": "https://www.ros.org/",
+   "type": "darmowa",
+   "youtubeDemo": "https://www.youtube.com/watch?v=KzE1p10_S-Q",
+   "description": "System operacyjny dla robotów."
+  }
+ ]
+}
