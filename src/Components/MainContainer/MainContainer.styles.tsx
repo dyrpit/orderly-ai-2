@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 
 export const Container = styled(Box)(({ theme }) => ({
   backgroundColor: colorVar.mainBackground,
-  display: "flex",
   maxWidth: "1170px",
   marginLeft: "auto",
   width: "1170px",

@@ -12,5 +12,6 @@ export const ModalFooter = styled(Typography)(({ theme: theme }) => ({
  "& a": {
   color: theme.palette.text.primary,
   textDecoration: "none",
+  cursor: "pointer",
  },
 }));

@@ -1,28 +1,19 @@
-
-[
-    {
-      "title": "Kategoria 1",
-      "description": "Opis kategorii 1"
-    },
-    {
-      "title": "Kategoria 2",
-      "description": "Opis kategorii 2"
-    },
-    {
-        "title": "Kategoria 3",
-        "description": "Opis kategorii 3"
-      },
-      {
-        "title": "Kategoria 4",
-        "description": "Opis kategorii 4"
-      },
-      {
-        "title": "Kategoria 5",
-        "description": "Opis kategorii 5"
-      },
-      {
-        "title": "Kategoria 6",
-        "description": "Opis kategorii 6"
-      }
-
-  ]
+{
+ "categories": [
+  {
+   "name": "Narzędzia do uczenia maszynowego",
+   "description": "Narzędzia i platformy do tworzenia i szkolenia modeli uczenia maszynowego.",
+   "colour": "#FFFFFF"
+  },
+  {
+   "name": "Przetwarzanie języka naturalnego",
+   "description": "Strony i narzędzia do przetwarzania tekstu i analizy języka naturalnego.",
+   "colour": "#FFFFFF"
+  },
+  {
+   "name": "Robotyka",
+   "description": "Strony związane z robotyką i automatyzacją.",
+   "colour": "#FFFFFF"
+  }
+ ]
+}

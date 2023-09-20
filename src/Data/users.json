@@ -1,19 +1,19 @@
 {
-  "users": [
-    {
-      "email": "admin@admin.com",
-      "password": "Admin123!",
-      "role": "admin"
-    },
-    {
-      "email": "regul123123123123123ar@regular.com",
-      "password": "Regular123!",
-      "role": "user"
-    },
-    {
-      "email": "user@user.com",
-      "password": "User123!",
-      "role": "user"
-    }
-  ]
+ "users": [
+  {
+   "email": "admin@admin.com",
+   "password": "Admin123!",
+   "role": "admin"
+  },
+  {
+   "email": "regul123123123123123ar@regular.com",
+   "password": "Regular123!",
+   "role": "user"
+  },
+  {
+   "email": "user@user.com",
+   "password": "User123!",
+   "role": "user"
+  }
+ ]
 }

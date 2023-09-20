@@ -5,7 +5,7 @@ import {
   StyledLink,
 } from "./Breadcrumbs.styles";
 
-export default function Breadcrumbs() {
+export function Breadcrumbs() {
   const location = useLocation();
   const crumbs = location.pathname.split("/").filter((crumb) => crumb !== "");
 
