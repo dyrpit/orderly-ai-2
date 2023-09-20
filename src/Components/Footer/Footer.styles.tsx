@@ -5,9 +5,9 @@ import { theme } from "../../Theme/ThemeProvider";
 export const FooterWrapper = styled(Box)(() => ({
  display: "flex",
  justifyContent: "center",
- position: 'relative',
- bottom: '0',
- width: '100%',
+ position: "relative",
+ bottom: "0",
+ width: "100%",
  backgroundColor: theme.palette.background.paper,
 }));
 

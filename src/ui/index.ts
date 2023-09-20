@@ -10,4 +10,3 @@ export * from "./Input/Input";
 export * from "./NavbarContainer/NavbarContainer.styles";
 export * from "./TopBarContainer/TopBarContainer.styles";
 export * from "./StyledButton/StyledButton";
-export * from "./ModalCloseContainer/ModalCloseContainer.styles";

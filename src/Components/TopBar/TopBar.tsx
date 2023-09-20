@@ -11,18 +11,22 @@ export function TopBar() {
  const buttonsContainerStyles = {
   marginLeft: "auto",
   display: showButtons,
+  position: "absolute",
+  right: 0,
+  top: 0,
+  backgroundColor: "#5C358E",
  };
-
+ const wrapperStyles = {
+  position: "relative",
+ };
  return (
-  <>
-   <TopBarContainer>
-    <Breadcrumbs></Breadcrumbs>
-    <Box sx={buttonsContainerStyles}>
-     <SignIn></SignIn>
-     <SignOut></SignOut>
-     <AdminPanel></AdminPanel>
-    </Box>
-   </TopBarContainer>
-  </>
+  <Box sx={wrapperStyles}>
+   <Breadcrumbs />
+   <Box sx={buttonsContainerStyles}>
+    <SignIn />
+    <SignOut />
+    <AdminPanel />
+   </Box>
+  </Box>
  );
 }
