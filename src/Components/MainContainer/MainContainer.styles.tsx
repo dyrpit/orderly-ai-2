@@ -6,6 +6,7 @@ export const Container = styled(Box)(({ theme }) => ({
   backgroundColor: colorVar.mainBackground,
   maxWidth: "1170px",
   marginLeft: "auto",
+  minHeight: "85vh",
   width: "1170px",
   marginRight: "auto",
   flexDirection: "row",

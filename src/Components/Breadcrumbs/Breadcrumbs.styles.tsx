@@ -12,7 +12,8 @@ export const BreadcrumbsContainer = styled("div")({
   borderRadius: "10px",
   background: theme.palette.background.paper,
   fontFamily: "Montserrat",
-  maxHeight: "30px"
+  maxHeight: "30px",
+  marginTop: "10px",
 });
 
 export const CrumbContainer = styled("div")({
