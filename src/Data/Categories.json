@@ -1,19 +1,29 @@
-{
- "categories": [
-  {
-   "name": "Narzędzia do uczenia maszynowego",
-   "description": "Narzędzia i platformy do tworzenia i szkolenia modeli uczenia maszynowego.",
-   "colour": "#FFFFFF"
-  },
-  {
-   "name": "Przetwarzanie języka naturalnego",
-   "description": "Strony i narzędzia do przetwarzania tekstu i analizy języka naturalnego.",
-   "colour": "#FFFFFF"
-  },
-  {
-   "name": "Robotyka",
-   "description": "Strony związane z robotyką i automatyzacją.",
-   "colour": "#FFFFFF"
-  }
- ]
-}
+[
+    {
+      "title": "Category 1",
+      "description": "Description 1"
+    },
+    {
+      "title": "Category 2",
+      "description": "Description 2"
+    },
+    {
+        "title": "Category 3",
+        "description": "Description 3"
+      },
+
+      {
+        "title": "Category 4",
+        "description": "Description 4"
+      },
+  
+      {
+        "title": "Category 5",
+        "description": "Description 5"
+      },
+
+      {
+        "title": "Category 6",
+        "description": "Description 6"
+      } 
+  ]

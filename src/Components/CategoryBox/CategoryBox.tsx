@@ -19,7 +19,7 @@ export function Category() {
   const [categories, setCategories] = useState<CategoryProps[]>([]);
 
   useEffect(() => {
-    fetch("/src/Data/Categories.json") 
+    fetch("/src/Data/categories.json") 
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
