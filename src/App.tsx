@@ -9,10 +9,10 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route path="/" element={<Home />}></Route>
-      <Route path="products" element={<ProductPage />}></Route>
-      <Route path="admin" element={<AdminPage />}></Route>
-      <Route path="login" element={<LoginModal />}></Route>
-      <Route path="register" element={<RegisterModal />}></Route>
+      <Route path="/products" element={<ProductPage />}></Route>
+      <Route path="/admin" element={<AdminPage />}></Route>
+      <Route path="/login" element={<LoginModal />}></Route>
+      <Route path="/register" element={<RegisterModal />}></Route>
       <Route path="*" element={<NotFound />} />
     </Route>,
   ),

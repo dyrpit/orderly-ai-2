@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { OrderAiContext } from "./ContextProvider";
-import { Category, Item, User } from "./types";
+import { Category, ProductType, User } from "./types";
 
 export const useOrderAi = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showButtons, setShowButtons] = useState("none");
   const [currentModal, setCurrentModal] = useState("none");
   const [categories, setCategories] = useState<Category[]>([]);
-  const [items, setItems] = useState<Item[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [editUsersVisible, setEditUserVisible] = useState(false);
 
@@ -23,10 +23,10 @@ export const useOrderAi = () => {
   }, []);
 
   useEffect(() => {
-    fetch("/src/Data/items.json")
+    fetch("/src/Data/products.json")
       .then((response) => response.json())
       .then((data) => {
-        setItems(data.items);
+        setProducts(data.products);
       })
       .catch((error) => {
         console.error("Error fetching JSON data:", error);
@@ -90,7 +90,7 @@ export const useOrderAi = () => {
     showButtons,
     currentModal,
     categories,
-    items,
+    products,
     users,
     editUsersVisible,
     showHideLoginButtons,
