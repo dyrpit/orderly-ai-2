@@ -21,7 +21,7 @@ export const CategoryBoxContainer = styled(Box)(() => ({
     [theme.breakpoints.down("tablet")]: {
         width: "100vw",
       },
-      
+    alignContent: 'center',
 }))
 
 export const CategoryBoxContent= styled(Box)(() => ({
