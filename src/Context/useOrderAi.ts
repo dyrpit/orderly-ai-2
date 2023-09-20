@@ -9,7 +9,6 @@ export const useOrderAi = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const [editUsersVisible, setEditUserVisible] = useState(false);
 
   useEffect(() => {
     fetch("/src/Data/categories.json")
@@ -70,10 +69,6 @@ export const useOrderAi = () => {
     setCurrentModal(element);
   };
 
-  const handleEditUserVisible = () => {
-    setEditUserVisible(!editUsersVisible);
-  };
-
   const handleModalOpen = () => {
     setIsModalOpen(true);
     setShowButtons("none");
@@ -87,13 +82,11 @@ export const useOrderAi = () => {
     categories,
     products,
     users,
-    editUsersVisible,
     showHideLoginButtons,
     changeModal,
     handleCategoryChange,
     handleItemChange,
     handleUserChange,
-    handleEditUserVisible,
     handleModalOpen,
     handleModalClose,
   };
