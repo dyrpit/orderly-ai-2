@@ -2,6 +2,13 @@ import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { theme } from "../../Theme/ThemeProvider";
 
+export const BoxesContainer = styled("div")(() => ({
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    width: '100%',
+  }));
+
 export const CategoryBoxContainer = styled(Box)(() => ({
     borderRadius: '20px',
     width: '470px',
@@ -10,7 +17,7 @@ export const CategoryBoxContainer = styled(Box)(() => ({
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     [theme.breakpoints.down("tablet")]: {
         width: "100vw",
       },
@@ -19,4 +26,5 @@ export const CategoryBoxContainer = styled(Box)(() => ({
 export const CategoryBoxContent= styled(Box)(() => ({
     padding: '20px',
     color: theme.palette.text.primary,
+    
 }))

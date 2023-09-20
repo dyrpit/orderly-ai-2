@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CategoryBoxContainer, CategoryBoxContent } from "./CategoryBox.style";
+import { BoxesContainer, CategoryBoxContainer, CategoryBoxContent } from "./CategoryBox.style";
 import { Link } from "react-router-dom";
 
 interface CategoryProps {
@@ -30,17 +30,17 @@ export function Category() {
       });
   }, []);
   return (
-    <div>
+    <BoxesContainer>
       {categories.map((category, index) => (
         <Link to="/Products" key={index}>
           <CategoryBoxContainer style={{ backgroundColor: generateRandomColor() }}>
             <CategoryBoxContent>
-              <div className="Title">{category.title}</div>
-              <div className="Desc">{category.description}</div>
+              <div className="Title"><h1>{category.title}</h1></div>
+              <div className="Desc"><h3>{category.description}</h3></div>
             </CategoryBoxContent>
           </CategoryBoxContainer>
         </Link>
       ))}
-    </div>
+    </BoxesContainer>
   );
 }

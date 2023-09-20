@@ -12,7 +12,7 @@ export const Container = styled(Box)(({ theme }) => ({
   flexDirection: "row",
   flexWrap: "wrap",
   [theme.breakpoints.down("mobile")]: {
-    width: "100%",
+    width: "100vw",
     display: "flex",
     justifyContent: "center"
   },
