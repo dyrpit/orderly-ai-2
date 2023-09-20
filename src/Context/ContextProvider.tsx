@@ -11,13 +11,13 @@ type OrderAiContextType = {
   users: User[];
   editUsersVisible: boolean;
   showHideLoginButtons: VoidFunction;
-  handleSignInClick: VoidFunction;
   changeModal: (element: string) => void;
   handleCategoryChange: VoidFunction;
   handleItemChange: () => void;
   handleUserChange: () => void;
   handleEditUserVisible: VoidFunction;
-
+  handleModalOpen: VoidFunction;
+  handleModalClose: VoidFunction;
 };
 
 type OrderAiContextProviderProps = {
@@ -33,12 +33,13 @@ export const OrderAiContext = createContext<OrderAiContextType>({
   users: [],
   editUsersVisible: false,
   showHideLoginButtons: () => null,
-  handleSignInClick: () => null,
   changeModal: () => null,
   handleCategoryChange: () => null,
   handleItemChange: () => { },
   handleUserChange: () => { },
   handleEditUserVisible: () => null,
+  handleModalOpen: () => null,
+  handleModalClose: () => null,
 });
 
 //Nie dotykajcie ;)

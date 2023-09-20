@@ -59,20 +59,9 @@ export const useOrderAi = () => {
   const showHideLoginButtons = () => {
     if (showButtons === "none") {
       setShowButtons("block");
-      setIsModalOpen(false);
       changeModal("none");
     } else {
       setShowButtons("none");
-      setIsModalOpen(false);
-      changeModal("none");
-    }
-  };
-
-  const handleSignInClick = () => {
-    setIsModalOpen(true);
-    changeModal("Sign In");
-    if (isModalOpen === true) {
-      setIsModalOpen(false);
       changeModal("none");
     }
   };
@@ -85,6 +74,12 @@ export const useOrderAi = () => {
     setEditUserVisible(!editUsersVisible);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+    setShowButtons("none");
+  };
+  const handleModalClose = () => setIsModalOpen(false);
+
   return {
     isModalOpen,
     showButtons,
@@ -94,12 +89,13 @@ export const useOrderAi = () => {
     users,
     editUsersVisible,
     showHideLoginButtons,
-    handleSignInClick,
     changeModal,
     handleCategoryChange,
     handleItemChange,
     handleUserChange,
     handleEditUserVisible,
+    handleModalOpen,
+    handleModalClose,
   };
 };
 
