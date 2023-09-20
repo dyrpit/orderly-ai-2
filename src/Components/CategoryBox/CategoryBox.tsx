@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BoxesContainer, CategoryBoxContainer, CategoryBoxContent } from "./CategoryBox.style";
 import { Link } from "react-router-dom";
 
 interface CategoryProps {
   title: string;
   description: string;
+  color: string;
 }
-function generateRandomColor() {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
 
 export function Category() {
   const [categories, setCategories] = useState<CategoryProps[]>([]);
@@ -29,14 +22,19 @@ export function Category() {
         console.error("Błąd podczas wczytywania danych z JSON:", error);
       });
   }, []);
+
   return (
     <BoxesContainer>
       {categories.map((category, index) => (
-        <Link to="/Products" key={index}>
-          <CategoryBoxContainer style={{ backgroundColor: generateRandomColor() }}>
+        <Link to="/Products" key={index} style={{textDecoration: 'none'}}>
+          <CategoryBoxContainer style={{ backgroundColor: category.color }}>
             <CategoryBoxContent>
-              <div className="Title"><h1>{category.title}</h1></div>
-              <div className="Desc"><h3>{category.description}</h3></div>
+              <div className="Title">
+                <h1>{category.title}</h1>
+              </div>
+              <div className="Desc">
+                <h3>{category.description}</h3>
+              </div>
             </CategoryBoxContent>
           </CategoryBoxContainer>
         </Link>
