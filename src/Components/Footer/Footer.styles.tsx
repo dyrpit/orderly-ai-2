@@ -1,13 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { theme } from "../../Theme/ThemeProvider";
 
 export const FooterWrapper = styled(Box)(() => ({
  display: "flex",
  justifyContent: "center",
- position: "fixed",
- left: 0,
- right: 0,
- bottom: 0,
+ position: "relative",
+ bottom: "0",
+ width: "100%",
+ backgroundColor: theme.palette.background.paper,
 }));
 
 export const FooterContainer = styled(Box)(({ theme: theme }) => ({

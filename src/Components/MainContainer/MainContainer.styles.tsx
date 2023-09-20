@@ -6,9 +6,12 @@ export const Container = styled(Box)(({ theme }) => ({
   backgroundColor: colorVar.mainBackground,
   maxWidth: "1170px",
   marginLeft: "auto",
+  width: "1170px",
   marginRight: "auto",
-  [theme.breakpoints.down("laptop")]: {
-    width: "100%",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  [theme.breakpoints.down("mobile")]: {
+    width: "100vw",
     display: "flex",
     justifyContent: "center"
   },
@@ -16,6 +19,7 @@ export const Container = styled(Box)(({ theme }) => ({
 
 export const ContainerContent = styled(Box)(() => ({
   display: "flex",
+  flexDirection: "row",
   justifyContent: "center",
 }));
 
