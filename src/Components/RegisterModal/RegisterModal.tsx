@@ -1,9 +1,13 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { RegisterModalContainer } from "../RegisterModal/RegisterModal.styles";
-import { ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader, StyledButton } from "../../ui";
+import { ModalCloseContainer, ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader, StyledButton } from "../../ui";
+import { useContext } from "react";
+import { OrderAiContext } from "../../Context/ContextProvider";
 
 export function RegisterModal() {
+ const { changeModal, handleSignInClick } = useContext(OrderAiContext);
+
  const formik = useFormik({
   initialValues: {
    email: "",
@@ -23,6 +27,13 @@ export function RegisterModal() {
  });
  return (
   <RegisterModalContainer>
+   <ModalCloseContainer
+    onClick={() => {
+     handleSignInClick();
+     changeModal("none");
+    }}>
+    <img src="../../../src/assets/clarity_close-line.png"></img>
+   </ModalCloseContainer>
    <ModalHeader>Sign Up</ModalHeader>
    <ModalSubHeader>Start using OrderlyAI today!</ModalSubHeader>
    <form onSubmit={formik.handleSubmit}>
@@ -43,7 +54,10 @@ export function RegisterModal() {
    </form>
    <ModalFooter>
     Already have an account?{" "}
-    <a href="#">
+    <a
+     onClick={() => {
+      changeModal("Sign In");
+     }}>
      <b>Sign in</b>
     </a>
    </ModalFooter>
