@@ -5,6 +5,8 @@ import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
 import { useContext } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
+import logoorderly from "./logoorderly.png";
+import "./Menu.css";
 
 export const Menu = () => {
  const { showHideLoginButtons } = useContext(OrderAiContext);
@@ -68,5 +70,5 @@ export const Menu = () => {
 };
 
 export const LogoContainer = () => {
- return <StyledLogoContainer>LOGO XD</StyledLogoContainer>;
+ return <StyledLogoContainer><div className="logo-wrapper"><img src={logoorderly} alt="Logo"/></div></StyledLogoContainer>;
 };
