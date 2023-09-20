@@ -4,6 +4,10 @@ import { styled } from "@mui/material/styles";
 export const FooterWrapper = styled(Box)(() => ({
  display: "flex",
  justifyContent: "center",
+ position: "fixed",
+ left: 0,
+ right: 0,
+ bottom: 0,
 }));
 
 export const FooterContainer = styled(Box)(({ theme: theme }) => ({
