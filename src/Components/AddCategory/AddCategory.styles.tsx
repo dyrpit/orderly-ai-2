@@ -28,3 +28,23 @@ export const StyledGridContainer = styled(Grid)({
   flexDirection: "column",
  },
 });
+
+export const ColoursGrid = styled("div")({
+ display: "flex",
+ flexDirection: "row",
+ flexWrap: "wrap",
+ gap: "20px",
+ justifyContent: "center",
+});
+
+export const ColourCircle = styled("div")({
+ width: "60px",
+ height: "60px",
+ borderRadius: "50%",
+ border: "2px solid #fff",
+ cursor: "pointer",
+ transition: "transform 0.2s ease-in-out",
+ "&:hover": {
+  transform: "scale(1.1)",
+ },
+});

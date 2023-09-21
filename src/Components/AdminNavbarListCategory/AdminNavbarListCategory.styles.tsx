@@ -16,7 +16,7 @@ export const ANTitleContainer = styled(Box)(({}) => ({
  display: "flex",
  justifyContent: "space-between",
  alignItems: "center",
- padding: "0.7em 0.5em",
+ padding: "0",
  borderRadius: "0.5em",
  cursor: "pointer",
 }));
@@ -27,15 +27,15 @@ export const ANTitle = styled(Typography)(({ theme: theme }) => ({
  fontWeight: theme.typography.fontWeightLight,
  color: fontSizeVar.loginModalDefault,
  "&:hover": {
-    borderRadius:"10px",
-    backgroundColor: "white",
- }
+  borderRadius: "10px",
+  backgroundColor: "#603795",
+ },
 }));
 
 export const ANArrow = styled("span")(({}) => ({
- borderLeft: "5px solid transparent",
- borderRight: "5px solid transparent",
- borderTop: "6px solid #fff",
+ borderLeft: "8px solid transparent",
+ borderRight: "8px solid transparent",
+ borderTop: "10px solid #fff",
  transition: "transform ease-in-out 0.3s",
  "&.active": {
   transform: "rotate(180deg)",
