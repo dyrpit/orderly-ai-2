@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ANArrow, ANList, ANListItem, ANListItemContainer, ANTitle, ANTitleContainer, AdminNavbarListContainer } from "./AdminNavbarListCategory.styles";
 import { Fade } from "@mui/material";
 import { ANButton } from "../AdminNavbar/AdminNavbar.styles";
+import { Link } from "react-router-dom";
 
 interface AdminNavbarListCategoryProps {
  category: string;
@@ -37,7 +38,9 @@ export function AdminNavbarListCategory({ category }: AdminNavbarListCategoryPro
 
    {isActive && (
     <ANList>
-     <ANButton sx={{ width: "100%", height: "fit-content", margin: "0 auto 0 auto",  fontSize: "12px" }}>Add Item</ANButton>{" "}
+     <Link to="/admin/additem" style={{ textDecoration: "none" }}>
+      <ANButton sx={{ width: "100%", height: "fit-content", margin: "0 auto 0 auto", fontSize: "12px" }}>Add Item</ANButton>{" "}
+     </Link>
      <ANListItemContainer>
       {listDataElements.map((value, index) => (
        <Fade in={true} unmountOnExit>

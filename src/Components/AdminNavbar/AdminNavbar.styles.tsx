@@ -30,6 +30,19 @@ export const ANList = styled(List)(() => ({
  overflow: "auto",
  color: fontSizeVar.loginModalDefault,
  listStyle: "none",
+ scrollbarColor: "transparent transparent",
+ scrollbarWidth: "thin",
+
+ // Hide the scrollbar thumb and track in Webkit browsers
+ "&::-webkit-scrollbar": {
+  width: "8px", // Adjust the width as needed
+ },
+ "&::-webkit-scrollbar-thumb": {
+  background: "transparent", // Hide the thumb
+ },
+ "&::-webkit-scrollbar-track": {
+  background: "transparent", // Hide the track
+ },
 }));
 
 export const ANListItem = styled(ListItem)(() => ({
