@@ -8,6 +8,7 @@ export function SignIn() {
   scale: "0.8",
   marginLeft: "auto",
  };
+
  const { handleModalOpen, changeModal } = useContext(OrderAiContext);
 
  return (

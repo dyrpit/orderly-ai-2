@@ -1,3 +1,4 @@
+import useAuth from "../../Hooks/useAuth";
 import { CustomButton } from "../../ui";
 
 export function SignOut() {
@@ -7,9 +8,13 @@ export function SignOut() {
   scale: "0.8",
   marginLeft: "auto",
  };
+ const { removeAuthToken } = useAuth();
+
  return (
   <>
-   <CustomButton sx={signOutStyles}>Sign Out</CustomButton>
+   <CustomButton sx={signOutStyles} onClick={removeAuthToken}>
+    Sign Out
+   </CustomButton>
   </>
  );
 }
