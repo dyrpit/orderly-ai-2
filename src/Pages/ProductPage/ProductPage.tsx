@@ -1,12 +1,12 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { ProductList } from "../../Components/ProductList/ProductList";
 
 export const ProductPage = () => {
   return (
-    <Grid container flexDirection={"column"} spacing={2} >
-      <Grid item>
+    <Grid container flexDirection={"column"}>
+      <Box sx={{ width: '100%' }}>
         <ProductList />
-      </Grid>
+      </Box>
     </Grid>
 
   );

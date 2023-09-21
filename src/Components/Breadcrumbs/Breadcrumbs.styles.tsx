@@ -3,18 +3,17 @@ import { Link } from "react-router-dom";
 import { theme } from "../../Theme/ThemeProvider";
 
 export const BreadcrumbsContainer = styled("div")({
- display: "flex",
- alignItems: "center",
- justifyContent: "center",
- padding: "10px",
- width: "fit-content",
- color: theme.palette.text.primary,
- borderRadius: "10px",
- background: theme.palette.background.paper,
- fontFamily: "Montserrat",
- maxHeight: "30px",
- marginTop: "20px",
- marginBottom: "20px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "10px",
+  width: "fit-content",
+  color: theme.palette.text.primary,
+  borderRadius: "10px",
+  background: theme.palette.background.paper,
+  fontFamily: "Montserrat",
+  maxHeight: "30px",
+  marginTop: "10px",
 });
 
 export const CrumbContainer = styled("div")({});

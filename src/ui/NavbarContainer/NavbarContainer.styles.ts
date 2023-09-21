@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const StyledNavBarContainer = styled(Box)(({ theme }) => ({
-  width: "1170px",
+  width: "100%",
   maxWidth: "1170px",
   height: "70px",
   backgroundColor: theme.palette.background.paper,

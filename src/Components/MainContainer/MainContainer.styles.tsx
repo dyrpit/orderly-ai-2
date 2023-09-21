@@ -4,14 +4,14 @@ import { styled } from "@mui/material/styles";
 
 export const Container = styled(Box)(({ theme }) => ({
   backgroundColor: colorVar.mainBackground,
-  maxWidth: "1170px",
   marginLeft: "auto",
-  width: "1170px",
+  width: "100%",
+  maxWidth: "1170px",
   marginRight: "auto",
   flexDirection: "row",
   flexWrap: "wrap",
-  [theme.breakpoints.down("mobile")]: {
-    width: "100vw",
+  [theme.breakpoints.down("laptop")]: {
+    width: "100%",
     display: "flex",
     justifyContent: "center"
   },

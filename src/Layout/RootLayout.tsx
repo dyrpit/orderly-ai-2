@@ -4,15 +4,15 @@ import { NavBar } from "../Components/NavBar/NavBar";
 import { TopBar } from "../Components/index";
 
 export default function RootLayout() {
- return (
-  <div className="RootLayout">
-   <NavBar />
-   <MainContainer>
-    <TopBar></TopBar>
-    <ModalsWrapper></ModalsWrapper>
-    <Outlet />
-   </MainContainer>
-   <Footer></Footer>
-  </div>
- );
+  return (
+    <div className="RootLayout">
+      <NavBar />
+      <MainContainer>
+        <TopBar></TopBar>
+        <ModalsWrapper></ModalsWrapper>
+        <Outlet />
+      </MainContainer>
+      <Footer></Footer>
+    </div>
+  );
 }
