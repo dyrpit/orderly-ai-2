@@ -17,7 +17,7 @@ export function AdminNavbar() {
   const randomInteger = Math.floor(Math.random() * (10 - 1) + 1);
 
   for (let i = 1; i <= randomInteger; i++) {
-   items.push(`Category ${i}`);
+   items.push(`Category Category Category Category Category Category ${i}`);
   }
   setListDataCategories(items);
   console.log(items);
@@ -28,7 +28,7 @@ export function AdminNavbar() {
   const randomInteger = Math.floor(Math.random() * (10 - 1) + 1);
 
   for (let i = 1; i <= randomInteger; i++) {
-   const category = `Category ${i}`;
+   const category = `Category Category Category Category Category Category Category Category Category ${i}`;
    elements.push(category);
   }
   return elements;
@@ -36,11 +36,12 @@ export function AdminNavbar() {
 
  return (
   <ANContainer>
-   <ANButton onClick={toggleListVisibility}>Categories</ANButton>
+   <ANButton onClick={toggleListVisibility}>Categories/Items</ANButton>
    <Fade in={isListVisible} unmountOnExit>
     <ANList>
+     <ANButton sx={{width: "100%", height:"fit-content", margin: "0 auto 20px auto", fontSize:"12px"}}>Add Category</ANButton>
      {listDataCategories.map((item, index) => (
-      <AdminNavbarListCategory key={index} category={item} elements={generateRandomElements()}/>
+      <AdminNavbarListCategory key={index} category={item} elements={generateRandomElements()} />
      ))}
     </ANList>
    </Fade>

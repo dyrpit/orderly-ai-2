@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { AdminNavbar } from "../../Components/AdminNavbar/AdminNavbar";
-import { AdminContent } from "../../Components";
+import { AddItem } from "../../Components";
 
 export const AdminPage = () => {
   return (
@@ -9,7 +9,7 @@ export const AdminPage = () => {
         <AdminNavbar />
       </Grid>
       <Grid item laptop={9} tablet={8} mobile={12}>
-        <AdminContent />
+        <AddItem/>
       </Grid>
     </Grid>
   );

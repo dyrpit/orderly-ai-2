@@ -5,4 +5,5 @@ export * from './AdminContent/AdminContent';
 export * from "./MainContainer/MainContainer";
 export * from "./UsersEdit/UsersEdit"
 export * from './CategoryBox/CategoryBox';
-
+export * from './AddCategory/AddCategory';
+export * from './AddItem/AddItem';

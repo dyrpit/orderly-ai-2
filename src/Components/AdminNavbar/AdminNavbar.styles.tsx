@@ -41,7 +41,7 @@ export const ANListItemText = styled(ListItemText)(({ }) => ({}));
 export const ANButton = styled(StyledButton)(({ }) => ({
  margin: "0",
  height: "60px",
- width: "200px"
+ width: "200px",
 }));
 
 export const ANCategoryDiv = styled("div")(({ }) => ({

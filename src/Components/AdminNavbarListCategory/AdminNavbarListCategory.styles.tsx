@@ -9,9 +9,16 @@ export const AdminNavbarListContainer = styled(Box)(({}) => ({
 }));
 
 export const ANTitleContainer = styled(Box)(({}) => ({
+ fontSize: "18px",
+ width: "100%",
+ border: "none",
+ color: "#fff",
  display: "flex",
- flexDirection: "row",
- fontSize: fontSizeVar.loginModalDefault,
+ justifyContent: "space-between",
+ alignItems: "center",
+ padding: "0.7em 0.5em",
+ borderRadius: "0.5em",
+ cursor: "pointer",
 }));
 
 export const ANTitle = styled(Typography)(({ theme: theme }) => ({
@@ -19,32 +26,23 @@ export const ANTitle = styled(Typography)(({ theme: theme }) => ({
  fontSize: theme.typography.fontSize,
  fontWeight: theme.typography.fontWeightLight,
  color: fontSizeVar.loginModalDefault,
+ "&:hover": {
+    borderRadius:"10px",
+    backgroundColor: "white",
+ }
 }));
 
 export const ANArrow = styled("span")(({}) => ({
- width: "10px",
- height: "10px",
- display: "block",
- borderStyle: "solid",
- borderWidth: "0px 1px 1px 0px",
- transform: "rotate(-45deg)",
- marginRight: "20px",
- marginLeft: "5px",
- position: "relative",
- color: colorVar.textColor,
- cursor: "pointer",
- top: "6px",
- left: "0px",
- transition: "transform 0.7s ease, width 0.7s ease, left 0.7s ease, top 0.7s ease",
+ borderLeft: "5px solid transparent",
+ borderRight: "5px solid transparent",
+ borderTop: "6px solid #fff",
+ transition: "transform ease-in-out 0.3s",
  "&.active": {
-  transform: "rotate(45deg)",
-  top: "4px",
-  left: "4px",
-  transition: "transform 0.7s ease, width 0.7s ease, left 0.7s ease, top 0.7s ease",
+  transform: "rotate(180deg)",
  },
 }));
 
-export const ANList = styled(List)(({ }) => ({
+export const ANList = styled(List)(({}) => ({
  paddingLeft: "20px",
  margin: "0px",
 }));
@@ -55,8 +53,7 @@ export const ANListItemContainer = styled(Typography)(({ theme: theme }) => ({
  color: fontSizeVar.loginModalDefault,
 }));
 
-export const ANListItem = styled(ListItem)(({ }) => ({
+export const ANListItem = styled(ListItem)(({}) => ({
  cursor: "pointer",
- paddingTop: "4px",
- paddingBottom: "4px",
+ padding: "4px 8px 4px 8px",
 }));
