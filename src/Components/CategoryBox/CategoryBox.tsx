@@ -1,21 +1,24 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BoxesContainer, CategoryBoxContainer, CategoryBoxContent } from "./CategoryBox.style";
 import { Link } from "react-router-dom";
 
-interface CategoryProps {
-  title: string;
-  description: string;
+interface CategoryData {
+  category: string;
   color: string;
 }
 
 export function Category() {
-  const [categories, setCategories] = useState<CategoryProps[]>([]);
+  const [categories, setCategories] = useState<CategoryData[]>([]);
 
   useEffect(() => {
-    fetch("/src/Data/categories.json") 
+    fetch("/src/Data/products.json") 
       .then((response) => response.json())
       .then((data) => {
-        setCategories(data);
+        const processedData = data.products.map((product: any) => ({
+          category: product.category,
+          color: product.color,
+        }));
+        setCategories(processedData);
         console.error("Poprawne wczytanie danych");
       })
       .catch((error) => {
@@ -26,14 +29,11 @@ export function Category() {
   return (
     <BoxesContainer>
       {categories.map((category, index) => (
-        <Link to="/Products" key={index} style={{textDecoration: 'none'}}>
+        <Link to="/Products" key={index} style={{ textDecoration: 'none'}}>
           <CategoryBoxContainer style={{ backgroundColor: category.color }}>
             <CategoryBoxContent>
               <div className="Title">
-                <h1>{category.title}</h1>
-              </div>
-              <div className="Desc">
-                <h3>{category.description}</h3>
+                <h1>{category.category}</h1>
               </div>
             </CategoryBoxContent>
           </CategoryBoxContainer>
