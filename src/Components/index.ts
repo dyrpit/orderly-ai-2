@@ -9,4 +9,5 @@ export * from "./TopBar/TopBar";
 export * from "./Breadcrumbs/Breadcrumbs";
 export * from "./UsersEdit/UsersEdit";
 export * from "./CategoryBox/CategoryBox";
-export * from "./ModalsWrapper/ModalsWrapper";
+export * from "./ModalsWrapper/ModalsWrapper";export * from './AddCategory/AddCategory';
+export * from './AddItem/AddItem';
