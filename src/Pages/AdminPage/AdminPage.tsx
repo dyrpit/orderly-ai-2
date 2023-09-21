@@ -4,7 +4,7 @@ import { AddItem } from "../../Components";
 
 export const AdminPage = () => {
   return (
-    <Grid container spacing={2} >
+    <Grid container spacing={2}>
       <Grid item laptop={3} tablet={4} mobile={12}>
         <AdminNavbar />
       </Grid>

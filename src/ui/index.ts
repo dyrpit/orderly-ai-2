@@ -10,3 +10,5 @@ export * from "./Input/Input";
 export * from "./NavbarContainer/NavbarContainer.styles";
 export * from "./SelectList/SelectList";
 export * from "./SelectListCheckmarks/SelectListCheckmars";
+export * from "./TopBarContainer/TopBarContainer.styles";
+export * from "./StyledButton/StyledButton";
