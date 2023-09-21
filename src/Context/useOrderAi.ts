@@ -1,6 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { OrderAiContext } from "./ContextProvider";
-import { Category, ProductType, User } from "./types";
+import { Category, ProductType, User, UserRole } from "./types";
+
+const toggleRole = (user: User) => {
+  return user.role === UserRole.admin
+    ? UserRole.user
+    : UserRole.admin;
+};
 
 export const useOrderAi = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,6 +61,14 @@ export const useOrderAi = () => {
     // Implement user data changes as needed
   };
 
+  const handleToggleRoleChange = (id: number) => {
+    setUsers(users => users.map((user) => {
+      return user.id === id
+        ? { ...user, role: toggleRole(user) }
+        : user;
+    }));
+  };
+
   const showHideLoginButtons = () => {
     if (showButtons === "none") {
       setShowButtons("block");
@@ -89,6 +103,7 @@ export const useOrderAi = () => {
     handleUserChange,
     handleModalOpen,
     handleModalClose,
+    handleToggleRoleChange
   };
 };
 

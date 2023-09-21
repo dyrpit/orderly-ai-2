@@ -16,6 +16,7 @@ type OrderAiContextType = {
   handleUserChange: () => void;
   handleModalOpen: VoidFunction;
   handleModalClose: VoidFunction;
+  handleToggleRoleChange: (id: number) => void;
 };
 
 type OrderAiContextProviderProps = {
@@ -36,6 +37,7 @@ export const OrderAiContext = createContext<OrderAiContextType>({
   handleUserChange: () => { },
   handleModalOpen: () => null,
   handleModalClose: () => null,
+  handleToggleRoleChange: () => { }
 });
 
 //Nie dotykajcie ;)
