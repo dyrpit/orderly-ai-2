@@ -1,12 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { OrderAiContext } from "./ContextProvider";
-import { Category, ProductType, User, UserRole } from "./types";
-
-const toggleRole = (user: User) => {
-  return user.role === UserRole.admin
-    ? UserRole.user
-    : UserRole.admin;
-};
+import { Category, ProductType, User } from "./types";
+import { toggleRole } from "./utils";
 
 export const useOrderAi = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
