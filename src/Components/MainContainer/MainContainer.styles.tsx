@@ -4,9 +4,9 @@ import { styled } from "@mui/material/styles";
 
 export const Container = styled(Box)(({ theme }) => ({
   backgroundColor: colorVar.mainBackground,
-  display: "flex",
-  maxWidth: "1170px",
   marginLeft: "auto",
+  width: "100%",
+  maxWidth: "1170px",
   marginRight: "auto",
   flexDirection: "row",
   flexWrap: "wrap",
@@ -19,7 +19,6 @@ export const Container = styled(Box)(({ theme }) => ({
 
 export const ContainerContent = styled(Box)(() => ({
   display: "flex",
-  
   flexDirection: "row",
   justifyContent: "center",
 }));
