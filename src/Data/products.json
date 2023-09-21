@@ -2,6 +2,7 @@
  "products": [
   {
    "category": "Narzędzia do uczenia maszynowego",
+   "color": "red",
    "name": "TensorFlow",
    "website": "https://www.tensorflow.org/",
    "license": "darmowa",
@@ -11,6 +12,7 @@
 
   {
    "category": "Narzędzia do uczenia maszynowego",
+   "color": "red",
    "name": "PyTorch",
    "website": "https://pytorch.org/",
    "license": "darmowa",
@@ -19,6 +21,7 @@
   },
   {
    "category": "Przetwarzanie języka naturalnego",
+   "color": "red",
    "name": "spaCy",
    "website": "https://spacy.io/",
    "license": "darmowa",
@@ -27,6 +30,7 @@
   },
   {
    "category": "Robotyka",
+   "color": "red",
    "name": "ROS (Robot Operating System)",
    "website": "https://www.ros.org/",
    "license": "darmowa",

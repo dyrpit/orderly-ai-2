@@ -14,6 +14,7 @@ export const BreadcrumbsContainer = styled("div")({
   fontFamily: "Montserrat",
   maxHeight: "30px",
   marginTop: "10px",
+  marginBottom: "10px",
 });
 
 export const CrumbContainer = styled("div")({});
