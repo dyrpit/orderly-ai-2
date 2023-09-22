@@ -17,7 +17,7 @@ export const Product = ({ product }: ProductProps) => {
           container
           flexDirection={"column"}
           alignItems={"center"}
-          justifyContent={"space-between"}
+          justifyContent={"space-around"}
           desktop={6} laptop={6} tablet={12} mobile={12} >
           <Grid sx={{ width: "50%" }} item>
             {name.length > 15
