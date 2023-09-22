@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { OrderAiContext } from "./ContextProvider";
 import { CategoryData, User } from "./types";
 import { fetchDataAndSetState } from "./utils";
+import { toggleRole } from "./utils";
 
 export const useOrderAi = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,6 +59,7 @@ export const useOrderAi = () => {
    handleUserChange,
    handleModalOpen,
    handleModalClose,
+    setUsers,
   };
 };
 

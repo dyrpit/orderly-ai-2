@@ -41,20 +41,6 @@ export const StyledIconButtonMenu = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-export const StyledLogoContainer = styled(Box)(({ theme }) => ({
-  width: "140px",
-  height: "100%",
-  padding: " 0 20px",
-  display: "flex",
-  alignItems: "center",
-  [theme.breakpoints.down("laptop")]: {
-    width: "110px",
-  },
-  [theme.breakpoints.down("tablet")]: {
-    width: "70px",
-  },
-}));
-
 export const DrawerHeader = styled("div")(({ theme }) => ({
   display: "none",
   [theme.breakpoints.down("laptop")]: {
@@ -84,5 +70,21 @@ export const StyledDrawer = styled(Drawer)(({ theme }) => ({
       top: "70px",
       backgroundColor: theme.palette.info.dark,
     },
+  },
+}));
+
+export const StyledLogoContainer = styled(Box)(({ theme }) => ({
+  width: "200px",
+  height: "100%",
+  padding: " 0 20px",
+  display: "flex",
+  alignItems: "center",
+  [theme.breakpoints.down("laptop")]: {
+    width: "110px",
+  },
+  [theme.breakpoints.down("tablet")]: {
+    width: "70px",
+    height: "100%",
+    overflow: "hidden"
   },
 }));

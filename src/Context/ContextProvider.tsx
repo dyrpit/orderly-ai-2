@@ -15,6 +15,20 @@ type OrderAiContextType = {
  handleUserChange: () => void;
  handleModalOpen: VoidFunction;
  handleModalClose: VoidFunction;
+  showButtons: string;
+  isModalOpen: boolean;
+  currentModal: string;
+  categories: Category[] | null;
+  products: ProductType[];
+  users: User[];
+  showHideLoginButtons: VoidFunction;
+  changeModal: (element: string) => void;
+  handleCategoryChange: VoidFunction;
+  handleItemChange: () => void;
+  handleUserChange: () => void;
+  handleModalOpen: VoidFunction;
+  handleModalClose: VoidFunction;
+  setUsers: (element: any) => void;
 };
 
 type OrderAiContextProviderProps = {
@@ -34,6 +48,7 @@ export const OrderAiContext = createContext<OrderAiContextType>({
  handleUserChange: () => {},
  handleModalOpen: () => null,
  handleModalClose: () => null,
+  setUsers: () => null,
 });
 
 //Nie dotykajcie ;)

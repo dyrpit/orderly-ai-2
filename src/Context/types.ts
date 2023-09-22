@@ -1,3 +1,13 @@
+export enum UserRole {
+  admin = "admin",
+  user = "user"
+}
+export interface Category {
+  name: string;
+  description: string;
+  colour: string;
+}
+
 export interface ProductData {
  id: number;
  name: string;
@@ -15,7 +25,8 @@ export interface CategoryData {
  products: ProductData[];
 }
 export interface User {
- email: string;
- password: string;
- role: string;
+  id: number;
+  email: string;
+  password: string;
+  role: UserRole;
 }

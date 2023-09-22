@@ -16,4 +16,10 @@ export const fetchDataAndSetState = (path: string, setStateCallback: (arg0: any)
     console.error(`Error fetching JSON data from ${path}:`, error);
    });
  }, []); // Provide an empty dependency array here
+};import { User, UserRole } from "./types";
+
+export const toggleRole = (user: User) => {
+  return user.role === UserRole.admin
+    ? UserRole.user
+    : UserRole.admin;
 };
