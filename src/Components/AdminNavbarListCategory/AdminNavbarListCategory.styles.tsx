@@ -1,6 +1,6 @@
 import { Box, List, ListItem, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { fontSizeVar, colorVar } from "../../Theme/variables";
+import { fontSizeVar } from "../../Theme/variables";
 
 export const AdminNavbarListContainer = styled(Box)(({}) => ({
  padding: "0px 0 10px 0",

@@ -3,19 +3,17 @@ import Fade from "@mui/material/Fade";
 import { useState } from "react";
 import { AdminNavbarListCategory } from "../AdminNavbarListCategory/AdminNavbarListCategory";
 import { Link } from "react-router-dom";
-import { OrderAiContext } from "../../Context/ContextProvider";
 import { useOrderAi } from "../../Context/useOrderAi";
 
 export function AdminNavbar() {
  const [isListVisible, setListVisible] = useState(false);
 
- const { products } = useOrderAi();
+ const { categories } = useOrderAi();
 
  const toggleListVisibility = () => {
   setListVisible(!isListVisible);
  };
 
- 
  return (
   <ANContainer>
    <ANButton sx={{ height: "60px" }} onClick={toggleListVisibility}>
@@ -24,12 +22,13 @@ export function AdminNavbar() {
    <Fade in={isListVisible} unmountOnExit>
     <ANList>
      <Link to="/admin/addcategory" style={{ textDecoration: "none" }}>
-      <ANButton sx={{ width: "100%", height: "fit-content", margin: "0 auto 20px auto", fontSize: "12px" }}>
-       New Category
-      </ANButton>
+      <ANButton sx={{ width: "100%", height: "fit-content", margin: "0 auto 20px auto", fontSize: "12px" }}>New Category</ANButton>
      </Link>
-     {products.map((product, index) => (
-      <AdminNavbarListCategory key={index} category={product.category} />
+     <Link to="/admin/additem/" style={{ textDecoration: "none" }}>
+      <ANButton sx={{ width: "100%", height: "fit-content", margin: "0 auto 0 auto", fontSize: "12px" }}>New Item</ANButton>{" "}
+     </Link>
+     {categories.map((categoryData, index) => (
+      <AdminNavbarListCategory category={categoryData} key={index}/>
      ))}
     </ANList>
    </Fade>

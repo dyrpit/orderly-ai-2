@@ -1,4 +1,4 @@
-import { Box, Grid, MenuItem, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Input, Label, SelectList, SelectListCheckmarks } from "../../ui";
 import { StyledAdminContentContainer, StyledGridContainer } from "./AddItem.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";

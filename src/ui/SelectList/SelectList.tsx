@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
- Checkbox,
- ListItemText,
  MenuItem,
  Select,
  OutlinedInput,
@@ -22,12 +20,9 @@ export const SelectList: React.FC<SelectListProps> = (props) => {
  const [selectedItems, setSelectedItems] = useState<string[]>([]);
  const isDefaultSelectedValid = items.includes(defaultSelected);
 
- // Set the default selected item as renderValue if it's valid
- const defaultRenderValue = isDefaultSelectedValid ? defaultSelected : undefined;
 
  useEffect(() => {
   if (isDefaultSelectedValid) {
-   // If the default selected item is valid, set it as the initial selected item
    setSelectedItems([defaultSelected]);
   } else {
    // If it's not valid, set an empty array

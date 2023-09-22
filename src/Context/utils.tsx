@@ -10,7 +10,6 @@ export const fetchDataAndSetState = (path: string, setStateCallback: (arg0: any)
     return response.json();
    })
    .then((data) => {
-    console.log(data)
     setStateCallback(data);
    })
    .catch((error) => {

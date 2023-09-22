@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
  Checkbox,
- ListItemText,
  MenuItem,
  Select,
  OutlinedInput,
@@ -22,15 +21,11 @@ export const SelectListCheckmarks: React.FC<SelectListCheckmarksProps> = (props)
  const [selectedItems, setSelectedItems] = useState<string[]>([]);
  const isDefaultSelectedValid = items.includes(defaultSelected);
 
- // Set the default selected item as renderValue if it's valid
- const defaultRenderValue = isDefaultSelectedValid ? defaultSelected : undefined;
 
  useEffect(() => {
   if (isDefaultSelectedValid) {
-   // If the default selected item is valid, set it as the initial selected item
    setSelectedItems([defaultSelected]);
   } else {
-   // If it's not valid, set an empty array
    setSelectedItems([]);
   }
  }, [defaultSelected, isDefaultSelectedValid]);
@@ -51,6 +46,8 @@ export const SelectListCheckmarks: React.FC<SelectListCheckmarksProps> = (props)
    sx={{ borderRadius: "10px", height: "36px", backgroundColor: theme.palette.info.main, width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
    {items.map((name, index) => (
     <MenuItem key={index} value={name}>
+     <Checkbox checked={items.indexOf(name) > -1} />
+
      {name}
     </MenuItem>
    ))}

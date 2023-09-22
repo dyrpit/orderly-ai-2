@@ -11,10 +11,10 @@ const router = createBrowserRouter(
    <Route path="products" element={<ProductPage />}></Route>
    <Route path="admin" element={<AdminPage />}>
     <Route path="addcategory" element={<AddCategory />} />
-    <Route path="editcategory" element={<EditCategory />} />"
+    <Route path="editcategory/:id" element={<EditCategory />} />"
     <Route path="edituser" element={<UsersEdit />} />
     <Route path="additem" element={<AddItem />} />
-    <Route path="edititem" element={<EditItem />} />"
+    <Route path="edititem/:id" element={<EditItem />} />"
    </Route>
    <Route path="login" element={<LoginModal />}></Route>
    <Route path="register" element={<RegisterModal />}></Route>

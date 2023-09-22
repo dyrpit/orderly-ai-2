@@ -1,16 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { OrderAiContext } from "./ContextProvider";
-import { Category, Product, User } from "./types";
+import { CategoryData, User } from "./types";
 import { fetchDataAndSetState } from "./utils";
 
 export const useOrderAi = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showButtons, setShowButtons] = useState("none");
   const [currentModal, setCurrentModal] = useState("none");
-  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<CategoryData[]>([]);
   const [users, setUsers] = useState<User[]>([]);
 
-  fetchDataAndSetState("/src/Data/products.json", setProducts);
+  fetchDataAndSetState("/src/Data/categories.json", setCategories);
   fetchDataAndSetState("/src/Data/users.json", setUsers);
 
   const handleUserChange = () => {
@@ -46,18 +46,18 @@ export const useOrderAi = () => {
   const handleModalClose = () => setIsModalOpen(false);
 
   return {
-    isModalOpen,
-    showButtons,
-    currentModal,
-    products,
-    users,
-    showHideLoginButtons,
-    changeModal,
-    handleCategoryChange,
-    handleItemChange,
-    handleUserChange,
-    handleModalOpen,
-    handleModalClose,
+   isModalOpen,
+   showButtons,
+   currentModal,
+   categories,
+   users,
+   showHideLoginButtons,
+   changeModal,
+   handleCategoryChange,
+   handleItemChange,
+   handleUserChange,
+   handleModalOpen,
+   handleModalClose,
   };
 };
 

@@ -1,22 +1,21 @@
-export interface Category {
+export interface ProductData {
+ id: number;
  name: string;
- categoryimageurl: string;
+ website: string;
+ license: string;
+ youtubeUrl: string;
+ description: string;
+}
+
+export interface CategoryData {
+ id: number;
+ name: string;
  color: string;
+ imageUrl: string;
+ products: ProductData[];
 }
-
-export interface Product {
-  color: string;
-  category: string;
-  name: string;
-  website: string;
-  license: string;
-  youTube: string;
-  description: string;
-}
-
 export interface User {
  email: string;
  password: string;
  role: string;
 }
-
