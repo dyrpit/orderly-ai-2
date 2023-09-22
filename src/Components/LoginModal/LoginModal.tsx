@@ -24,6 +24,8 @@ export function LoginModal() {
    const matchUser = getMatchUser(values.email, values.password);
    if (matchUser) {
     generateToken(matchUser);
+    alert("Successfully logged!");
+    handleModalClose();
    } else {
     alert("Wrong password or email!");
    }

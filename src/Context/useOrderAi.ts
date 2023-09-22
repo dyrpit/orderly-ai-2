@@ -5,64 +5,49 @@ import { fetchDataAndSetState } from "./utils";
 import { toggleRole } from "./utils";
 
 export const useOrderAi = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showButtons, setShowButtons] = useState("none");
-  const [currentModal, setCurrentModal] = useState("none");
-  const [categories, setCategories] = useState<CategoryData[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
+ const [isModalOpen, setIsModalOpen] = useState(false);
+ const [currentModal, setCurrentModal] = useState("none");
+ const [categories, setCategories] = useState<CategoryData[]>([]);
+ const [users, setUsers] = useState<User[]>([]);
 
-  fetchDataAndSetState("/src/Data/categories.json", setCategories);
-  fetchDataAndSetState("/src/Data/users.json", setUsers);
+ fetchDataAndSetState("/src/Data/categories.json", setCategories);
+ fetchDataAndSetState("/src/Data/users.json", setUsers);
 
-  const handleUserChange = () => {
-    // Implement user data changes as needed
-  };
+ const handleUserChange = () => {
+  // Implement user data changes as needed
+ };
 
-  const handleItemChange = () => {
-    // Implement item data changes as needed
-  };
+ const handleItemChange = () => {
+  // Implement item data changes as needed
+ };
 
-  const handleCategoryChange = () => {
-    // Implement user data changes as needed
-  };
+ const handleCategoryChange = () => {
+  // Implement user data changes as needed
+ };
 
-  const showHideLoginButtons = () => {
-    if (showButtons === "none") {
-      setShowButtons("block");
-      changeModal("none");
-    } else {
-      setShowButtons("none");
-      changeModal("none");
-    }
-  };
+ const changeModal = (element: string) => {
+  setCurrentModal(element);
+ };
 
-  const changeModal = (element: string) => {
-    setCurrentModal(element);
-  };
+ const handleModalOpen = () => setIsModalOpen(true);
 
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-    setShowButtons("none");
-  };
-  const handleModalClose = () => setIsModalOpen(false);
+ const handleModalClose = () => setIsModalOpen(false);
 
-  return {
-   isModalOpen,
-   showButtons,
-   currentModal,
-   categories,
-   users,
-   showHideLoginButtons,
-   changeModal,
-   handleCategoryChange,
-   handleItemChange,
-   handleUserChange,
-   handleModalOpen,
-   handleModalClose,
-    setUsers,
-  };
+ return {
+  isModalOpen,
+  currentModal,
+  categories,
+  users,
+  changeModal,
+  handleCategoryChange,
+  handleItemChange,
+  handleUserChange,
+  handleModalOpen,
+  handleModalClose,
+  setUsers,
+ };
 };
 
 export const useOrderAiContext = () => {
-  return useContext(OrderAiContext);
+ return useContext(OrderAiContext);
 };
