@@ -53,9 +53,10 @@ export const SelectList: React.FC<SelectListProps> = (props) => {
     textOverflow: "ellipsis",
     width: "100%",
    }}>
-   {items.map((name) => (
+   {items.map((name, index) => (
     <MenuItem
      value={name}
+     key={index}
      sx={{
       width: "100%",
      }}>

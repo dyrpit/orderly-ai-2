@@ -1,53 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ANArrow, ANList, ANListItem, ANListItemContainer, ANTitle, ANTitleContainer, AdminNavbarListContainer } from "./AdminNavbarListCategory.styles";
 import { Fade } from "@mui/material";
 import { ANButton } from "../AdminNavbar/AdminNavbar.styles";
 import { Link } from "react-router-dom";
+import { useOrderAi } from "../../Context/useOrderAi";
 
 interface AdminNavbarListCategoryProps {
  category: string;
- elements: string[];
 }
 
 export function AdminNavbarListCategory({ category }: AdminNavbarListCategoryProps) {
+ const { products } = useOrderAi();
  const [isActive, setIsActive] = useState(false);
-
- const [listDataElements, setListDataElements] = useState<string[]>([]);
+ const [localProducts, setLocalProducts] = useState<any>([]);
 
  const toggleActive = () => {
   setIsActive(!isActive);
-  generateRandomElements();
  };
 
- const generateRandomElements = () => {
-  const items: string[] = [];
-  const randomInteger = Math.floor(Math.random() * (10 - 1) + 1);
-
-  for (let i = 1; i <= randomInteger; i++) {
-   items.push(`Item ${i}`);
-  }
-  setListDataElements(items);
- };
+ useEffect(() => {
+  const filteredProducts = products.filter((product) => product.category === category);
+  setLocalProducts(filteredProducts);
+ }, [products, category]);
 
  return (
   <AdminNavbarListContainer>
    <ANTitleContainer>
     <ANArrow className={isActive ? "active" : ""} onClick={toggleActive}></ANArrow>
-    <ANTitle>{category}</ANTitle>
+    <Link to="editcategory" style={{ textDecoration: "none" }}>
+     <ANTitle className={isActive ? "active" : ""}>{category}</ANTitle>
+    </Link>
    </ANTitleContainer>
 
    {isActive && (
     <ANList>
-     <Link to="/admin/additem" style={{ textDecoration: "none" }}>
-      <ANButton sx={{ width: "100%", height: "fit-content", margin: "0 auto 0 auto", fontSize: "12px" }}>Add Item</ANButton>{" "}
-     </Link>
      <ANListItemContainer>
-      {listDataElements.map((value, index) => (
+      {localProducts.map((product: any, index: any) => (
        <Fade in={true} unmountOnExit>
-        <ANListItem key={index}>• {value}</ANListItem>
+        <Link to="/admin/edititem" style={{ textDecoration: "none" , color:"white"}}>
+         <ANListItem key={index}>• {product.name}</ANListItem>
+        </Link>
        </Fade>
       ))}
      </ANListItemContainer>
+     <Link to="/admin/additem" style={{ textDecoration: "none" }}>
+      <ANButton sx={{ width: "100%", height: "fit-content", margin: "0 auto 0 auto", fontSize: "12px" }}>New Item</ANButton>{" "}
+     </Link>
     </ANList>
    )}
   </AdminNavbarListContainer>

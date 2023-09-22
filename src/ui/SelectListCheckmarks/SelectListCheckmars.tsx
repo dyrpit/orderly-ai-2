@@ -49,8 +49,10 @@ export const SelectListCheckmarks: React.FC<SelectListCheckmarksProps> = (props)
    input={<OutlinedInput label="Tag" />}
    renderValue={(selected) => selected.join(", ")}
    sx={{ borderRadius: "10px", height: "36px", backgroundColor: theme.palette.info.main, width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-   {items.map((name) => (
-    <MenuItem value={name}>{name}</MenuItem>
+   {items.map((name, index) => (
+    <MenuItem key={index} value={name}>
+     {name}
+    </MenuItem>
    ))}
   </Select>
  );

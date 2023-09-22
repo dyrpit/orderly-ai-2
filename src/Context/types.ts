@@ -5,6 +5,7 @@ export interface Category {
 }
 
 export interface Product {
+  color: string;
   category: string;
   name: string;
   website: string;

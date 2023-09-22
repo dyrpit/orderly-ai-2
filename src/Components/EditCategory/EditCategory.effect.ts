@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export const useEditItemEffects = () => {
+export const useEditCategoryEffects = () => {
  const formik = useFormik({
   initialValues: {
    category: "",

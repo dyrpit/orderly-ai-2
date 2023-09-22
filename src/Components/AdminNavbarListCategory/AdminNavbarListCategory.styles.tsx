@@ -30,6 +30,9 @@ export const ANTitle = styled(Typography)(({ theme: theme }) => ({
   borderRadius: "10px",
   backgroundColor: "#603795",
  },
+ "&.active": {
+  color: "turquoise",
+ },
 }));
 
 export const ANArrow = styled("span")(({}) => ({
@@ -37,8 +40,10 @@ export const ANArrow = styled("span")(({}) => ({
  borderRight: "8px solid transparent",
  borderTop: "10px solid #fff",
  transition: "transform ease-in-out 0.3s",
+ transform: "rotate(-90deg)",
  "&.active": {
-  transform: "rotate(180deg)",
+  transform: "rotate(0deg)",
+  color: "turquoise",
  },
 }));
 

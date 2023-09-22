@@ -43,8 +43,12 @@ export const ColourCircle = styled("div")({
  borderRadius: "50%",
  border: "2px solid #fff",
  cursor: "pointer",
- transition: "transform 0.2s ease-in-out",
+ transition: "transform 0.2s ease-in-out, border-radius 0.2s ease",
  "&:hover": {
+  transform: "scale(1.1)",
+ },
+ "&.selected": {
+  borderRadius: "25%",
   transform: "scale(1.1)",
  },
 });

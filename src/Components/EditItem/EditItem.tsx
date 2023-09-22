@@ -1,15 +1,15 @@
 import { Box, Grid } from "@mui/material";
 import { Input, Label } from "../../ui";
-import { StyledAdminContentContainer, StyledGridContainer, StyledName } from "./EditItem.styles";
+import { StyledEditItemContainer, StyledGridContainer, StyledName } from "./EditItem.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
 import "./EditItem.css";
-import { useAdminContentEffects } from "./EditItem.effect";
+import { useEditItemEffects } from "./EditItem.effect";
 
-export const AdminContent = () => {
-  const { form } = useAdminContentEffects();
+export const EditItem = () => {
+  const { form } = useEditItemEffects();
 
   return (
-    <StyledAdminContentContainer>
+    <StyledEditItemContainer>
       <form onSubmit={form.handleSubmit}>
         <StyledGridContainer container spacing={2}>
           <Grid container justifyContent={"center"} item desktop={6} laptop={6} tablet={6} mobile={12}>
@@ -125,6 +125,6 @@ export const AdminContent = () => {
           </Grid>
         </StyledGridContainer>
       </form>
-    </StyledAdminContentContainer>
+    </StyledEditItemContainer>
   );
 };
