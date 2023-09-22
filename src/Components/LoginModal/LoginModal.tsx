@@ -10,7 +10,7 @@ import useAuth from "../../Hooks/useAuth";
 
 export function LoginModal() {
  const { changeModal, handleModalClose, isModalOpen } = useContext(OrderAiContext);
- const { getMatchUser, saveAuthToken, generateToken } = useAuth();
+ const { getMatchUser, generateToken } = useAuth();
  const formik = useFormik({
   initialValues: {
    email: "",

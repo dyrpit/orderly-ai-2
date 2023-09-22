@@ -48,12 +48,22 @@ const useAuth = () => {
   return false;
  };
 
+ const getIsEmailExist = (email: string) => {
+  const isEmailExist = users.find((user) => user.email === email);
+  if (isEmailExist === undefined) {
+   return false;
+  } else {
+   return true;
+  }
+ };
+
  return {
   authToken,
   saveAuthToken,
   removeAuthToken,
   getMatchUser,
   generateToken,
+  getIsEmailExist,
  };
 };
 
