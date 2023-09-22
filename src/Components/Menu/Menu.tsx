@@ -10,6 +10,7 @@ import "./Menu.css";
 import { SignIn } from "..";
 import { SignOut } from "../SignButtons/SignOut";
 import { AdminPanel } from "../SignButtons/AdminPanel";
+import useAuth from "../../Hooks/useAuth";
 
 const imgStyle = {
  width: "100%",
@@ -18,6 +19,7 @@ const imgStyle = {
 
 export const Menu = () => {
  const { changeModal } = useContext(OrderAiContext);
+ const { getIsTokenExist } = useAuth();
  const [showButtons, setShowButtons] = useState("none");
  const [open, setOpen] = useState(false);
  const handleDrawerOpen = () => {
@@ -88,9 +90,14 @@ export const Menu = () => {
     </List>
    </StyledDrawer>
    <Box sx={buttonsContainerStyles}>
-    <SignIn />
-    <SignOut />
-    <AdminPanel />
+    {getIsTokenExist() ? (
+     <>
+      <SignOut />
+      <AdminPanel />
+     </>
+    ) : (
+     <SignIn />
+    )}
    </Box>
   </Box>
  );
