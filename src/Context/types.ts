@@ -1,17 +1,10 @@
 export interface Category {
-  name: string;
-  description: string;
-  colour: string;
+ name: string;
+ categoryimageurl: string;
+ color: string;
 }
 
-export interface User {
-  id: number;
-  email: string;
-  password: string;
-  role: string;
-}
-
-export interface ProductType {
+export interface Product {
   category: string;
   name: string;
   website: string;
@@ -19,3 +12,10 @@ export interface ProductType {
   youTube: string;
   description: string;
 }
+
+export interface User {
+ email: string;
+ password: string;
+ role: string;
+}
+

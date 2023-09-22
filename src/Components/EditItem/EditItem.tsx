@@ -1,9 +1,9 @@
 import { Box, Grid } from "@mui/material";
 import { Input, Label } from "../../ui";
-import { StyledAdminContentContainer, StyledGridContainer, StyledName } from "./AdminContent.styles";
+import { StyledAdminContentContainer, StyledGridContainer, StyledName } from "./EditItem.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
-import "./AdminContent.css";
-import { useAdminContentEffects } from "./AdminContent.effects";
+import "./EditItem.css";
+import { useAdminContentEffects } from "./EditItem.effect";
 
 export const AdminContent = () => {
   const { form } = useAdminContentEffects();

@@ -1,21 +1,20 @@
 import { ReactNode, createContext } from "react";
 import { useOrderAi } from "./useOrderAi";
-import { Category, ProductType, User } from "./types";
+import { Product, User } from "./types";
 
 type OrderAiContextType = {
-  showButtons: string;
-  isModalOpen: boolean;
-  currentModal: string;
-  categories: Category[] | null;
-  products: ProductType[];
-  users: User[];
-  showHideLoginButtons: VoidFunction;
-  changeModal: (element: string) => void;
-  handleCategoryChange: VoidFunction;
-  handleItemChange: () => void;
-  handleUserChange: () => void;
-  handleModalOpen: VoidFunction;
-  handleModalClose: VoidFunction;
+ showButtons: string;
+ isModalOpen: boolean;
+ currentModal: string;
+ products: Product[];
+ users: User[];
+ showHideLoginButtons: VoidFunction;
+ changeModal: (element: string) => void;
+ handleCategoryChange: VoidFunction;
+ handleItemChange: () => void;
+ handleUserChange: () => void;
+ handleModalOpen: VoidFunction;
+ handleModalClose: VoidFunction;
 };
 
 type OrderAiContextProviderProps = {
@@ -26,7 +25,6 @@ export const OrderAiContext = createContext<OrderAiContextType>({
   showButtons: "none",
   isModalOpen: false,
   currentModal: "none",
-  categories: [],
   products: [],
   users: [],
   showHideLoginButtons: () => null,

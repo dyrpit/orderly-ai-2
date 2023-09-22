@@ -1,47 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { OrderAiContext } from "./ContextProvider";
-import { Category, ProductType, User } from "./types";
+import { Category, Product, User } from "./types";
+import { fetchDataAndSetState } from "./utils";
 
 export const useOrderAi = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showButtons, setShowButtons] = useState("none");
   const [currentModal, setCurrentModal] = useState("none");
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    fetch("/src/Data/categories.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setCategories(data.categories);
-      })
-      .catch((error) => {
-        console.error("Error fetching JSON data:", error);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetch("/src/Data/products.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.products);
-      })
-      .catch((error) => {
-        console.error("Error fetching JSON data:", error);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetch("/src/Data/users.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setUsers(data.users);
-      })
-      .catch((error) => {
-        console.error("Error fetching JSON data:", error);
-      });
-  }, []);
+  fetchDataAndSetState("/src/Data/products.json", setProducts);
+  fetchDataAndSetState("/src/Data/users.json", setUsers);
 
   const handleUserChange = () => {
     // Implement user data changes as needed
@@ -79,7 +49,6 @@ export const useOrderAi = () => {
     isModalOpen,
     showButtons,
     currentModal,
-    categories,
     products,
     users,
     showHideLoginButtons,
