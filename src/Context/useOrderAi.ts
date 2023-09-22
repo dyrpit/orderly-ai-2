@@ -56,14 +56,6 @@ export const useOrderAi = () => {
     // Implement user data changes as needed
   };
 
-  const handleToggleRoleChange = (id: number) => {
-    setUsers(users => users.map((user) => {
-      return user.id === id
-        ? { ...user, role: toggleRole(user) }
-        : user;
-    }));
-  };
-
   const showHideLoginButtons = () => {
     if (showButtons === "none") {
       setShowButtons("block");
@@ -98,7 +90,7 @@ export const useOrderAi = () => {
     handleUserChange,
     handleModalOpen,
     handleModalClose,
-    handleToggleRoleChange
+    setUsers,
   };
 };
 

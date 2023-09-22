@@ -1,6 +1,6 @@
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import RootLayout from "./Layout/RootLayout";
-import { AdminContent, LoginModal, RegisterModal, UsersEdit } from "./Components";
+import { AddCategory, AdminContent, LoginModal, RegisterModal, UsersEdit } from "./Components";
 import { AdminPage, Home, ProductPage, NotFound } from "./Pages";
 import "./App.css";
 
@@ -10,7 +10,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />}></Route>
       <Route path="products" element={<ProductPage />}></Route>
       <Route path="admin" element={<AdminPage />}>
-        <Route path="add" element={<AdminContent />} />
+        <Route path="addcategory" element={<AddCategory />} />
         <Route path="edit" element={<UsersEdit />} />
       </Route>
       <Route path="login" element={<LoginModal />}></Route>
