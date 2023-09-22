@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import { Box, Grid, Typography } from "@mui/material";
 import { theme } from "../../Theme/ThemeProvider";
 
-export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
+export const StyledEditCategoryContainer = styled(Box)(({ theme }) => ({
  backgroundColor: theme.palette.background.paper,
  borderRadius: "16px",
  padding: "36px",
@@ -10,6 +10,7 @@ export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
   padding: "8px",
  },
 }));
+
 
 export const StyledName = styled(Typography)(({ theme }) => ({
  fontSize: "60px",
