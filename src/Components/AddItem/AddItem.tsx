@@ -1,4 +1,4 @@
-import { Box, Grid, MenuItem } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Input, Label, SelectList, SelectListCheckmarks } from "../../ui";
 import { StyledAdminContentContainer, StyledGridContainer } from "./AddItem.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
@@ -12,15 +12,13 @@ export const AddItem = () => {
 
  // Function to extract the video ID from a YouTube URL
  const getYouTubeVideoId = (url: string) => {
-  const videoIdMatch = url.match(
-   /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?feature=player_embedded&v=|\/videos\/|\/user\/\S+\/|\/v\/|\/e\/|watch\?v=|watch\?v=|embed\/))([\w-]{11})$/,
-  );
-  return videoIdMatch && videoIdMatch[1];
+  const videoIdMatch = url.slice(-11);
+  return videoIdMatch;
  };
 
  // Function to update the embedded YouTube video URL
- const updateEmbedUrl = () => {
-  const videoId = getYouTubeVideoId(youtubeUrl);
+ const updateEmbedUrl = (pastedText:string) => {
+  const videoId = getYouTubeVideoId(pastedText);
   if (videoId) {
    setYoutubeEmbedUrl(`https://www.youtube.com/embed/${videoId}`);
   } else {
@@ -31,9 +29,15 @@ export const AddItem = () => {
  // Handle changes in the YouTube URL input field
  const handleYoutubeUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   const newUrl = event.target.value;
-  setYoutubeUrl(newUrl);
-  updateEmbedUrl();
+  updateEmbedUrl(newUrl);
  };
+
+const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+ const pastedText = event.clipboardData.getData("text");
+ setYoutubeUrl(pastedText); // Set the pasted text as the input value
+ updateEmbedUrl(pastedText);
+ event.preventDefault(); // Prevent the default paste behavior
+};
 
  return (
   <StyledAdminContentContainer>
@@ -63,7 +67,7 @@ export const AddItem = () => {
      <Label htmlFor="category" sx={{ marginRight: "8px" }}>
       Category:{" "}
      </Label>
-     <SelectList items={["1234123412341234123412341 2341234123412341 23412341234123412341234 12341234", "456"]} defaultSelected="123"></SelectList>
+     <SelectList items={["1234123412341234123412341 2341234123412341 23412341234123412341234 12341234", "456"]} defaultSelected="456"></SelectList>
     </Grid>
 
     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
@@ -95,6 +99,7 @@ export const AddItem = () => {
       id="ytUrl"
       value={youtubeUrl}
       onChange={handleYoutubeUrlChange}
+      onPaste={handlePaste}
      />
     </Grid>
 
@@ -115,11 +120,26 @@ export const AddItem = () => {
     </Grid>
     <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={12} mobile={12} display={"flex"}>
      <Grid item laptop={6} desktop={6} tablet={6} mobile={12}>
-      {youtubeEmbedUrl && (
-       <Box>
+      <div
+       style={{
+        height: "260px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        margin: "10px auto",
+        borderRadius: "10px",
+        border: "2px solid #fff",
+       }}>
+       <Typography
+        variant="subtitle2"
+        style={{
+         color: "#666",
+        }}>
         <iframe src={youtubeEmbedUrl} allow="autoplay; encrypted-media" title="video" />
-       </Box>
-      )}
+       </Typography>
+      </div>
      </Grid>
     </Grid>
    </StyledGridContainer>

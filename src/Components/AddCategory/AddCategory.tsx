@@ -6,7 +6,11 @@ import { SetStateAction, useState } from "react";
 
 export const AddCategory = () => {
  const colors = ["#52877A", "#875252", "#528758", "#868752", "#527787", "#875272", "#FF99C8", "#9D82B0", "#7067CF", "#374785", "#011936", "#465362"];
+ const [selectedColor, setSelectedColor] = useState(colors[0]);
+
  const handleColorClick = (color: string) => {
+  setSelectedColor(color);
+
   console.log(color);
  };
 
@@ -107,7 +111,12 @@ export const AddCategory = () => {
       <Label htmlFor="colour">Colour:</Label>
       <ColoursGrid>
        {colors.map((color, index) => (
-        <ColourCircle key={index} className="color-circle" style={{ backgroundColor: color }} onClick={() => handleColorClick(color)}></ColourCircle>
+        <ColourCircle 
+        key={index} 
+        className={`color-circle ${selectedColor === color ? "selected" : ""}`} 
+        style={{ backgroundColor: color }} 
+        onClick={() => handleColorClick(color)}>
+        </ColourCircle>
        ))}
       </ColoursGrid>
      </Grid>

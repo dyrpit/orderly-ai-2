@@ -1,6 +1,6 @@
 import { Box, List, ListItem, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { fontSizeVar, colorVar } from "../../Theme/variables";
+import { fontSizeVar } from "../../Theme/variables";
 
 export const AdminNavbarListContainer = styled(Box)(({}) => ({
  padding: "0px 0 10px 0",
@@ -30,6 +30,9 @@ export const ANTitle = styled(Typography)(({ theme: theme }) => ({
   borderRadius: "10px",
   backgroundColor: "#603795",
  },
+ "&.active": {
+  color: "turquoise",
+ },
 }));
 
 export const ANArrow = styled("span")(({}) => ({
@@ -37,8 +40,10 @@ export const ANArrow = styled("span")(({}) => ({
  borderRight: "8px solid transparent",
  borderTop: "10px solid #fff",
  transition: "transform ease-in-out 0.3s",
+ transform: "rotate(-90deg)",
  "&.active": {
-  transform: "rotate(180deg)",
+  transform: "rotate(0deg)",
+  color: "turquoise",
  },
 }));
 
