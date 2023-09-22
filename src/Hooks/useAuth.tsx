@@ -4,7 +4,6 @@ const useAuth = () => {
  const savedToken = localStorage.getItem("authToken");
  const [authToken, setAuthToken] = useState(savedToken || "");
  const { users } = useContext(OrderAiContext);
-
  const saveAuthToken = (token: string) => {
   localStorage.setItem("authToken", token);
   setAuthToken(token);
@@ -57,6 +56,17 @@ const useAuth = () => {
   }
  };
 
+ const getIsTokenExist = () => {
+  try {
+   if (localStorage.authToken.length > 0) {
+    return true;
+   }
+   return false;
+  } catch (error) {
+   console.error("Token does not exist");
+  }
+ };
+
  return {
   authToken,
   saveAuthToken,
@@ -64,6 +74,7 @@ const useAuth = () => {
   getMatchUser,
   generateToken,
   getIsEmailExist,
+  getIsTokenExist,
  };
 };
 
