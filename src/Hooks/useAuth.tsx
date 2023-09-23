@@ -1,10 +1,11 @@
 import { useContext, useState } from "react";
 import { OrderAiContext } from "../Context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 const useAuth = () => {
  const savedToken = localStorage.getItem("authToken");
  const [authToken, setAuthToken] = useState(savedToken || "");
  const { users } = useContext(OrderAiContext);
-
+ const navigate = useNavigate();
  const saveAuthToken = (token: string) => {
   localStorage.setItem("authToken", token);
   setAuthToken(token);
@@ -13,6 +14,7 @@ const useAuth = () => {
  const removeAuthToken = () => {
   localStorage.removeItem("authToken");
   setAuthToken("");
+  navigate("/");
  };
 
  const generateToken = (user: any) => {
@@ -36,7 +38,6 @@ const useAuth = () => {
   const encodedSignature = btoa(signature);
 
   const jwtToken = `${encodedHeaders}.${encodedPlayload}.${encodedSignature}`;
-  console.log({ jwtToken });
   saveAuthToken(jwtToken);
  };
 
@@ -48,12 +49,35 @@ const useAuth = () => {
   return false;
  };
 
+ const getIsEmailExist = (email: string) => {
+  const isEmailExist = users.find((user) => user.email === email);
+  if (isEmailExist === undefined) {
+   return false;
+  } else {
+   return true;
+  }
+ };
+
+ const getIsTokenExist = () => {
+  try {
+   if (localStorage.authToken.length > 0) {
+    return true;
+   }
+   return false;
+  } catch (error) {
+   // Nie wiem co w przypadku jak nie ma tokena - trzeba przekminić. Bo rzucenie errora do konsoli zrobi konsolę całą na czerwoną
+   return;
+  }
+ };
+
  return {
   authToken,
   saveAuthToken,
   removeAuthToken,
   getMatchUser,
   generateToken,
+  getIsEmailExist,
+  getIsTokenExist,
  };
 };
 
