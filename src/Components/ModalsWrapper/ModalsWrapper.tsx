@@ -4,15 +4,17 @@ import { LoginModal, RegisterModal } from "..";
 import { ImportModal } from "../ImportModal/ImportModal";
 
 export function ModalsWrapper() {
- const { currentModal } = useContext(OrderAiContext);
+ const { isModalOpen, currentModal } = useContext(OrderAiContext);
 
  return (
   <>
+   {isModalOpen && (
     <>
      {currentModal === "Sign In" && <LoginModal />}
      {currentModal === "Sign Up" && <RegisterModal />}
      {currentModal === "Import" && <ImportModal />}
     </>
+   )}
   </>
  );
 }

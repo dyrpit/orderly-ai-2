@@ -1,68 +1,34 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { LoginModalContainer } from "../LoginModal/LoginModal.styles";
-import { StyledButton } from "../../ui/StyledButton/StyledButton.styles";
-import { ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader } from "../../ui";
-import { useContext } from "react";
+import React, { useContext, useState, ChangeEvent } from "react";
+import { ImportModalContainer } from "./ImportModal.style";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import Modal from "@mui/material/Modal";
-import useAuth from "../../Hooks/useAuth";
 
 export function ImportModal() {
- const { changeModal, handleModalClose, isModalOpen } = useContext(OrderAiContext);
- const { getMatchUser, saveAuthToken, generateToken } = useAuth();
- const formik = useFormik({
-  initialValues: {
-   email: "",
-   password: "",
-  },
-  validationSchema: Yup.object({
-   email: Yup.string().max(25, "Email must be 25 characters or less.").email("Invalid email address.").required("Required"),
-   password: Yup.string().max(25, "Password must be 25 characters or less.").min(8, "Password must be minimum 8 characters.").required("Required"),
-  }),
-  onSubmit: (values) => {
-   const matchUser = getMatchUser(values.email, values.password);
-   if (matchUser) {
-    generateToken(matchUser);
-   } else {
-    alert("Wrong password or email!");
-   }
-  },
- });
+  const { changeModal, handleModalClose, isModalOpen, setJsonData } = useContext(OrderAiContext);
+  const [selectedFile, setSelectedFile] = useState(null);
 
- const commonInputsProperties = (key: "email" | "password") => ({
-  id: key,
-  name: key,
-  type: key,
-  onChange: formik.handleChange,
-  onBlur: formik.handleBlur,
-  value: formik.values[key],
- });
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files[0];
 
- return (
-  <Modal open={isModalOpen} onClose={handleModalClose}>
-   <LoginModalContainer>
-    <ModalHeader>Import</ModalHeader>
-    <ModalSubHeader>Welcome back. Sign in to continue</ModalSubHeader>
-    <form onSubmit={formik.handleSubmit}>
-     <ModalInput placeholder="Email" {...commonInputsProperties("email")} />
-     <ModalErrorMessage>{formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}</ModalErrorMessage>
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result as string);
+          setJsonData(data); 
+        } catch (error) {
+          console.error("Błąd parsowania pliku JSON:", error);
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
 
-     <ModalInput placeholder="Password" {...commonInputsProperties("password")} />
-     <ModalErrorMessage>{formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}</ModalErrorMessage>
-
-     <StyledButton type="submit">Submit</StyledButton>
-    </form>
-    <ModalFooter>
-     Don't have an account?{" "}
-     <a
-      onClick={() => {
-       changeModal("Sign Up");
-      }}>
-      <b>Create account</b>
-     </a>
-    </ModalFooter>
-   </LoginModalContainer>
-  </Modal>
- );
+  return (
+    <Modal open={isModalOpen} onClose={handleModalClose}>
+      <ImportModalContainer>
+        <input type="file" onChange={handleFileChange} accept=".json" />
+      </ImportModalContainer>
+    </Modal>
+  );
 }
