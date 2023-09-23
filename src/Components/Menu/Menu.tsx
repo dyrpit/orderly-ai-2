@@ -9,6 +9,7 @@ import logoorderly from "./logoorderly.png";
 import "./Menu.css";
 
 export const Menu = () => {
+
  const { showHideLoginButtons } = useContext(OrderAiContext);
  const [open, setOpen] = useState(false);
  const handleDrawerOpen = () => {
@@ -17,11 +18,14 @@ export const Menu = () => {
  const handleDrawerClose = () => {
   setOpen(false);
  };
-
+ const handleImportButtonClick = () => {
+    console.log("test");
+  };
  const optionButtons = [
   {
    name: "Import",
    img: "../../../src/assets/clarity_import-line.png",
+   onClick: handleImportButtonClick,
   },
   {
    name: "Export",
@@ -37,12 +41,14 @@ export const Menu = () => {
  return (
   <Box>
    <StyledMenu>
-    {optionButtons.map(({ img, name, showHideLoginButtons }) => (
+    {optionButtons.map(({ img, name, showHideLoginButtons, onClick}) => (
      <StyledIconButton onClick={showHideLoginButtons} key={name}>
       {" "}
       <img src={img} />
      </StyledIconButton>
+     
     ))}
+    
    </StyledMenu>
    {open ? (
     <StyledIconButtonMenu onClick={handleDrawerClose}>{<StyledCloseIcon />}</StyledIconButtonMenu>

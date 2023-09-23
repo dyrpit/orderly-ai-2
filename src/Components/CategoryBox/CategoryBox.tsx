@@ -14,6 +14,7 @@ export function Category() {
     fetch("/src/Data/products.json") 
       .then((response) => response.json())
       .then((data) => {
+
         const processedData = data.products.map((product: any) => ({
           category: product.category,
           color: product.color,

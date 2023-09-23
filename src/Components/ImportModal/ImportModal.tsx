@@ -1,0 +1,68 @@
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { LoginModalContainer } from "../LoginModal/LoginModal.styles";
+import { StyledButton } from "../../ui/StyledButton/StyledButton.styles";
+import { ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader } from "../../ui";
+import { useContext } from "react";
+import { OrderAiContext } from "../../Context/ContextProvider";
+import Modal from "@mui/material/Modal";
+import useAuth from "../../Hooks/useAuth";
+
+export function ImportModal() {
+ const { changeModal, handleModalClose, isModalOpen } = useContext(OrderAiContext);
+ const { getMatchUser, saveAuthToken, generateToken } = useAuth();
+ const formik = useFormik({
+  initialValues: {
+   email: "",
+   password: "",
+  },
+  validationSchema: Yup.object({
+   email: Yup.string().max(25, "Email must be 25 characters or less.").email("Invalid email address.").required("Required"),
+   password: Yup.string().max(25, "Password must be 25 characters or less.").min(8, "Password must be minimum 8 characters.").required("Required"),
+  }),
+  onSubmit: (values) => {
+   const matchUser = getMatchUser(values.email, values.password);
+   if (matchUser) {
+    generateToken(matchUser);
+   } else {
+    alert("Wrong password or email!");
+   }
+  },
+ });
+
+ const commonInputsProperties = (key: "email" | "password") => ({
+  id: key,
+  name: key,
+  type: key,
+  onChange: formik.handleChange,
+  onBlur: formik.handleBlur,
+  value: formik.values[key],
+ });
+
+ return (
+  <Modal open={isModalOpen} onClose={handleModalClose}>
+   <LoginModalContainer>
+    <ModalHeader>Import</ModalHeader>
+    <ModalSubHeader>Welcome back. Sign in to continue</ModalSubHeader>
+    <form onSubmit={formik.handleSubmit}>
+     <ModalInput placeholder="Email" {...commonInputsProperties("email")} />
+     <ModalErrorMessage>{formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}</ModalErrorMessage>
+
+     <ModalInput placeholder="Password" {...commonInputsProperties("password")} />
+     <ModalErrorMessage>{formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}</ModalErrorMessage>
+
+     <StyledButton type="submit">Submit</StyledButton>
+    </form>
+    <ModalFooter>
+     Don't have an account?{" "}
+     <a
+      onClick={() => {
+       changeModal("Sign Up");
+      }}>
+      <b>Create account</b>
+     </a>
+    </ModalFooter>
+   </LoginModalContainer>
+  </Modal>
+ );
+}
