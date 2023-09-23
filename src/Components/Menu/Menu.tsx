@@ -9,6 +9,7 @@ import { OrderAiContext } from "../../Context/ContextProvider";
 import "./Menu.css";
 import { SignIn } from "..";
 import { SignOut } from "../SignButtons/SignOut";
+import { ImportModal } from "../ImportModal/ImportModal";
 import { AdminPanel } from "../SignButtons/AdminPanel";
 import useAuth from "../../Hooks/useAuth";
 
@@ -18,7 +19,7 @@ const imgStyle = {
 };
 
 export const Menu = () => {
- const { changeModal } = useContext(OrderAiContext);
+ const { changeModal, handleModalOpen } = useContext(OrderAiContext);
  const { getIsTokenExist } = useAuth();
  const [showButtons, setShowButtons] = useState("none");
  const [open, setOpen] = useState(false);
@@ -37,10 +38,17 @@ export const Menu = () => {
    changeModal("none");
   }
  };
+
+ const test = () => {
+    handleModalOpen();
+     changeModal("Import");
+  };
+
  const optionButtons = [
   {
    name: "Import",
    img: "../../../src/assets/clarity_import-line.png",
+   eventClick: test,
   },
   {
    name: "Export",
@@ -49,7 +57,7 @@ export const Menu = () => {
   {
    name: "Login",
    img: "../../../src/assets/clarity_avatar-line.png",
-   showHideLoginButtons,
+   eventClick: showHideLoginButtons,
   },
  ];
  const buttonsContainerStyles = {
@@ -61,11 +69,13 @@ export const Menu = () => {
  return (
   <Box>
    <StyledMenu>
-    {optionButtons.map(({ img, name, showHideLoginButtons }) => (
-     <StyledIconButton onClick={showHideLoginButtons} key={name}>
+    {optionButtons.map(({ img, name, eventClick}) => (
+     <StyledIconButton onClick={eventClick} key={name}>
       <img src={img} />
      </StyledIconButton>
+     
     ))}
+    
    </StyledMenu>
    {open ? (
     <StyledIconButtonMenu onClick={handleDrawerClose} sx={{ display: "flex", justifyContent: "end" }}>
