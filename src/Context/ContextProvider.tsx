@@ -1,21 +1,22 @@
 import { ReactNode, createContext, useState } from "react";
 import { useOrderAi } from "./useOrderAi";
-import { CategoryData, ProductData, User } from "./types";
+import { CategoryData, User } from "./types";
 
 type OrderAiContextType = {
   isModalOpen: boolean;
   currentModal: string;
   categories: CategoryData[] | null;
   users: User[];
-  jsonData: ProductData[] | null; // Dodaj pole jsonData do kontekstu
+  jsonData: CategoryData[] | null; // Dodaj pole jsonData do kontekstu
   changeModal: (element: string) => void;
   handleCategoryChange: VoidFunction;
   handleItemChange: () => void;
   handleUserChange: () => void;
   handleModalOpen: VoidFunction;
   handleModalClose: VoidFunction;
-  setUsers: (element: any) => void;
-  setJsonData: (data: ProductData[] | null) => void; // Dodaj metodę setJsonData do kontekstu
+  setUsers: (element: User[]) => void;
+  setJsonData: (data: CategoryData[] | null) => void; // Dodaj metodę setJsonData do kontekstu
+  getEmbedYTLink: (link: string) => string;
 };
 
 type OrderAiContextProviderProps = {
@@ -25,21 +26,22 @@ type OrderAiContextProviderProps = {
 export const OrderAiContext = createContext<OrderAiContextType>({
   isModalOpen: false,
   currentModal: "none",
-  categories: [],
+  categories: null,
   users: [],
   jsonData: null, // Inicjalnie ustaw null dla jsonData
   changeModal: () => null,
   handleCategoryChange: () => null,
-  handleItemChange: () => {},
-  handleUserChange: () => {},
+  handleItemChange: () => { },
+  handleUserChange: () => { },
   handleModalOpen: () => null,
   handleModalClose: () => null,
   setUsers: () => null,
   setJsonData: () => null, // Dodaj inicjalne ustawienie dla setJsonData
+  getEmbedYTLink: () => ''
 });
 
 export const OrderAiContextProvider = ({ children }: OrderAiContextProviderProps) => {
-  const [jsonData, setJsonData] = useState<ProductData[] | null>(null); // Inicjalizuj stan dla jsonData
+  const [jsonData, setJsonData] = useState<CategoryData[] | null>(null); // Inicjalizuj stan dla jsonData
 
   const value = {
     ...useOrderAi(),
