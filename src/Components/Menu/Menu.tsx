@@ -3,13 +3,25 @@ import { StyledCloseIcon, StyledDrawer, StyledIconButton, StyledIconButtonMenu, 
 import { Box, Divider, ListItem, ListItemButton, ListItemIcon } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import List from "@mui/material/List";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
-import logoorderly from "./logoorderly.png";
 import "./Menu.css";
+import { SignIn } from "..";
+import { SignOut } from "../SignButtons/SignOut";
+import { ImportModal } from "../ImportModal/ImportModal";
+import { AdminPanel } from "../SignButtons/AdminPanel";
+import useAuth from "../../Hooks/useAuth";
+
+const imgStyle = {
+ width: "100%",
+ height: "100%",
+};
 
 export const Menu = () => {
- const { showHideLoginButtons } = useContext(OrderAiContext);
+ const { changeModal, handleModalOpen } = useContext(OrderAiContext);
+ const { getIsTokenExist } = useAuth();
+ const [showButtons, setShowButtons] = useState("none");
  const [open, setOpen] = useState(false);
  const handleDrawerOpen = () => {
   setOpen(true);
@@ -17,11 +29,26 @@ export const Menu = () => {
  const handleDrawerClose = () => {
   setOpen(false);
  };
+ const showHideLoginButtons = () => {
+  if (showButtons === "none") {
+   setShowButtons("block");
+   changeModal("none");
+  } else {
+   setShowButtons("none");
+   changeModal("none");
+  }
+ };
+
+ const test = () => {
+    handleModalOpen();
+     changeModal("Import");
+  };
 
  const optionButtons = [
   {
    name: "Import",
    img: "../../../src/assets/clarity_import-line.png",
+   eventClick: test,
   },
   {
    name: "Export",
@@ -30,27 +57,34 @@ export const Menu = () => {
   {
    name: "Login",
    img: "../../../src/assets/clarity_avatar-line.png",
-   showHideLoginButtons: showHideLoginButtons,
+   eventClick: showHideLoginButtons,
   },
  ];
-
+ const buttonsContainerStyles = {
+  marginLeft: "auto",
+  display: showButtons,
+  position: "absolute",
+  backgroundColor: "#5C358E",
+ };
  return (
   <Box>
    <StyledMenu>
-    {optionButtons.map(({ img, name, showHideLoginButtons }) => (
-     <StyledIconButton onClick={showHideLoginButtons} key={name}>
-      {" "}
+    {optionButtons.map(({ img, name, eventClick}) => (
+     <StyledIconButton onClick={eventClick} key={name}>
       <img src={img} />
      </StyledIconButton>
+     
     ))}
+    
    </StyledMenu>
    {open ? (
-    <StyledIconButtonMenu onClick={handleDrawerClose}>{<StyledCloseIcon />}</StyledIconButtonMenu>
+    <StyledIconButtonMenu onClick={handleDrawerClose} sx={{ display: "flex", justifyContent: "end" }}>
+     {<StyledCloseIcon />}
+    </StyledIconButtonMenu>
    ) : (
     <StyledIconButtonMenu onClick={handleDrawerOpen}>{<StyledMenuIcon />}</StyledIconButtonMenu>
    )}
    <StyledDrawer variant="persistent" anchor="right" open={open}>
-    {" "}
     <Divider />
     <List>
      {optionButtons.map(({ img, name }) => (
@@ -65,10 +99,28 @@ export const Menu = () => {
      ))}
     </List>
    </StyledDrawer>
+   <Box sx={buttonsContainerStyles}>
+    {getIsTokenExist() ? (
+     <>
+      <SignOut />
+      <AdminPanel />
+     </>
+    ) : (
+     <SignIn />
+    )}
+   </Box>
   </Box>
  );
 };
 
 export const LogoContainer = () => {
- return <StyledLogoContainer><div className="logo-wrapper"><img src={logoorderly} alt="Logo"/></div></StyledLogoContainer>;
+ return (
+  <Link to="/">
+   <StyledLogoContainer>
+    <div className="logo-wrapper">
+     <img style={imgStyle} src="../../../src/assets/logo.png" />
+    </div>
+   </StyledLogoContainer>
+  </Link>
+ );
 };

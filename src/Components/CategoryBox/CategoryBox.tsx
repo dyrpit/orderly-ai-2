@@ -1,44 +1,36 @@
-import { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { BoxesContainer, CategoryBoxContainer, CategoryBoxContent } from "./CategoryBox.style";
 import { Link } from "react-router-dom";
-
-interface CategoryProps {
-  title: string;
-  description: string;
-  color: string;
-}
+import { OrderAiContext } from "../../Context/ContextProvider";
 
 export function Category() {
-  const [categories, setCategories] = useState<CategoryProps[]>([]);
+  const { jsonData, categories } = useContext(OrderAiContext);
 
-  useEffect(() => {
-    fetch("/src/Data/categories.json") 
-      .then((response) => response.json())
-      .then((data) => {
-        setCategories(data);
-        console.error("Poprawne wczytanie danych");
-      })
-      .catch((error) => {
-        console.error("Błąd podczas wczytywania danych z JSON:", error);
-      });
-  }, []);
-
-  return (
-    <BoxesContainer>
-      {categories.map((category, index) => (
-        <Link to="/Products" key={index} style={{textDecoration: 'none'}}>
-          <CategoryBoxContainer style={{ backgroundColor: category.color }}>
+  const renderedCategoryBoxes = jsonData
+    ? jsonData.map((product, index) => (
+        <Link to="/Products" key={index} style={{ textDecoration: "none" }}>
+          <CategoryBoxContainer style={{ backgroundColor: product.color }}>
             <CategoryBoxContent>
-              <div className="Title">
-                <h1>{category.title}</h1>
+              <div style={{ textAlign: "center" }}>
+                <h1>{product.name}</h1>
               </div>
-              <div className="Desc">
-                <h3>{category.description}</h3>
-              </div>
+              <img src={product.imageUrl} alt={product.name} />
             </CategoryBoxContent>
           </CategoryBoxContainer>
         </Link>
-      ))}
-    </BoxesContainer>
-  );
+      ))
+    : categories.map((product, index) => (
+        <Link to="/Products" key={index} style={{ textDecoration: "none" }}>
+          <CategoryBoxContainer style={{ backgroundColor: product.color }}>
+            <CategoryBoxContent>
+              <div style={{ textAlign: "center" }}>
+                <h1>{product.name}</h1>
+              </div>
+              <img src={product.imageUrl} alt={product.name} />
+            </CategoryBoxContent>
+          </CategoryBoxContainer>
+        </Link>
+      ));
+
+  return <BoxesContainer>{renderedCategoryBoxes}</BoxesContainer>;
 }

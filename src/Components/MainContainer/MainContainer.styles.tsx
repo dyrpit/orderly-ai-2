@@ -7,6 +7,7 @@ export const Container = styled(Box)(({ theme }) => ({
   marginLeft: "auto",
   width: "100%",
   maxWidth: "1170px",
+  minHeight: "calc(100vh - 140px)",
   marginRight: "auto",
   flexDirection: "row",
   flexWrap: "wrap",
