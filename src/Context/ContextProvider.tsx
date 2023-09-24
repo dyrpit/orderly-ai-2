@@ -14,6 +14,7 @@ type OrderAiContextType = {
   handleUserChange: () => void;
   handleModalOpen: VoidFunction;
   handleModalClose: VoidFunction;
+  handleToggleRoleChange: (id: number) => void;
   setUsers: (element: User[]) => void;
   setJsonData: (data: CategoryData[] | null) => void; // Dodaj metodę setJsonData do kontekstu
   getEmbedYTLink: (link: string) => string;
@@ -35,6 +36,7 @@ export const OrderAiContext = createContext<OrderAiContextType>({
   handleUserChange: () => { },
   handleModalOpen: () => null,
   handleModalClose: () => null,
+  handleToggleRoleChange: () => { },
   setUsers: () => null,
   setJsonData: () => null, // Dodaj inicjalne ustawienie dla setJsonData
   getEmbedYTLink: () => ''

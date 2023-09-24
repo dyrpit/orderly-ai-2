@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { OrderAiContext } from "./ContextProvider";
 import { CategoryData, User } from "./types";
-import { fetchDataAndSetState } from "./utils";
+import { fetchDataAndSetState, toggleRole } from "./utils";
 // import { toggleRole } from "./utils";
 
 export const useOrderAi = () => {
@@ -23,6 +23,14 @@ export const useOrderAi = () => {
 
   const handleCategoryChange = () => {
     // Implement user data changes as needed
+  };
+
+  const handleToggleRoleChange = (id: number) => {
+    setUsers(users => users.map((user) => {
+      return user.id === id
+        ? { ...user, role: toggleRole(user) }
+        : user;
+    }));
   };
 
   const changeModal = (element: string) => {
@@ -53,6 +61,7 @@ export const useOrderAi = () => {
     handleUserChange,
     handleModalOpen,
     handleModalClose,
+    handleToggleRoleChange,
     getEmbedYTLink,
     setUsers,
   };
