@@ -3,7 +3,9 @@ import { BreadcrumbsContainer, CrumbContainer, StyledLink } from "./Breadcrumbs.
 
 export function Breadcrumbs() {
   const location = useLocation();
-  const crumbs = location.pathname.split("/").filter((crumb) => crumb !== "");
+  const crumbs = decodeURIComponent(location.pathname)
+    .split("/")
+    .filter((crumb) => crumb !== "");
 
   const breadcrumbElements = crumbs.map((crumb, index) => {
     const path = `/${crumbs.slice(0, index + 1).join("/")}`;

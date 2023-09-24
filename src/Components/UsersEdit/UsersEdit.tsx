@@ -5,7 +5,8 @@ import { OrderAiContext } from "../../Context/ContextProvider";
 import { UserRole } from "../../Context/types";
 
 export function UsersEdit() {
-  const { users, handleToggleRoleChange } = useContext(OrderAiContext);
+  const { users } = useContext(OrderAiContext);
+  console.log(users);
 
   return (
     <UsersEditContainer>
@@ -20,7 +21,7 @@ export function UsersEdit() {
                   <Checkbox
                     defaultChecked={role === UserRole.admin ? true : false}
                     color="primary"
-                    onChange={() => handleToggleRoleChange(id)}
+                  // onChange={() => handleToggleRoleChange(id)}
                   />
                 }
                 label="Admin" labelPlacement="end"
