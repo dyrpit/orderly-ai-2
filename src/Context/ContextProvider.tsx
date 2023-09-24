@@ -1,15 +1,13 @@
-import { ReactNode, createContext } from "react";
+import { ReactNode, createContext, useState } from "react";
 import { useOrderAi } from "./useOrderAi";
-import { Category, ProductType, User } from "./types";
+import { CategoryData, User } from "./types";
 
 type OrderAiContextType = {
-  showButtons: string;
   isModalOpen: boolean;
   currentModal: string;
-  categories: Category[] | null;
-  products: ProductType[];
+  categories: CategoryData[] | null;
   users: User[];
-  showHideLoginButtons: VoidFunction;
+  jsonData: CategoryData[] | null; // Dodaj pole jsonData do kontekstu
   changeModal: (element: string) => void;
   handleCategoryChange: VoidFunction;
   handleItemChange: () => void;
@@ -17,6 +15,9 @@ type OrderAiContextType = {
   handleModalOpen: VoidFunction;
   handleModalClose: VoidFunction;
   handleToggleRoleChange: (id: number) => void;
+  setUsers: (element: User[]) => void;
+  setJsonData: (data: CategoryData[] | null) => void; // Dodaj metodę setJsonData do kontekstu
+  getEmbedYTLink: (link: string) => string;
 };
 
 type OrderAiContextProviderProps = {
@@ -24,25 +25,31 @@ type OrderAiContextProviderProps = {
 };
 
 export const OrderAiContext = createContext<OrderAiContextType>({
-  showButtons: "none",
   isModalOpen: false,
   currentModal: "none",
-  categories: [],
-  products: [],
+  categories: null,
   users: [],
-  showHideLoginButtons: () => null,
+  jsonData: null, // Inicjalnie ustaw null dla jsonData
   changeModal: () => null,
   handleCategoryChange: () => null,
   handleItemChange: () => { },
   handleUserChange: () => { },
   handleModalOpen: () => null,
   handleModalClose: () => null,
-  handleToggleRoleChange: () => { }
+  handleToggleRoleChange: () => { },
+  setUsers: () => null,
+  setJsonData: () => null, // Dodaj inicjalne ustawienie dla setJsonData
+  getEmbedYTLink: () => ''
 });
 
-//Nie dotykajcie ;)
 export const OrderAiContextProvider = ({ children }: OrderAiContextProviderProps) => {
-  const value = useOrderAi();
+  const [jsonData, setJsonData] = useState<CategoryData[] | null>(null); // Inicjalizuj stan dla jsonData
+
+  const value = {
+    ...useOrderAi(),
+    jsonData, // Przekaż jsonData do kontekstu
+    setJsonData, // Przekaż setJsonData do kontekstu
+  };
 
   return <OrderAiContext.Provider value={value}>{children}</OrderAiContext.Provider>;
 };

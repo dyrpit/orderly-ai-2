@@ -5,10 +5,10 @@ import { Outlet } from "react-router-dom";
 export const AdminPage = () => {
   return (
     <Grid container spacing={2}>
-      <Grid item laptop={3} tablet={4} mobile={12}>
+      <Grid item laptop={3} tablet={0} mobile={12}>
         <AdminNavbar />
       </Grid>
-      <Grid item laptop={9} tablet={8} mobile={12}>
+      <Grid item laptop={9} tablet={12} mobile={12}>
         <Outlet />
       </Grid>
     </Grid>
