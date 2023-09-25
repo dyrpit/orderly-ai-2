@@ -29,7 +29,7 @@ export const StyledGridContainer = styled(Grid)({
  },
 });
 
-export const ColoursGrid = styled("div")({
+export const ColorsGrid = styled("div")({
  display: "flex",
  flexDirection: "row",
  flexWrap: "wrap",
@@ -37,7 +37,7 @@ export const ColoursGrid = styled("div")({
  justifyContent: "center",
 });
 
-export const ColourCircle = styled("div")({
+export const ColorCircle = styled("div")({
  width: "60px",
  height: "60px",
  borderRadius: "50%",
@@ -51,4 +51,42 @@ export const ColourCircle = styled("div")({
   borderRadius: "25%",
   transform: "scale(1.1)",
  },
+});
+
+export const StyledImageContainer = styled("div")({
+ display: "flex",
+ flexDirection: "column",
+ justifyContent: "center",
+ alignItems: "center",
+ maxWidth: "100%",
+ height: "260px",
+ margin: "10px auto",
+});
+
+export const StyledImage = styled("img")({
+ width: "auto",
+ maxWidth: "100%",
+ height: "auto",
+ maxHeight: "100%",
+ display: "block",
+ margin: "10px auto",
+ borderRadius: "10px",
+ border: "2px solid #fff",
+});
+
+export const StyledImagePreview = styled("div")({
+ height: "260px",
+ display: "flex",
+ flexDirection: "column",
+ justifyContent: "center",
+ alignItems: "center",
+ width: "100%",
+ margin: "10px auto",
+ borderRadius: "10px",
+ border: "2px solid #fff",
+});
+
+export const StyledPreviewText = styled(Typography)({
+ color: "#666",
+ variant: "subtitle2",
 });

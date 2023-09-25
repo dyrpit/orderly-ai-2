@@ -20,12 +20,12 @@ export const EditCategory = () => {
 
  useEffect(() => {
   if (id && categories) {
-   for (var i = 0; i < categories.length; i++) {
-    if (categories[i].id == id) {
+   for (let i = 0; i < categories.length; i++) {
+    if (categories[i].id === id) {
      setName(categories[i].name);
      setImageUrl(categories[i].imageUrl);
      setItemColor(categories[i].color);
-     break; // Exit the loop once the data is found
+     break; 
     }
    }
   }
@@ -38,7 +38,6 @@ export const EditCategory = () => {
  };
 
  const handleImageUrlChange = (event: { target: { value: SetStateAction<string> } }) => {
-  // Update the state with the new image URL
   setImageUrl(event.target.value);
  };
 

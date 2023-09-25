@@ -19,6 +19,7 @@ export const StyledName = styled(Typography)(({ theme }) => ({
   fontSize: "40px",
  },
 }));
+
 export const StyledGridContainer = styled(Grid)({
  display: "flex",
  justifyContent: "space-between",
@@ -27,4 +28,26 @@ export const StyledGridContainer = styled(Grid)({
   display: "flex",
   flexDirection: "column",
  },
+});
+
+export const StyledImageContainer = styled("div")(({}) => ({
+ display: "flex",
+ flexDirection: "column",
+ justifyContent: "center",
+ alignItems: "center",
+ maxWidth: "100%",
+ height: "260px",
+ margin: "10px auto",
+}));
+
+export const StyledImagePreview = styled("div")({
+ height: "260px",
+ display: "flex",
+ flexDirection: "column",
+ justifyContent: "center",
+ alignItems: "center",
+ width: "100%",
+ margin: "10px auto",
+ borderRadius: "10px",
+ border: "2px solid #fff",
 });

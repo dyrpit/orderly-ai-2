@@ -1,56 +1,36 @@
-import React, { useState, useEffect } from "react";
-import {
- Checkbox,
- MenuItem,
- Select,
- OutlinedInput,
- SelectChangeEvent, // Import the SelectChangeEvent type
-} from "@mui/material";
-import { theme } from "../../Theme/ThemeProvider";
+import React from "react";
+import { Checkbox, MenuItem, Select, OutlinedInput, FormControl } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
 
 interface SelectListCheckmarksProps {
+ field: {
+  name: string;
+  value: any;
+  onChange: (event: SelectChangeEvent<string[]>, child: React.ReactNode) => void;
+  onBlur: (event: React.FocusEvent<any, Element>) => void;
+ };
+ form: {
+  touched: { [field: string]: boolean };
+  errors: { [field: string]: string };
+ };
+ name: string;
  items: string[];
- defaultSelected: string;
 }
 
-//*Need to pass items and defaultSelected props to this component
-//*Ex. <SelectListCheckmarks items={names} defaultSelected={""}></SelectListCheckmarks>
-
-export const SelectListCheckmarks: React.FC<SelectListCheckmarksProps> = (props) => {
- const { items, defaultSelected } = props; // Destructure props
- const [selectedItems, setSelectedItems] = useState<string[]>([]);
- const isDefaultSelectedValid = items.includes(defaultSelected);
-
-
- useEffect(() => {
-  if (isDefaultSelectedValid) {
-   setSelectedItems([defaultSelected]);
-  } else {
-   setSelectedItems([]);
-  }
- }, [defaultSelected, isDefaultSelectedValid]);
-
- const handleChange = (event: SelectChangeEvent<string[]>) => {
-  setSelectedItems(event.target.value as string[]);
- };
+export const SelectListCheckmarks: React.FC<SelectListCheckmarksProps> = ({ field, form, name, items }) => {
+ const isError = Boolean(form.touched[name] && form.errors[name]);
 
  return (
-  <Select
-   labelId="demo-multiple-checkbox-label"
-   id="demo-multiple-checkbox"
-   multiple
-   value={selectedItems}
-   onChange={handleChange}
-   input={<OutlinedInput label="Tag" />}
-   renderValue={(selected) => selected.join(", ")}
-   sx={{ borderRadius: "10px", height: "36px", backgroundColor: theme.palette.info.main, width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-   {items.map((name, index) => (
-    <MenuItem key={index} value={name}>
-     <Checkbox checked={items.indexOf(name) > -1} />
-
-     {name}
-    </MenuItem>
-   ))}
-  </Select>
+  <FormControl fullWidth variant="outlined" error={isError}>
+   <Select {...field} value={field.value || []} multiple input={<OutlinedInput label={name} />} renderValue={(selected) => (selected as string[]).join(", ")}>
+    {items.map((item) => (
+     <MenuItem key={item} value={item}>
+      <Checkbox checked={(field.value as string[]).indexOf(item) > -1} />
+      {item}
+     </MenuItem>
+    ))}
+   </Select>
+   {isError && <div>{form.errors[name]}</div>}
+  </FormControl>
  );
 };

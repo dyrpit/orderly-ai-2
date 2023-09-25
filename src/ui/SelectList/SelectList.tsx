@@ -1,63 +1,34 @@
-import React, { useState, useEffect } from "react";
-import {
- MenuItem,
- Select,
- OutlinedInput,
- SelectChangeEvent, // Import the SelectChangeEvent type
-} from "@mui/material";
-import { theme } from "../../Theme/ThemeProvider";
+import React from "react";
+import { MenuItem, Select, OutlinedInput, FormControl, SelectChangeEvent } from "@mui/material";
 
 interface SelectListProps {
+ field: {
+  name: string;
+  value: any;
+  onChange: (event: SelectChangeEvent<any>, child: React.ReactNode) => void;
+  onBlur: (e: React.FocusEvent<any>) => void;
+ };
+ form: {
+  touched: { [field: string]: boolean };
+  errors: { [field: string]: string };
+ };
+ name: string;
  items: string[];
- defaultSelected: string;
 }
 
-//*Need to pass items and defaultSelected props to this component
-//*Ex. <SelectList items={names} defaultSelected={""}></SelectList>
-
-export const SelectList: React.FC<SelectListProps> = (props) => {
- const { items, defaultSelected } = props; // Destructure props
- const [selectedItems, setSelectedItems] = useState<string[]>([]);
- const isDefaultSelectedValid = items.includes(defaultSelected);
-
-
- useEffect(() => {
-  if (isDefaultSelectedValid) {
-   setSelectedItems([defaultSelected]);
-  } else {
-   // If it's not valid, set an empty array
-   setSelectedItems([]);
-  }
- }, [defaultSelected, isDefaultSelectedValid]);
-
- const handleChange = (event: SelectChangeEvent<string[]>) => {
-  setSelectedItems(event.target.value as string[]);
- };
+export const SelectList: React.FC<SelectListProps> = ({ field, form, name, items }) => {
+ const isError = Boolean(form.touched[name] && form.errors[name]);
 
  return (
-  <Select
-   value={selectedItems}
-   onChange={handleChange}
-   input={<OutlinedInput label="Tag" />}
-   sx={{
-    borderRadius: "10px",
-    height: "36px",
-    backgroundColor: theme.palette.info.main,
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    width: "100%",
-   }}>
-   {items.map((name, index) => (
-    <MenuItem
-     value={name}
-     key={index}
-     sx={{
-      width: "100%",
-     }}>
-     {name}
-    </MenuItem>
-   ))}
-  </Select>
+  <FormControl fullWidth variant="outlined" error={isError}>
+   <Select {...field} value={field.value || ""} input={<OutlinedInput label={name} />}>
+    {items.map((item) => (
+     <MenuItem value={item} key={item}>
+      {item}
+     </MenuItem>
+    ))}
+   </Select>
+   {isError && <div>{form.errors[name]}</div>}
+  </FormControl>
  );
 };
