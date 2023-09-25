@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext } from "react";
 import { useOrderAi } from "./useOrderAi";
 import { CategoryData, User } from "./types";
 
@@ -6,8 +6,8 @@ type OrderAiContextType = {
   isModalOpen: boolean;
   currentModal: string;
   categories: CategoryData[] | null;
+  jsonData: CategoryData[] | null;
   users: User[];
-  // Usuń jsonData z kontekstu
   changeModal: (element: string) => void;
   handleCategoryChange: VoidFunction;
   handleItemChange: () => void;
@@ -16,8 +16,8 @@ type OrderAiContextType = {
   handleModalClose: VoidFunction;
   handleToggleRoleChange: (id: number) => void;
   setUsers: (element: User[]) => void;
-  // Usuń setJsonData z kontekstu
   getEmbedYTLink: (link: string) => string;
+  setJsonData: (data: CategoryData[] | null) => void;
 };
 
 type OrderAiContextProviderProps = {
@@ -28,6 +28,7 @@ export const OrderAiContext = createContext<OrderAiContextType>({
   isModalOpen: false,
   currentModal: "none",
   categories: null,
+  jsonData: null,
   users: [],
   changeModal: () => null,
   handleCategoryChange: () => null,
@@ -37,13 +38,11 @@ export const OrderAiContext = createContext<OrderAiContextType>({
   handleModalClose: () => null,
   handleToggleRoleChange: () => { },
   setUsers: () => null,
-  getEmbedYTLink: () => ''
+  getEmbedYTLink: () => '',
+  setJsonData: () => { }
 });
 
 export const OrderAiContextProvider = ({ children }: OrderAiContextProviderProps) => {
-  const value = {
-    ...useOrderAi(),
-  };
-
+  const value = useOrderAi()
   return <OrderAiContext.Provider value={value}>{children}</OrderAiContext.Provider>;
 };

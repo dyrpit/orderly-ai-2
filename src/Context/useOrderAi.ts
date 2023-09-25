@@ -8,7 +8,7 @@ export const useOrderAi = () => {
   const [currentModal, setCurrentModal] = useState("none");
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const [jsonData, setJsonData] = useState<CategoryData[] | null>(null); // Przenieś jsonData do hooka
+  const [jsonData, setJsonData] = useState<CategoryData[] | null>(null);
 
   fetchDataAndSetState("/src/Data/categories.json", setCategories);
   fetchDataAndSetState("/src/Data/users.json", ({ users }) => setUsers(users));
