@@ -44,11 +44,10 @@ export const Menu = () => {
   changeModal("Import");
  };
 
-  const Export = () => {
-   handleModalOpen();
-    changeModal("Export");
+ const Export = () => {
+  handleModalOpen();
+  changeModal("Export");
  };
-
 
  const optionButtons = [
   {
