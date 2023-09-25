@@ -1,20 +1,39 @@
-import React, { useContext, useState, ChangeEvent } from "react";
+import { useContext, useState } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import Modal from "@mui/material/Modal";
 import { ExportModalContainer } from "./ExportModal.style";
-import img from "./No-Memes-15.jpg"
 
 export function ExportModal() {
-  const { changeModal, handleModalClose, isModalOpen } = useContext(OrderAiContext);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const { handleModalClose, isModalOpen, jsonData, categories } = useContext(OrderAiContext);
+  const [exportedData, setExportedData] = useState<string | null>(null);
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files[0];
+  const exportToJson = () => {
+    const dataToExport = jsonData || categories || {}; 
+    const jsonDataString = JSON.stringify(dataToExport, null, 2);
+    const blob = new Blob([jsonDataString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    setExportedData(url);
+  };
+
+  const resetExportedData = () => {
+    setExportedData(null);
   };
 
   return (
     <Modal open={isModalOpen} onClose={handleModalClose}>
-        <ExportModalContainer><img src={img}></img></ExportModalContainer>
+      <ExportModalContainer>
+        {exportedData ? (
+          <div>
+            <a href={exportedData} download="exported_data.json">
+              Pobierz dane JSON
+            </a>
+            <button onClick={resetExportedData}>Zamknij</button>
+          </div>
+        ) : (
+          <button onClick={exportToJson}>Eksportuj dane do JSON</button>
+        )}
+      </ExportModalContainer>
     </Modal>
   );
 }
