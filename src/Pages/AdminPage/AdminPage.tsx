@@ -1,6 +1,5 @@
 import { Grid } from "@mui/material";
 import { AdminNavbar } from "../../Components/AdminNavbar/AdminNavbar";
-import { AddCategory, AddItem, UsersEdit } from "../../Components";
 import { Outlet } from "react-router-dom";
 
 export const AdminPage = () => {
@@ -10,7 +9,7 @@ export const AdminPage = () => {
         <AdminNavbar />
       </Grid>
       <Grid item laptop={9} tablet={12} mobile={12}>
-        <Outlet/>
+        <Outlet />
       </Grid>
     </Grid>
   );
