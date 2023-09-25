@@ -6,8 +6,9 @@ import "./EditItem.css";
 import { useEditItemEffects } from "./EditItem.effect";
 import { useParams } from "react-router";
 import { useOrderAi } from "../../Context/useOrderAi";
-import { CategoryData, ProductData } from "../../Context/types";
+import { CategoryData, ProductData, User, UserRole } from "../../Context/types";
 import { useEffect, useState } from "react";
+import useDecrypt from "../../Hooks/useDecrypt";
 
 const names = ["Darmowa", "Płatna"];
 
@@ -15,7 +16,6 @@ export const EditItem = () => {
  const { categories } = useOrderAi();
  const { form } = useEditItemEffects();
  const { id } = useParams<{ id: string }>();
-
  const [foundData, setFoundData] = useState<{ product: ProductData | null; category: CategoryData | null }>({
   product: null,
   category: null,
@@ -23,6 +23,9 @@ export const EditItem = () => {
  const { product, category } = foundData ?? { product: null, category: null };
  const { name, license = "", website, youtubeUrl, description } = product || {};
  const categoryName = category?.name ?? "";
+ const { parseJwtToken } = useDecrypt();
+ const user: User | undefined = parseJwtToken();
+
  useEffect(() => {
   if (!id || !categories) {
    console.log("null dziwko");
@@ -58,13 +61,15 @@ export const EditItem = () => {
       />
      </Grid>
      <Grid container justifyContent={"end"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-      <Grid container justifyContent={"space-between"}>
+      <Grid container justifyContent={"end"}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       <StyledIconButton>
-        <img src="../../../src/assets/clarity_trash-line.png" />
-       </StyledIconButton>
+       {user && user.role === UserRole.admin ? (
+        <StyledIconButton>
+         <img src="../../../src/assets/clarity_trash-line.png" />
+        </StyledIconButton>
+       ) : null}
        <StyledIconButton>
         <img src="../../../src/assets/clarity_close-line.png" />
        </StyledIconButton>
