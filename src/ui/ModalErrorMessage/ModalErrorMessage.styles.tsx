@@ -2,7 +2,8 @@ import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const ModalErrorMessage = styled(Box)(({ theme: theme }) => ({
- width: "512px",
+ maxWidth: "512px",
+ width: "100%",
  height: "30px",
  fontSize: "12px",
  marginLeft: "20%",

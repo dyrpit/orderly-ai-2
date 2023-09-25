@@ -2,7 +2,8 @@ import { TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const ModalInput = styled(TextField)(({ theme: theme }) => ({
- width: "512px",
+ maxWidth: "512px",
+ width: "100%",
  height: "60px",
  borderRadius: "14px",
  background: theme.palette.info.dark,
