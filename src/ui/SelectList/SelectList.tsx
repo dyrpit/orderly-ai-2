@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
- MenuItem,
- Select,
- OutlinedInput,
- SelectChangeEvent, // Import the SelectChangeEvent type
-} from "@mui/material";
+import { MenuItem, Select, OutlinedInput, SelectChangeEvent } from "@mui/material";
 import { theme } from "../../Theme/ThemeProvider";
 
 interface SelectListProps {
@@ -12,20 +7,15 @@ interface SelectListProps {
  defaultSelected: string;
 }
 
-//*Need to pass items and defaultSelected props to this component
-//*Ex. <SelectList items={names} defaultSelected={""}></SelectList>
-
 export const SelectList: React.FC<SelectListProps> = (props) => {
- const { items, defaultSelected } = props; // Destructure props
+ const { items, defaultSelected } = props;
  const [selectedItems, setSelectedItems] = useState<string[]>([]);
  const isDefaultSelectedValid = items.includes(defaultSelected);
-
 
  useEffect(() => {
   if (isDefaultSelectedValid) {
    setSelectedItems([defaultSelected]);
   } else {
-   // If it's not valid, set an empty array
    setSelectedItems([]);
   }
  }, [defaultSelected, isDefaultSelectedValid]);

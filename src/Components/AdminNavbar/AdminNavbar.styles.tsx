@@ -13,7 +13,7 @@ export const ANContainer = styled(Box)(({ theme: theme }) => ({
  display: "flex",
  flexDirection: "column",
  gap: "20px",
- alignItems: "center", // Center items vertically
+ alignItems: "center",
  textAlign: "center",
  borderRadius: "15px",
  [theme.breakpoints.down("laptop")]: {
@@ -33,15 +33,14 @@ export const ANList = styled(List)(() => ({
  scrollbarColor: "transparent transparent",
  scrollbarWidth: "thin",
 
- // Hide the scrollbar thumb and track in Webkit browsers
  "&::-webkit-scrollbar": {
-  width: "8px", // Adjust the width as needed
+  width: "8px",
  },
  "&::-webkit-scrollbar-thumb": {
-  background: "transparent", // Hide the thumb
+  background: "transparent",
  },
  "&::-webkit-scrollbar-track": {
-  background: "transparent", // Hide the track
+  background: "transparent",
  },
 }));
 
@@ -50,8 +49,8 @@ export const ANListItem = styled(ListItem)(() => ({
  background: "#2f3238",
  borderRadius: "0.5em",
  position: "relative",
- left: "-100%", // Initial state, off-screen to the left
- transition: "left 0.5s ease-in-out", // Add transition for left property
+ left: "-100%",
+ transition: "left 0.5s ease-in-out",
  transitionDelay: "calc(60ms * var(--delay))",
 }));
 

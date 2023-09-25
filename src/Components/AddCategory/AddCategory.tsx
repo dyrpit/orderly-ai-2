@@ -17,7 +17,6 @@ export const AddCategory = () => {
  const [imageUrl, setImageUrl] = useState("");
 
  const handleImageUrlChange = (event: { target: { value: SetStateAction<string> } }) => {
-  // Update the state with the new image URL
   setImageUrl(event.target.value);
  };
 
@@ -111,12 +110,7 @@ export const AddCategory = () => {
       <Label htmlFor="colour">Colour:</Label>
       <ColoursGrid>
        {colors.map((color, index) => (
-        <ColourCircle 
-        key={index} 
-        className={`color-circle ${selectedColor === color ? "selected" : ""}`} 
-        style={{ backgroundColor: color }} 
-        onClick={() => handleColorClick(color)}>
-        </ColourCircle>
+        <ColourCircle key={index} className={`color-circle ${selectedColor === color ? "selected" : ""}`} style={{ backgroundColor: color }} onClick={() => handleColorClick(color)}></ColourCircle>
        ))}
       </ColoursGrid>
      </Grid>

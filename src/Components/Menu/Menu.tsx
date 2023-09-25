@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { StyledCloseIcon, StyledDrawer, StyledIconButton, StyledIconButtonMenu, StyledLogoContainer, StyledMenu, StyledMenuIcon } from "./Menu.styles";
 import { Box, Divider, ListItem, ListItemButton, ListItemIcon } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
@@ -11,6 +11,7 @@ import { SignIn } from "..";
 import { SignOut } from "../SignButtons/SignOut";
 import { AdminPanel } from "../SignButtons/AdminPanel";
 import useAuth from "../../Hooks/useAuth";
+import useClickOutside from "../../Hooks/useClickOutside";
 
 const imgStyle = {
  width: "100%",
@@ -65,6 +66,14 @@ export const Menu = () => {
   position: "absolute",
   backgroundColor: "#5C358E",
  };
+
+ const outsideClickRef = useRef(null);
+ const handleClickOutsideMenuButtons = () => {
+  console.log("Outside");
+  setShowButtons("none");
+ };
+ useClickOutside(outsideClickRef, handleClickOutsideMenuButtons);
+
  return (
   <Box>
    <StyledMenu>
@@ -96,7 +105,7 @@ export const Menu = () => {
      ))}
     </List>
    </StyledDrawer>
-   <Box sx={buttonsContainerStyles}>
+   <Box sx={buttonsContainerStyles} ref={outsideClickRef}>
     {getIsTokenExist() ? (
      <>
       <SignOut />
