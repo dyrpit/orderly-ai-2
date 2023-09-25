@@ -10,34 +10,31 @@ export const AddItem = () => {
  const [youtubeUrl, setYoutubeUrl] = useState("");
  const [youtubeEmbedUrl, setYoutubeEmbedUrl] = useState("");
 
- // Function to extract the video ID from a YouTube URL
  const getYouTubeVideoId = (url: string) => {
   const videoIdMatch = url.slice(-11);
   return videoIdMatch;
  };
 
- // Function to update the embedded YouTube video URL
- const updateEmbedUrl = (pastedText:string) => {
+ const updateEmbedUrl = (pastedText: string) => {
   const videoId = getYouTubeVideoId(pastedText);
   if (videoId) {
    setYoutubeEmbedUrl(`https://www.youtube.com/embed/${videoId}`);
   } else {
-   setYoutubeEmbedUrl(""); // Clear the iframe source if no valid video ID is found
+   setYoutubeEmbedUrl("");
   }
  };
 
- // Handle changes in the YouTube URL input field
  const handleYoutubeUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   const newUrl = event.target.value;
   updateEmbedUrl(newUrl);
  };
 
-const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
- const pastedText = event.clipboardData.getData("text");
- setYoutubeUrl(pastedText); // Set the pasted text as the input value
- updateEmbedUrl(pastedText);
- event.preventDefault(); // Prevent the default paste behavior
-};
+ const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+  const pastedText = event.clipboardData.getData("text");
+  setYoutubeUrl(pastedText);
+  updateEmbedUrl(pastedText);
+  event.preventDefault();
+ };
 
  return (
   <StyledAdminContentContainer>

@@ -36,12 +36,10 @@ export const UsersEditListItem = styled(ListItem)(() => ({
 }));
 
 export const UsersEditCheckbox = styled(FormControlLabel)(({}) => ({
- alignSelf: "flex-end", // Stick the checkbox to the right
+ alignSelf: "flex-end",
  width: "100%",
  margin: "auto 0 auto 0",
  paddingRight: "10px",
 }));
 
-export const UsersEditButton = styled(StyledButton)(({ theme: theme }) => ({
-    
-}));
+export const UsersEditButton = styled(StyledButton)(({ theme: theme }) => ({}));
