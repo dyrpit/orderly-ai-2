@@ -9,7 +9,6 @@ import { OrderAiContext } from "../../Context/ContextProvider";
 import "./Menu.css";
 import { SignIn } from "..";
 import { SignOut } from "../SignButtons/SignOut";
-import { ImportModal } from "../ImportModal/ImportModal";
 import { AdminPanel } from "../SignButtons/AdminPanel";
 import useAuth from "../../Hooks/useAuth";
 
@@ -40,9 +39,9 @@ export const Menu = () => {
  };
 
  const Import = () => {
-    handleModalOpen();
-     changeModal("Import");
-  };
+  handleModalOpen();
+  changeModal("Import");
+ };
 
   const Export = () => {
    handleModalOpen();
@@ -76,13 +75,11 @@ export const Menu = () => {
  return (
   <Box>
    <StyledMenu>
-    {optionButtons.map(({ img, name, eventClick}) => (
+    {optionButtons.map(({ img, name, eventClick }) => (
      <StyledIconButton onClick={eventClick} key={name}>
       <img src={img} />
      </StyledIconButton>
-     
     ))}
-    
    </StyledMenu>
    {open ? (
     <StyledIconButtonMenu onClick={handleDrawerClose} sx={{ display: "flex", justifyContent: "end" }}>
