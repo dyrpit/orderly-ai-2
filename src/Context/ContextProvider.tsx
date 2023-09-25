@@ -7,7 +7,7 @@ type OrderAiContextType = {
   currentModal: string;
   categories: CategoryData[] | null;
   users: User[];
-  jsonData: CategoryData[] | null; // Dodaj pole jsonData do kontekstu
+  // Usuń jsonData z kontekstu
   changeModal: (element: string) => void;
   handleCategoryChange: VoidFunction;
   handleItemChange: () => void;
@@ -16,7 +16,7 @@ type OrderAiContextType = {
   handleModalClose: VoidFunction;
   handleToggleRoleChange: (id: number) => void;
   setUsers: (element: User[]) => void;
-  setJsonData: (data: CategoryData[] | null) => void; // Dodaj metodę setJsonData do kontekstu
+  // Usuń setJsonData z kontekstu
   getEmbedYTLink: (link: string) => string;
 };
 
@@ -29,7 +29,6 @@ export const OrderAiContext = createContext<OrderAiContextType>({
   currentModal: "none",
   categories: null,
   users: [],
-  jsonData: null, // Inicjalnie ustaw null dla jsonData
   changeModal: () => null,
   handleCategoryChange: () => null,
   handleItemChange: () => { },
@@ -38,17 +37,12 @@ export const OrderAiContext = createContext<OrderAiContextType>({
   handleModalClose: () => null,
   handleToggleRoleChange: () => { },
   setUsers: () => null,
-  setJsonData: () => null, // Dodaj inicjalne ustawienie dla setJsonData
   getEmbedYTLink: () => ''
 });
 
 export const OrderAiContextProvider = ({ children }: OrderAiContextProviderProps) => {
-  const [jsonData, setJsonData] = useState<CategoryData[] | null>(null); // Inicjalizuj stan dla jsonData
-
   const value = {
     ...useOrderAi(),
-    jsonData, // Przekaż jsonData do kontekstu
-    setJsonData, // Przekaż setJsonData do kontekstu
   };
 
   return <OrderAiContext.Provider value={value}>{children}</OrderAiContext.Provider>;
