@@ -10,7 +10,7 @@
    "id": 2,
    "email": "regular@regular.com",
    "password": "Regular123!",
-   "role": "regular"
+   "role": "user"
   },
   {
    "id": 3,

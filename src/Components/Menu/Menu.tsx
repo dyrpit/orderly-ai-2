@@ -39,20 +39,27 @@ export const Menu = () => {
   }
  };
 
- const test = () => {
+ const Import = () => {
   handleModalOpen();
   changeModal("Import");
  };
+
+  const Export = () => {
+   handleModalOpen();
+    changeModal("Export");
+ };
+
 
  const optionButtons = [
   {
    name: "Import",
    img: "../../../src/assets/clarity_import-line.png",
-   eventClick: test,
+   eventClick: Import,
   },
   {
    name: "Export",
    img: "../../../src/assets/clarity_export-line.png",
+   eventClick: Export,
   },
   {
    name: "Login",
