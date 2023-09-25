@@ -2,7 +2,8 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const ModalSubHeader = styled(Typography)(({ theme: theme }) => ({
- width: "288px",
+ maxWidth: "288px",
+ width: "100%",
  height: "20px",
  color: theme.palette.text.secondary,
  textAlign: "center",

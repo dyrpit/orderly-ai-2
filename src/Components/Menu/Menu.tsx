@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { StyledCloseIcon, StyledDrawer, StyledIconButton, StyledIconButtonMenu, StyledLogoContainer, StyledMenu, StyledMenuIcon } from "./Menu.styles";
-import { Box, Divider, ListItem, ListItemButton, ListItemIcon } from "@mui/material";
-import ListItemText from "@mui/material/ListItemText";
+import { Box, Divider, ListItem, ListItemButton } from "@mui/material";
 import List from "@mui/material/List";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
@@ -32,10 +31,8 @@ export const Menu = () => {
  const showHideLoginButtons = () => {
   if (showButtons === "none") {
    setShowButtons("block");
-   changeModal("none");
   } else {
    setShowButtons("none");
-   changeModal("none");
   }
  };
 
@@ -44,11 +41,10 @@ export const Menu = () => {
   changeModal("Import");
  };
 
-  const Export = () => {
-   handleModalOpen();
-    changeModal("Export");
+ const Export = () => {
+  handleModalOpen();
+  changeModal("Export");
  };
-
 
  const optionButtons = [
   {
@@ -76,7 +72,6 @@ export const Menu = () => {
 
  const outsideClickRef = useRef(null);
  const handleClickOutsideMenuButtons = () => {
-  console.log("Outside");
   setShowButtons("none");
  };
  useClickOutside(outsideClickRef, handleClickOutsideMenuButtons);
@@ -100,16 +95,20 @@ export const Menu = () => {
    <StyledDrawer variant="persistent" anchor="right" open={open}>
     <Divider />
     <List>
-     {optionButtons.map(({ img, name }) => (
-      <ListItem key={name}>
-       <ListItemButton>
-        <ListItemIcon>
-         <img src={img} />
-        </ListItemIcon>
-        <ListItemText>{name}</ListItemText>
-       </ListItemButton>
-      </ListItem>
-     ))}
+     <ListItem>
+      <ListItemButton>
+       <Box>
+        {getIsTokenExist() ? (
+         <>
+          <SignOut />
+          <AdminPanel />
+         </>
+        ) : (
+         <SignIn />
+        )}
+       </Box>
+      </ListItemButton>
+     </ListItem>
     </List>
    </StyledDrawer>
    <Box sx={buttonsContainerStyles} ref={outsideClickRef}>
