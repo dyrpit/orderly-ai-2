@@ -2,9 +2,10 @@ import React, { useContext, useState, ChangeEvent } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import Modal from "@mui/material/Modal";
 import { ExportModalContainer } from "./ExportModal.style";
+import img from "./No-Memes-15.jpg"
 
-export function ImportModal() {
-  const { changeModal, handleModalClose, isModalOpen, setJsonData } = useContext(OrderAiContext);
+export function ExportModal() {
+  const { changeModal, handleModalClose, isModalOpen } = useContext(OrderAiContext);
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -13,7 +14,7 @@ export function ImportModal() {
 
   return (
     <Modal open={isModalOpen} onClose={handleModalClose}>
-        <ExportModalContainer>Test</ExportModalContainer>
+        <ExportModalContainer><img src={img}></img></ExportModalContainer>
     </Modal>
   );
 }
