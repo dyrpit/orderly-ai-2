@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext } from "react";
 import { useOrderAi } from "./useOrderAi";
 import { CategoryData, User } from "./types";
 
@@ -37,13 +37,10 @@ export const OrderAiContext = createContext<OrderAiContextType>({
 });
 
 export const OrderAiContextProvider = ({ children }: OrderAiContextProviderProps) => {
- const [jsonData, setJsonData] = useState<CategoryData[] | null>(null);
+ 
 
- const value = {
-  ...useOrderAi(),
-  jsonData,
-  setJsonData,
- };
+ const value = useOrderAi();
+
 
  return <OrderAiContext.Provider value={value}>{children}</OrderAiContext.Provider>;
 };

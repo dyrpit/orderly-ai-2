@@ -1,6 +1,7 @@
 export enum UserRole {
   admin = "admin",
-  user = "user"
+  user = "user",
+  regular = "regular"
 }
 export interface Category {
   name: string;

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { OrderAiContext } from "./ContextProvider";
 import { CategoryData, User } from "./types";
 import { fetchDataAndSetState, toggleRole } from "./utils";
