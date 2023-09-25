@@ -3,21 +3,18 @@ import { useOrderAi } from "./useOrderAi";
 import { CategoryData, User } from "./types";
 
 type OrderAiContextType = {
-  isModalOpen: boolean;
-  currentModal: string;
-  categories: CategoryData[] | null;
-  jsonData: CategoryData[] | null;
-  users: User[];
-  changeModal: (element: string) => void;
-  handleCategoryChange: VoidFunction;
-  handleItemChange: () => void;
-  handleUserChange: () => void;
-  handleModalOpen: VoidFunction;
-  handleModalClose: VoidFunction;
-  handleToggleRoleChange: (id: number) => void;
-  setUsers: (element: User[]) => void;
-  getEmbedYTLink: (link: string) => string;
-  setJsonData: (data: CategoryData[] | null) => void;
+ isModalOpen: boolean;
+ currentModal: string;
+ categories: CategoryData[] | null;
+ users: User[];
+ jsonData: CategoryData[] | null;
+ changeModal: (element: string) => void;
+ handleModalOpen: VoidFunction;
+ handleModalClose: VoidFunction;
+ handleToggleRoleChange: (id: number) => void;
+ setUsers: (element: User[]) => void;
+ setJsonData: (data: CategoryData[] | null) => void;
+ getEmbedYTLink: (link: string) => string;
 };
 
 type OrderAiContextProviderProps = {
@@ -25,24 +22,25 @@ type OrderAiContextProviderProps = {
 };
 
 export const OrderAiContext = createContext<OrderAiContextType>({
-  isModalOpen: false,
-  currentModal: "none",
-  categories: null,
-  jsonData: null,
-  users: [],
-  changeModal: () => null,
-  handleCategoryChange: () => null,
-  handleItemChange: () => { },
-  handleUserChange: () => { },
-  handleModalOpen: () => null,
-  handleModalClose: () => null,
-  handleToggleRoleChange: () => { },
-  setUsers: () => null,
-  getEmbedYTLink: () => '',
-  setJsonData: () => { }
+ isModalOpen: false,
+ currentModal: "none",
+ categories: null,
+ users: [],
+ jsonData: null,
+ changeModal: () => null,
+ handleModalOpen: () => null,
+ handleModalClose: () => null,
+ handleToggleRoleChange: () => {},
+ setUsers: () => null,
+ setJsonData: () => null,
+ getEmbedYTLink: () => "",
 });
 
 export const OrderAiContextProvider = ({ children }: OrderAiContextProviderProps) => {
-  const value = useOrderAi()
-  return <OrderAiContext.Provider value={value}>{children}</OrderAiContext.Provider>;
+ 
+
+ const value = useOrderAi();
+
+
+ return <OrderAiContext.Provider value={value}>{children}</OrderAiContext.Provider>;
 };

@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import Modal from "@mui/material/Modal";
 import { ExportModalContainer } from "./ExportModal.style";
-import img from "./No-Memes-15.jpg";
 
 export function ExportModal() {
   const { handleModalClose, isModalOpen, jsonData, categories } = useContext(OrderAiContext);
@@ -34,7 +33,6 @@ export function ExportModal() {
         ) : (
           <button onClick={exportToJson}>Eksportuj dane do JSON</button>
         )}
-        <img src={img} alt="Obraz" />
       </ExportModalContainer>
     </Modal>
   );
