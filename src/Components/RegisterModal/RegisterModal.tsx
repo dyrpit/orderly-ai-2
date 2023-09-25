@@ -34,10 +34,16 @@ export function RegisterModal() {
     .required("Required"),
   }),
   onSubmit: (values) => {
-   registerUser({
-    email: values.email,
-    password: values.password,
-   });
+   try {
+    registerUser({
+     email: values.email,
+     password: values.password,
+    });
+    alert(`Successfully registered as ${values.email}`);
+    handleModalClose();
+   } catch (error) {
+    alert("Problem with registration. Try again.");
+   }
   },
  });
 
