@@ -10,65 +10,50 @@ export const useOrderAi = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [jsonData, setJsonData] = useState<CategoryData[] | null>(null);
 
-  fetchDataAndSetState("/src/Data/categories.json", setCategories);
-  fetchDataAndSetState("/src/Data/users.json", ({ users }) => setUsers(users));
+ fetchDataAndSetState("/src/Data/categories.json", setCategories);
+ fetchDataAndSetState("/src/Data/users.json", ({ users }) => setUsers(users));
 
-  const handleUserChange = () => {
-    // Implement user data changes as needed
-  };
+ const handleToggleRoleChange = (id: number) => {
+  setUsers((users) =>
+   users.map((user) => {
+    return user.id === id ? { ...user, role: toggleRole(user) } : user;
+   }),
+  );
+ };
 
-  const handleItemChange = () => {
-    // Implement item data changes as needed
-  };
+ const changeModal = (element: string) => {
+  setCurrentModal(element);
+ };
 
-  const handleCategoryChange = () => {
-    // Implement user data changes as needed
-  };
+ const getEmbedYTLink = (ytLink: string): string => {
+  const url = new URL(ytLink);
+  const ytId = url.searchParams.get("v");
+  if (!ytId) {
+   throw new Error("Not correct yt link");
+  }
+  return `https://www.youtube.com/embed/${ytId}`;
+ };
 
-  const handleToggleRoleChange = (id: number) => {
-    setUsers(users => users.map((user) => {
-      return user.id === id
-        ? { ...user, role: toggleRole(user) }
-        : user;
-    }));
-  };
+ const handleModalOpen = () => setIsModalOpen(true);
 
-  const changeModal = (element: string) => {
-    setCurrentModal(element);
-  };
+ const handleModalClose = () => setIsModalOpen(false);
 
-  const getEmbedYTLink = (ytLink: string): string => {
-    const url = new URL(ytLink);
-    const ytId = url.searchParams.get('v');
-    if (!ytId) {
-      throw new Error('Not correct yt link');
-    }
-    return `https://www.youtube.com/embed/${ytId}`;
-  };
-
-  const handleModalOpen = () => setIsModalOpen(true);
-
-  const handleModalClose = () => setIsModalOpen(false);
-
-  return {
-    isModalOpen,
-    currentModal,
-    categories,
-    users,
-    jsonData,
-    setJsonData,
-    changeModal,
-    handleCategoryChange,
-    handleItemChange,
-    handleUserChange,
-    handleModalOpen,
-    handleModalClose,
-    handleToggleRoleChange,
-    getEmbedYTLink,
-    setUsers,
-  };
+ return {
+  isModalOpen,
+  currentModal,
+  categories,
+  users,
+  jsonData,
+  setJsonData,
+  changeModal,
+  handleModalOpen,
+  handleModalClose,
+  handleToggleRoleChange,
+  getEmbedYTLink,
+  setUsers,
+ };
 };
 
 export const useOrderAiContext = () => {
-  return useContext(OrderAiContext);
+ return useContext(OrderAiContext);
 };

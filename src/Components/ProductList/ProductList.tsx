@@ -6,18 +6,17 @@ import { ProductData } from "../../Context/types";
 import { useParams } from "react-router-dom";
 
 export const ProductList = () => {
-  const { categoryName } = useParams();
-  const { categories } = useContext(OrderAiContext);
-  const category = categories?.find(({ name }) => name === categoryName);
-  const products: ProductData[] = category ? category.products : [];
+ const { categoryName } = useParams();
+ const { categories, jsonData } = useContext(OrderAiContext);
+ const category = categories?.find(({ name }) => name === categoryName);
+ const uploadedCategory = jsonData?.find(({ name }) => name === categoryName);
+ const products: ProductData[] = uploadedCategory ? uploadedCategory.products : category ? category.products : [];
 
-  return (
-    <Grid container flexDirection={"column"} >
-      {
-        products.map((product) => (
-          <Product categoryName={categoryName ?? ''} product={product} key={product.website}></Product>
-        ))
-      }
-    </Grid >
-  );
+ return (
+  <Grid container flexDirection={"column"}>
+   {products.map((product) => (
+    <Product categoryName={categoryName ?? ""} product={product} key={product.id}></Product>
+   ))}
+  </Grid>
+ );
 };

@@ -21,7 +21,7 @@ type OrderAiContextType = {
 };
 
 type OrderAiContextProviderProps = {
-  children: ReactNode;
+ children: ReactNode;
 };
 
 export const OrderAiContext = createContext<OrderAiContextType>({

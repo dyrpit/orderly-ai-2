@@ -20,10 +20,9 @@ export const EditItem = () => {
   product: null,
   category: null,
  });
-const { product, category } = foundData ?? { product: null, category: null };
-const { name, license = "", website, youtubeUrl, description } = product || {};
-const categoryName = category?.name ?? "";
- // Use useEffect to fetch and set the found product and category when the component mounts
+ const { product, category } = foundData ?? { product: null, category: null };
+ const { name, license = "", website, youtubeUrl, description } = product || {};
+ const categoryName = category?.name ?? "";
  useEffect(() => {
   if (!id || !categories) {
    console.log("null dziwko");
@@ -34,11 +33,10 @@ const categoryName = category?.name ?? "";
    const currentProduct = currentCategory.products.find((p) => p.id.toString() === id);
    if (currentProduct) {
     setFoundData({ product: currentProduct, category: currentCategory });
-    break; // Exit the loop once the product is found
+    break;
    }
   }
  }, [id, categories]);
-
 
  return (
   <StyledEditItemContainer>

@@ -65,8 +65,7 @@ const useAuth = () => {
    }
    return false;
   } catch (error) {
-   // Nie wiem co w przypadku jak nie ma tokena - trzeba przekminić. Bo rzucenie errora do konsoli zrobi konsolę całą na czerwoną
-   return;
+   return false;
   }
  };
 
