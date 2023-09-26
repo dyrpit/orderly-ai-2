@@ -121,7 +121,10 @@ export const EditCategory = () => {
 
  const handleRemoveCategory = () => {
   if (id !== undefined) {
-   deleteCategory(parseInt(id, 10));
+   const shouldDelete = window.confirm("Are you sure you want to delete this category?");
+   if (shouldDelete) {
+    deleteCategory(parseInt(id, 10));
+   }
   } else {
    console.error("Couldn't remove category");
   }

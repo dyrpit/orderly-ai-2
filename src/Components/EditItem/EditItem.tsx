@@ -152,7 +152,10 @@ export const EditItem = () => {
  });
 
  const handleDeleteProduct = () => {
-  deleteProduct(productIdInt, findCategoryId(form.values.category));
+  const shouldDelete = window.confirm("Are you sure you want to delete this product?");
+  if (shouldDelete) {
+   deleteProduct(productIdInt, findCategoryId(form.values.category));
+  }
  };
 
  return (
