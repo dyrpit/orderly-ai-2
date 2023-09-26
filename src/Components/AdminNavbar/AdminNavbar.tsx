@@ -1,4 +1,4 @@
-import { ANButton, ANContainer, ANList } from "./AdminNavbar.styles";
+import { ANButton, ANButtonSmall, ANContainer, ANList } from "./AdminNavbar.styles";
 import Fade from "@mui/material/Fade";
 import { useState } from "react";
 import { AdminNavbarListCategory } from "../AdminNavbarListCategory/AdminNavbarListCategory";
@@ -16,16 +16,16 @@ export function AdminNavbar() {
 
  return (
   <ANContainer>
-   <ANButton sx={{ height: "60px" }} onClick={toggleListVisibility}>
+   <ANButton sx={{ minHeight: "60px" }} onClick={toggleListVisibility}>
     Categories/Items
    </ANButton>
    <Fade in={isListVisible} unmountOnExit>
     <ANList>
      <Link to="/admin/addcategory" style={{ textDecoration: "none" }}>
-      <ANButton sx={{ width: "100%", height: "fit-content", margin: "0 auto 20px auto", fontSize: "12px" }}>New Category</ANButton>
+      <ANButtonSmall>New Category</ANButtonSmall>
      </Link>
      <Link to="/admin/additem/" style={{ textDecoration: "none" }}>
-      <ANButton sx={{ width: "100%", height: "fit-content", margin: "0 auto 0 auto", fontSize: "12px" }}>New Item</ANButton>{" "}
+      <ANButtonSmall>New Item</ANButtonSmall>{" "}
      </Link>
      {categories.map((categoryData, index) => (
       <AdminNavbarListCategory category={categoryData} key={index} />

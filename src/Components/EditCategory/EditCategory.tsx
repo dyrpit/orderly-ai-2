@@ -1,24 +1,14 @@
 import { Grid } from "@mui/material";
-import { Input, Label, ModalErrorMessage } from "../../ui";
-import {
- ColorCircle,
- ColorsGrid,
- StyledAdminContentContainer,
- StyledColorsGridImage,
- StyledColorsGridTitle,
- StyledGridContainer,
- StyledImage,
- StyledImageContainer,
- StyledImagePreview,
- StyledPreviewText,
-} from "./EditCategory.styles";
+import { Input, Label } from "../../ui";
+import { ColorCircle, ColorsGrid, StyledAdminContentContainer, StyledColorsGridImage, StyledColorsGridTitle, StyledGridContainer } from "./EditCategory.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useOrderAi } from "../../Context/useOrderAi";
 import { useParams } from "react-router-dom";
 import { generateRandomPastelColorsArray } from "../../Context/utils";
+import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 
 export const EditCategory = () => {
  const { categories } = useOrderAi();
@@ -27,7 +17,7 @@ export const EditCategory = () => {
 
  useEffect(() => {
   categories.forEach((item) => {
-   if (item.id == id) {
+   if (item.id == Number(id)) {
     // Set the first local color to the item's color if available, or use the default color
     const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
     setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]); // Adjust the number of colors accordingly
@@ -78,7 +68,7 @@ export const EditCategory = () => {
  const reloadColors = () => {
   const firstLocalColor = form.values.color || generateRandomPastelColorsArray(1)[0];
   setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]);
-  form.values.color = ''
+  form.values.color = "";
  };
 
  return (
@@ -95,7 +85,7 @@ export const EditCategory = () => {
        }}
        {...commonInputsProperties("name")}
       />
-      {form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
@@ -113,7 +103,7 @@ export const EditCategory = () => {
       <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
        <StyledColorsGridTitle>
         <Label htmlFor="name" style={{ alignSelf: "flex-start" }}>
-         Image:s
+         Image:
         </Label>
         <Label
          htmlFor="name"
@@ -131,7 +121,7 @@ export const EditCategory = () => {
          <ColorCircle key={index} className={`color-circle ${form.values.color === color ? "selected" : ""}`} style={{ backgroundColor: color }} onClick={() => handleColorClick(color)}></ColorCircle>
         ))}
        </ColorsGrid>{" "}
-       {form.touched.color && form.errors.color ? <div>{form.errors.color}</div> : null}
+       <ErrorMessage>{form.touched.color && form.errors.color ? <div>{form.errors.color}</div> : null}</ErrorMessage>
       </Grid>
      </Grid>
     </StyledGridContainer>

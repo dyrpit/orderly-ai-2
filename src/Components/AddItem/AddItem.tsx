@@ -1,12 +1,13 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Input, Label, SelectList, SelectListCheckmarks } from "../../ui";
-import { StyledAdminContentContainer, StyledGridContainer, StyledImageContainer, StyledImagePreview } from "./AddItem.styles";
+import { StyledAdminContentContainer, StyledGridContainer, StyledVideoContainer, StyledVideoPreview } from "./AddItem.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
 import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useOrderAi } from "../../Context/useOrderAi";
 import { OrderAiContext } from "../../Context/ContextProvider";
+import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 
 const names = ["Darmowa", "Płatna"];
 const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
@@ -23,7 +24,7 @@ export const AddItem = () => {
   initialValues: {
    name: "",
    category: "",
-   license: "",
+   license: [] as string[],
    website: "",
    youtubeUrl: "",
    description: "",
@@ -31,13 +32,13 @@ export const AddItem = () => {
   validationSchema: Yup.object({
    name: Yup.string().min(3, "Must be 3 characters or more").required("Required"),
    category: Yup.string().required("Required"),
-   license: Yup.array().required("Required"),
+   license: Yup.array().min(1, "Must select at least one option").required("Required"),
    website: Yup.string().required("Required"),
    youtubeUrl: Yup.string().matches(youtubeUrlRegex, "Invalid YouTube URL").required("Required"),
    description: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
-   values.license = Array.isArray(values.license) ? values.license.join(", ") : values.license;
+   console.log(values);
   },
  });
 
@@ -75,7 +76,7 @@ export const AddItem = () => {
        }}
        {...commonInputsProperties("name")}
       />{" "}
-      {form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
@@ -94,6 +95,7 @@ export const AddItem = () => {
        Category:{" "}
       </Label>
       <SelectList name="category" items={categoryNames} field={form.getFieldProps("category")} />
+      <ErrorMessage>{form.touched.category && form.errors.category ? <div>{form.errors.category}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
@@ -101,6 +103,7 @@ export const AddItem = () => {
        License:{" "}
       </Label>
       <SelectListCheckmarks name="license" items={names} field={form.getFieldProps("license")} />
+      <ErrorMessage>{form.touched.license && form.errors.license ? <div>{form.errors.license}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
@@ -113,7 +116,7 @@ export const AddItem = () => {
        }}
        {...commonInputsProperties("website")}
       />{" "}
-      {form.touched.website && form.errors.website ? <div>{form.errors.website}</div> : null}
+      <ErrorMessage>{form.touched.website && form.errors.website ? <div>{form.errors.website}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
@@ -126,7 +129,7 @@ export const AddItem = () => {
        }}
        {...commonInputsProperties("youtubeUrl")}
       />{" "}
-      {form.touched.youtubeUrl && form.errors.youtubeUrl ? <div>{form.errors.youtubeUrl}</div> : null}
+      <ErrorMessage>{form.touched.youtubeUrl && form.errors.youtubeUrl ? <div>{form.errors.youtubeUrl}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"left"} item laptop={12} desktop={12} tablet={12} mobile={12}>
@@ -143,26 +146,24 @@ export const AddItem = () => {
        {...commonInputsProperties("description")}
        multiline
       />{" "}
-      {form.touched.description && form.errors.description ? <div>{form.errors.description}</div> : null}
+      <ErrorMessage>{form.touched.description && form.errors.description ? <div>{form.errors.description}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={12} mobile={12} display={"flex"}>
       <Grid item laptop={6} desktop={6} tablet={6} mobile={12}>
-       <StyledImageContainer>
-        <StyledImagePreview>
+       <StyledVideoContainer>
+        <StyledVideoPreview>
          {validUrl && (
-          <Typography variant="subtitle2" style={{ color: "#666" }}>
-           <iframe
-            width="100%"
-            height="100%"
-            src={youtubeUrl}
-            title="YouTube Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen></iframe>
-          </Typography>
+          <iframe
+           width="100%"
+           height="100%"
+           src={youtubeUrl}
+           title="YouTube Video"
+           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+           allowFullScreen></iframe>
          )}
-        </StyledImagePreview>
-       </StyledImageContainer>
+        </StyledVideoPreview>
+       </StyledVideoContainer>
       </Grid>
      </Grid>
     </StyledGridContainer>

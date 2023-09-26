@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { User, UserRole } from "./types";
-import { useOrderAi } from "./useOrderAi";
 
 export const fetchDataAndSetState = (path: string, setStateCallback: (arg0: any) => void) => {
  useEffect(() => {

@@ -5,9 +5,11 @@ import { theme } from "../../Theme/ThemeProvider";
 export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
  backgroundColor: theme.palette.background.paper,
  borderRadius: "16px",
- padding: "36px",
+ padding: "30px",
+ marginBottom: "30px",
  [theme.breakpoints.down("laptop")]: {
-  padding: "8px",
+  margin: "8px",
+  marginBottom: "30px",
  },
 }));
 
@@ -30,24 +32,20 @@ export const StyledGridContainer = styled(Grid)({
  },
 });
 
-export const StyledImageContainer = styled("div")(({}) => ({
+export const StyledVideoContainer = styled("div")(({}) => ({
  display: "flex",
  flexDirection: "column",
  justifyContent: "center",
  alignItems: "center",
  maxWidth: "100%",
- height: "260px",
+ height: "200px",
  margin: "10px auto",
 }));
 
-export const StyledImagePreview = styled("div")({
- height: "260px",
+export const StyledVideoPreview = styled("div")({
+ height: "200px",
  display: "flex",
- flexDirection: "column",
- justifyContent: "center",
- alignItems: "center",
  width: "100%",
- margin: "10px auto",
- borderRadius: "10px",
+ borderRadius: "20px",
  border: "2px solid #fff",
 });

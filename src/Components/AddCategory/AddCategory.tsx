@@ -1,22 +1,12 @@
 import { Grid } from "@mui/material";
-import { Input, Label, ModalErrorMessage } from "../../ui";
-import {
- ColorCircle,
- ColorsGrid,
- StyledAdminContentContainer,
- StyledColorsGridImage,
- StyledColorsGridTitle,
- StyledGridContainer,
- StyledImage,
- StyledImageContainer,
- StyledImagePreview,
- StyledPreviewText,
-} from "./AddCategory.styles";
+import { Input, Label } from "../../ui";
+import { ColorCircle, ColorsGrid, StyledAdminContentContainer, StyledColorsGridImage, StyledColorsGridTitle, StyledGridContainer } from "./AddCategory.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { generateRandomPastelColorsArray } from "../../Context/utils";
-import { useRef, useEffect, useState } from "react";
+import { useState } from "react";
+import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 
 export const AddCategory = () => {
  const [colors, setColors] = useState<string[]>(generateRandomPastelColorsArray(48));
@@ -72,7 +62,7 @@ export const AddCategory = () => {
        }}
        {...commonInputsProperties("name")}
       />
-      {form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
@@ -110,11 +100,11 @@ export const AddCategory = () => {
       </Grid> */}
       <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
        <StyledColorsGridTitle>
-        <Label htmlFor="name" style={{ alignSelf: "flex-start" }}>
-         Image:
+        <Label htmlFor="color" style={{ alignSelf: "flex-start" }}>
+         Color:
         </Label>
         <Label
-         htmlFor="name"
+         htmlFor="color"
          style={{
           alignSelf: "flex-end",
           display: "flex",
@@ -129,7 +119,7 @@ export const AddCategory = () => {
          <ColorCircle key={index} className={`color-circle ${form.values.color === color ? "selected" : ""}`} style={{ backgroundColor: color }} onClick={() => handleColorClick(color)}></ColorCircle>
         ))}
        </ColorsGrid>
-       {form.touched.color && form.errors.color ? <div>{form.errors.color}</div> : null}
+       <ErrorMessage>{form.touched.color && form.errors.color ? <div>{form.errors.color}</div> : null}</ErrorMessage>
       </Grid>
      </Grid>
     </StyledGridContainer>
