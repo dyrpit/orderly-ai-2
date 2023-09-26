@@ -1,46 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { Checkbox, MenuItem, Select, OutlinedInput, SelectChangeEvent } from "@mui/material";
+import React from "react";
+import { Checkbox, MenuItem, Select, OutlinedInput, FormControl } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
 import { theme } from "../../Theme/ThemeProvider";
 
 interface SelectListCheckmarksProps {
+ field: {
+  name: string;
+  value: any;
+  onChange: (event: SelectChangeEvent<string[]>, child: React.ReactNode) => void;
+  onBlur: (event: React.FocusEvent<any, Element>) => void;
+ };
+ name: string;
  items: string[];
- defaultSelected: string;
 }
 
-export const SelectListCheckmarks: React.FC<SelectListCheckmarksProps> = (props) => {
- const { items, defaultSelected } = props;
- const [selectedItems, setSelectedItems] = useState<string[]>([]);
- const isDefaultSelectedValid = items.includes(defaultSelected);
+export const SelectListCheckmarks: React.FC<SelectListCheckmarksProps> = ({ field, name, items }) => {
+ const selectedItems = field.value || [];
 
- useEffect(() => {
-  if (isDefaultSelectedValid) {
-   setSelectedItems([defaultSelected]);
-  } else {
-   setSelectedItems([]);
-  }
- }, [defaultSelected, isDefaultSelectedValid]);
+ const handleCheckboxToggle = (item: string) => {
+  const updatedItems = selectedItems.includes(item) ? selectedItems.filter((selected: string) => selected !== item) : [...selectedItems, item];
 
- const handleChange = (event: SelectChangeEvent<string[]>) => {
-  setSelectedItems(event.target.value as string[]);
+  field.onChange({ target: { name: field.name, value: updatedItems } } as SelectChangeEvent<string[]>, field.name);
  };
 
  return (
-  <Select
-   labelId="demo-multiple-checkbox-label"
-   id="demo-multiple-checkbox"
-   multiple
-   value={selectedItems}
-   onChange={handleChange}
-   input={<OutlinedInput label="Tag" />}
-   renderValue={(selected) => selected.join(", ")}
-   sx={{ borderRadius: "10px", height: "36px", backgroundColor: theme.palette.info.main, width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-   {items.map((name, index) => (
-    <MenuItem key={index} value={name}>
-     <Checkbox checked={items.indexOf(name) > -1} />
-
-     {name}
-    </MenuItem>
-   ))}
-  </Select>
+  <FormControl fullWidth variant="outlined">
+   <Select 
+   //*Nie narzekac ze tutaj jest SX, bo jak dam w styles.tsx i dam importa to się cały komponent rozwala
+    sx={{ borderRadius: "10px", height: "36px", backgroundColor: theme.palette.info.main, width: "100%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
+    {...field}
+    value={selectedItems}
+    multiple
+    input={<OutlinedInput label={name} />}
+    renderValue={(selected) => (selected as string[]).join(", ")}>
+    {items.map((item) => (
+     <MenuItem key={item} value={item}>
+      <Checkbox checked={selectedItems.includes(item)} onChange={() => handleCheckboxToggle(item)} />
+      {item}
+     </MenuItem>
+    ))}
+   </Select>
+  </FormControl>
  );
 };

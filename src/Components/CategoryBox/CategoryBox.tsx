@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { BoxesContainer, CategoryBoxContainer, CategoryBoxContent } from "./CategoryBox.style";
 import { Link } from "react-router-dom";
+import { useOrderAi } from "../../Context/useOrderAi";
+
 import { OrderAiContext } from "../../Context/ContextProvider";
 
 export function Category() {

@@ -14,7 +14,6 @@ export const ANTitleContainer = styled(Box)(({}) => ({
  border: "none",
  color: "#fff",
  display: "flex",
- justifyContent: "space-between",
  alignItems: "center",
  padding: "0",
  borderRadius: "0.5em",
@@ -26,6 +25,7 @@ export const ANTitle = styled(Typography)(({ theme: theme }) => ({
  fontSize: theme.typography.fontSize,
  fontWeight: theme.typography.fontWeightLight,
  color: fontSizeVar.loginModalDefault,
+ textAlign: "left",
  "&:hover": {
   borderRadius: "10px",
   backgroundColor: "#603795",

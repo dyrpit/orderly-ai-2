@@ -1,145 +1,173 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Input, Label, SelectList, SelectListCheckmarks } from "../../ui";
-import { StyledAdminContentContainer, StyledGridContainer } from "./AddItem.styles";
+import { StyledAdminContentContainer, StyledGridContainer, StyledVideoContainer, StyledVideoPreview } from "./AddItem.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useOrderAi } from "../../Context/useOrderAi";
+import { OrderAiContext } from "../../Context/ContextProvider";
+import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 
-const names = ["Free", "Paid"];
+const names = ["Darmowa", "Płatna"];
+const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const AddItem = () => {
- const [youtubeUrl, setYoutubeUrl] = useState("");
- const [youtubeEmbedUrl, setYoutubeEmbedUrl] = useState("");
+ const [youtubeUrl, setyoutubeUrl] = useState("");
+ const [validUrl, setValidUrl] = useState(false);
+ const { categories } = useOrderAi();
+ const categoryNames = categories.map((category) => category.name);
 
- const getYouTubeVideoId = (url: string) => {
-  const videoIdMatch = url.slice(-11);
-  return videoIdMatch;
- };
+ const { getEmbedYTLink } = useContext(OrderAiContext);
 
- const updateEmbedUrl = (pastedText: string) => {
-  const videoId = getYouTubeVideoId(pastedText);
-  if (videoId) {
-   setYoutubeEmbedUrl(`https://www.youtube.com/embed/${videoId}`);
-  } else {
-   setYoutubeEmbedUrl("");
-  }
- };
+ const form = useFormik({
+  initialValues: {
+   name: "",
+   category: "",
+   license: [] as string[],
+   website: "",
+   youtubeUrl: "",
+   description: "",
+  },
+  validationSchema: Yup.object({
+   name: Yup.string().min(3, "Must be 3 characters or more").required("Required"),
+   category: Yup.string().required("Required"),
+   license: Yup.array().min(1, "Must select at least one option").required("Required"),
+   website: Yup.string().required("Required"),
+   youtubeUrl: Yup.string().matches(youtubeUrlRegex, "Invalid YouTube URL").required("Required"),
+   description: Yup.string().required("Required"),
+  }),
+  onSubmit: (values) => {
+   console.log(values);
+  },
+ });
 
- const handleYoutubeUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const newUrl = event.target.value;
-  updateEmbedUrl(newUrl);
- };
+ const commonInputsProperties = (key: "name" | "category" | "license" | "youtubeUrl" | "website" | "description") => ({
+  id: key,
+  onChange: (e: { target: { value: string } }) => {
+   if (key === "youtubeUrl") {
+    const isValid = youtubeUrlRegex.test(e.target.value);
+    setValidUrl(isValid);
+    if (isValid) {
+     setyoutubeUrl(getEmbedYTLink(e.target.value));
+    }
+   }
+   form.handleChange(e);
+  },
+  onBlur: form.handleBlur,
+  value: form.values[key],
+ });
 
- const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-  const pastedText = event.clipboardData.getData("text");
-  setYoutubeUrl(pastedText);
-  updateEmbedUrl(pastedText);
-  event.preventDefault();
+ const handleClearForm = () => {
+  form.resetForm();
  };
 
  return (
   <StyledAdminContentContainer>
-   <StyledGridContainer container spacing={2}>
-    <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-     <Label htmlFor="name">Name:</Label>
-     <Input
-      variant="standard"
-      placeholder="name"
-      InputProps={{
-       disableUnderline: true,
-      }}
-      id="name"
-     />
-    </Grid>
-    <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
-     <Grid container justifyContent={"space-between"}>
-      <StyledIconButton>
-       <img src="../../../src/assets/clarity_check-line.png" />
-      </StyledIconButton>
-      <StyledIconButton>
-       <img src="../../../src/assets/clarity_close-line.png" />
-      </StyledIconButton>
+   <form onSubmit={form.handleSubmit}>
+    <StyledGridContainer container spacing={2}>
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Label htmlFor="name">Name:</Label>
+      <Input
+       variant="standard"
+       placeholder="name"
+       InputProps={{
+        disableUnderline: true,
+       }}
+       {...commonInputsProperties("name")}
+      />{" "}
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
      </Grid>
-    </Grid>
-    <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-     <Label htmlFor="category" sx={{ marginRight: "8px" }}>
-      Category:{" "}
-     </Label>
-     <SelectList items={["1234123412341234123412341 2341234123412341 23412341234123412341234 12341234", "456"]} defaultSelected="456"></SelectList>
-    </Grid>
 
-    <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-     <Label htmlFor="category" sx={{ marginRight: "8px" }}>
-      License:{" "}
-     </Label>
-     <SelectListCheckmarks items={names} defaultSelected={""}></SelectListCheckmarks>
-    </Grid>
-    <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-     <Label htmlFor="website">Website:</Label>
-     <Input
-      variant="standard"
-      placeholder="web url"
-      InputProps={{
-       disableUnderline: true,
-      }}
-      id="website"
-     />
-    </Grid>
-
-    <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-     <Label htmlFor="ytUrl">YouTube URL:</Label>
-     <Input
-      variant="standard"
-      placeholder="Enter YouTube Url"
-      InputProps={{
-       disableUnderline: true,
-      }}
-      id="ytUrl"
-      value={youtubeUrl}
-      onChange={handleYoutubeUrlChange}
-      onPaste={handlePaste}
-     />
-    </Grid>
-
-    <Grid container justifyContent={"left"} item laptop={12} desktop={12} tablet={12} mobile={12}>
-     <Label htmlFor="description">Description:</Label>
-     <Input
-      sx={{ height: "120px" }}
-      variant="standard"
-      placeholder="description"
-      InputProps={{
-       disableUnderline: true,
-       minRows: 3,
-       maxRows: 4,
-      }}
-      id="description"
-      multiline
-     />
-    </Grid>
-    <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={12} mobile={12} display={"flex"}>
-     <Grid item laptop={6} desktop={6} tablet={6} mobile={12}>
-      <div
-       style={{
-        height: "260px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        margin: "10px auto",
-        borderRadius: "10px",
-        border: "2px solid #fff",
-       }}>
-       <Typography
-        variant="subtitle2"
-        style={{
-         color: "#666",
-        }}>
-        <iframe src={youtubeEmbedUrl} allow="autoplay; encrypted-media" title="video" />
-       </Typography>
-      </div>
+     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
+      <Grid container justifyContent={"space-between"}>
+       <StyledIconButton type="submit">
+        <img src="../../../src/assets/clarity_check-line.png" />
+       </StyledIconButton>
+       <StyledIconButton type="button" onClick={handleClearForm}>
+        <img src="../../../src/assets/clarity_close-line.png" />
+       </StyledIconButton>
+      </Grid>
      </Grid>
-    </Grid>
-   </StyledGridContainer>
+
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Label htmlFor="category" sx={{ marginRight: "8px" }}>
+       Category:{" "}
+      </Label>
+      <SelectList name="category" items={categoryNames} field={form.getFieldProps("category")} />
+      <ErrorMessage>{form.touched.category && form.errors.category ? <div>{form.errors.category}</div> : null}</ErrorMessage>
+     </Grid>
+
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Label htmlFor="license" sx={{ marginRight: "8px" }}>
+       License:{" "}
+      </Label>
+      <SelectListCheckmarks name="license" items={names} field={form.getFieldProps("license")} />
+      <ErrorMessage>{form.touched.license && form.errors.license ? <div>{form.errors.license}</div> : null}</ErrorMessage>
+     </Grid>
+
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Label htmlFor="website">Website:</Label>
+      <Input
+       variant="standard"
+       placeholder="web url"
+       InputProps={{
+        disableUnderline: true,
+       }}
+       {...commonInputsProperties("website")}
+      />{" "}
+      <ErrorMessage>{form.touched.website && form.errors.website ? <div>{form.errors.website}</div> : null}</ErrorMessage>
+     </Grid>
+
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Label htmlFor="ytUrl">YouTube URL:</Label>
+      <Input
+       variant="standard"
+       placeholder="Enter YouTube Url"
+       InputProps={{
+        disableUnderline: true,
+       }}
+       {...commonInputsProperties("youtubeUrl")}
+      />{" "}
+      <ErrorMessage>{form.touched.youtubeUrl && form.errors.youtubeUrl ? <div>{form.errors.youtubeUrl}</div> : null}</ErrorMessage>
+     </Grid>
+
+     <Grid container justifyContent={"left"} item laptop={12} desktop={12} tablet={12} mobile={12}>
+      <Label htmlFor="description">Description:</Label>
+      <Input
+       sx={{ height: "120px" }}
+       variant="standard"
+       placeholder="description"
+       InputProps={{
+        disableUnderline: true,
+        minRows: 3,
+        maxRows: 4,
+       }}
+       {...commonInputsProperties("description")}
+       multiline
+      />{" "}
+      <ErrorMessage>{form.touched.description && form.errors.description ? <div>{form.errors.description}</div> : null}</ErrorMessage>
+     </Grid>
+
+     <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={12} mobile={12} display={"flex"}>
+      <Grid item laptop={6} desktop={6} tablet={6} mobile={12}>
+       <StyledVideoContainer>
+        <StyledVideoPreview>
+         {validUrl && (
+          <iframe
+           width="100%"
+           height="100%"
+           src={youtubeUrl}
+           title="YouTube Video"
+           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+           allowFullScreen></iframe>
+         )}
+        </StyledVideoPreview>
+       </StyledVideoContainer>
+      </Grid>
+     </Grid>
+    </StyledGridContainer>
+   </form>
   </StyledAdminContentContainer>
  );
 };
