@@ -3,7 +3,8 @@ import { styled } from "@mui/material/styles";
 import { fontSizeVar } from "../../Theme/variables";
 
 export const ModalHeader = styled(Typography)(({ theme: theme }) => ({
- width: "278px",
+ maxWidth: "278px",
+ width: "100%",
  height: "60px",
  color: theme.palette.text.primary,
  fontSize: fontSizeVar.loginModalHeader,

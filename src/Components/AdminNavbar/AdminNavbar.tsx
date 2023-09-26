@@ -1,52 +1,43 @@
-import { ANButton, ANContainer, ANList } from "./AdminNavbar.styles";
+import { ANButton, ANButtonSmall, ANContainer, ANList } from "./AdminNavbar.styles";
 import Fade from "@mui/material/Fade";
 import { useState } from "react";
 import { AdminNavbarListCategory } from "../AdminNavbarListCategory/AdminNavbarListCategory";
 import { Link } from "react-router-dom";
+import { useOrderAi } from "../../Context/useOrderAi";
+import useDecrypt from "../../Hooks/useDecrypt";
+import { User, UserRole } from "../../Context/types";
 
 export function AdminNavbar() {
-   const [isListVisible, setListVisible] = useState(false);
-   const [listDataCategories, setListDataCategories] = useState<string[]>([]);
+ const [isListVisible, setListVisible] = useState(false);
+ const { categories } = useOrderAi();
+ const { parseJwtToken } = useDecrypt();
+ const user: User | undefined = parseJwtToken();
 
-   const toggleListVisibility = () => {
-      if (!isListVisible) generateRandomCategories();
-      setListVisible(!isListVisible);
-   };
+ const toggleListVisibility = () => {
+  setListVisible(!isListVisible);
+ };
 
-   const generateRandomCategories = () => {
-      const items: string[] = [];
-      const randomInteger = Math.floor(Math.random() * (10 - 1) + 1);
-
-      for (let i = 1; i <= randomInteger; i++) {
-         items.push(`Category ${i}`);
-      }
-      setListDataCategories(items);
-      console.log(items);
-   };
-
-   const generateRandomElements = () => {
-      const elements: string[] = [];
-      const randomInteger = Math.floor(Math.random() * (10 - 1) + 1);
-
-      for (let i = 1; i <= randomInteger; i++) {
-         const category = `Category ${i}`;
-         elements.push(category);
-      }
-      return elements;
-   };
-
-   return (
-      <ANContainer>
-         <Link to='/admin/add'><ANButton>Add Category</ANButton></Link>
-         <ANButton onClick={toggleListVisibility}>Categories</ANButton>
-         <Fade in={isListVisible} unmountOnExit>
-            <ANList>
-               {listDataCategories.map((item, index) => (
-                  <AdminNavbarListCategory key={index} category={item} elements={generateRandomElements()} />
-               ))}
-            </ANList>
-         </Fade>
-         <Link to='/admin/edit'><ANButton>Edit Users</ANButton></Link>
-      </ANContainer>
-   );
+ return (
+  <ANContainer>
+   <ANButton sx={{ height: "60px" }} onClick={toggleListVisibility}>
+    Categories/Items
+   </ANButton>
+   <Fade in={isListVisible} unmountOnExit>
+    <ANList>
+     <Link to="/admin/addcategory" style={{ textDecoration: "none" }}>
+      {user && user.role === UserRole.admin ? <ANButtonSmall>New Category</ANButtonSmall> : null}
+     </Link>
+     <Link to="/admin/additem/" style={{ textDecoration: "none" }}>
+      {user && user.role === UserRole.admin ? <ANButtonSmall>New Item</ANButtonSmall> : null}
+     </Link>
+     {categories.map((categoryData, index) => (
+      <AdminNavbarListCategory category={categoryData} key={index} />
+     ))}
+    </ANList>
+   </Fade>
+   <Link to="/admin/edituser" style={{ textDecoration: "none" }}>
+    {user && user.role === UserRole.admin ? <ANButton>Edit Users</ANButton> : null}
+   </Link>
+  </ANContainer>
+ );
 }

@@ -7,10 +7,13 @@ import { useContext } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import Modal from "@mui/material/Modal";
 import useAuth from "../../Hooks/useAuth";
+import useDecrypt from "../../Hooks/useDecrypt";
+import { User } from "../../Context/types";
 
 export function LoginModal() {
- const { changeModal, handleModalClose, isModalOpen } = useContext(OrderAiContext);
- const { getMatchUser, saveAuthToken, generateToken } = useAuth();
+ const { changeModal, handleModalClose, isModalOpen, saveLoggedUserRole, saveLoggedUserEmail } = useContext(OrderAiContext);
+ const { getMatchUser, generateToken } = useAuth();
+ const { parseJwtToken } = useDecrypt();
  const formik = useFormik({
   initialValues: {
    email: "",
@@ -24,6 +27,11 @@ export function LoginModal() {
    const matchUser = getMatchUser(values.email, values.password);
    if (matchUser) {
     generateToken(matchUser);
+    alert("Successfully logged!");
+    handleModalClose();
+    const user: User | undefined = parseJwtToken();
+    saveLoggedUserRole(user?.role || "");
+    saveLoggedUserEmail(user?.email || "");
    } else {
     alert("Wrong password or email!");
    }

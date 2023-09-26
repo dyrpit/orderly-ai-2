@@ -5,9 +5,13 @@ import { ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader
 import { useContext } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import Modal from "@mui/material/Modal";
+import useAuth from "../../Hooks/useAuth";
+import useRegister from "../../Hooks/useRegister";
 
 export function RegisterModal() {
  const { changeModal, isModalOpen, handleModalClose } = useContext(OrderAiContext);
+ const { getIsEmailExist } = useAuth();
+ const { registerUser } = useRegister();
 
  const formik = useFormik({
   initialValues: {
@@ -16,25 +20,51 @@ export function RegisterModal() {
    repeatPassword: "",
   },
   validationSchema: Yup.object({
-   email: Yup.string().max(25, "Email must be 25 characters or less.").email("Invalid email address.").required("Required"),
+   email: Yup.string()
+    .max(25, "Email must be 25 characters or less.")
+    .email("Invalid email address.")
+    .required("Required")
+    .test("Unique Email", "Email already in use", (email: string) => {
+     const isEmailExist = getIsEmailExist(email);
+     return !isEmailExist;
+    }),
    password: Yup.string().max(25, "Password must be 25 characters or less.").min(8, "Password must be minimum 8 characters.").required("Required"),
    repeatPassword: Yup.string()
     .oneOf([Yup.ref("password")], "Passwords must match")
     .required("Required"),
   }),
   onSubmit: (values) => {
-   alert(JSON.stringify(values, null, 2));
+   try {
+    registerUser({
+     email: values.email,
+     password: values.password,
+    });
+    alert(`Successfully registered as ${values.email}`);
+    handleModalClose();
+   } catch (error) {
+    alert("Problem with registration. Try again.");
+   }
   },
  });
+
+ const commonInputsProperties = (key: "email" | "password") => ({
+  id: key,
+  name: key,
+  type: key,
+  onChange: formik.handleChange,
+  onBlur: formik.handleBlur,
+  value: formik.values[key],
+ });
+
  return (
   <Modal open={isModalOpen} onClose={handleModalClose}>
    <RegisterModalContainer>
     <ModalHeader>Sign Up</ModalHeader>
     <ModalSubHeader>Start using OrderlyAI today!</ModalSubHeader>
     <form onSubmit={formik.handleSubmit}>
-     <ModalInput id="email" name="email" type="email" placeholder="Email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email}></ModalInput>
+     <ModalInput placeholder="Email" {...commonInputsProperties("email")}></ModalInput>
      <ModalErrorMessage>{formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}</ModalErrorMessage>
-     <ModalInput id="password" name="password" type="password" placeholder="Password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password}></ModalInput>
+     <ModalInput placeholder="Password" {...commonInputsProperties("password")}></ModalInput>
      <ModalErrorMessage>{formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}</ModalErrorMessage>
      <ModalInput
       id="repeatPassword"
@@ -45,7 +75,7 @@ export function RegisterModal() {
       onBlur={formik.handleBlur}
       value={formik.values.repeatPassword}></ModalInput>
      <ModalErrorMessage>{formik.touched.repeatPassword && formik.errors.repeatPassword ? <div>{formik.errors.repeatPassword}</div> : null}</ModalErrorMessage>
-     <StyledButton>Sign Up</StyledButton>
+     <StyledButton type="submit">Sign Up</StyledButton>
     </form>
     <ModalFooter>
      Already have an account?{" "}

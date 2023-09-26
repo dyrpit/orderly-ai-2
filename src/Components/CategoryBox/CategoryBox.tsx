@@ -1,44 +1,26 @@
-import { useState, useEffect } from "react";
-import { BoxesContainer, CategoryBoxContainer, CategoryBoxContent } from "./CategoryBox.style";
+import { useContext } from "react";
+import { BoxesContainer } from "./CategoryBox.style";
 import { Link } from "react-router-dom";
 
-interface CategoryProps {
-  title: string;
-  description: string;
-  color: string;
-}
+import { OrderAiContext } from "../../Context/ContextProvider";
+import { Box, Grid } from "@mui/material";
 
 export function Category() {
-  const [categories, setCategories] = useState<CategoryProps[]>([]);
+ const { jsonData, categories } = useContext(OrderAiContext);
 
-  useEffect(() => {
-    fetch("/src/Data/categories.json") 
-      .then((response) => response.json())
-      .then((data) => {
-        setCategories(data);
-        console.error("Poprawne wczytanie danych");
-      })
-      .catch((error) => {
-        console.error("Błąd podczas wczytywania danych z JSON:", error);
-      });
-  }, []);
+ const renderedCategoryBoxes = (jsonData ?? categories ?? []).map((category, index) => (
+  <Grid desktop={5} mobile={12} key={category.name}>
+   <Link to={`${category.name}`} key={index} style={{ textDecoration: "none" }}>
+    <Grid>
+     <Box sx={{ backgroundColor: category.color, minHeight: "240px", borderRadius: "20px" }}>
+      <div>
+       <h2>{category.name}</h2>
+      </div>
+     </Box>
+    </Grid>
+   </Link>
+  </Grid>
+ ));
 
-  return (
-    <BoxesContainer>
-      {categories.map((category, index) => (
-        <Link to="/Products" key={index} style={{textDecoration: 'none'}}>
-          <CategoryBoxContainer style={{ backgroundColor: category.color }}>
-            <CategoryBoxContent>
-              <div className="Title">
-                <h1>{category.title}</h1>
-              </div>
-              <div className="Desc">
-                <h3>{category.description}</h3>
-              </div>
-            </CategoryBoxContent>
-          </CategoryBoxContainer>
-        </Link>
-      ))}
-    </BoxesContainer>
-  );
+ return <BoxesContainer>{renderedCategoryBoxes}</BoxesContainer>;
 }
