@@ -5,40 +5,66 @@ import { StyledIconButton } from "../Menu/Menu.styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { generateRandomPastelColorsArray } from "../../Context/utils";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
+import { OrderAiContext } from "../../Context/ContextProvider";
+import { Link } from "react-router-dom";
+
+const categoryExistsMessage = "Category name already exists!";
 
 export const AddCategory = () => {
+ const { categories, jsonData, gptData, addCategory, findFreeCategoryId } = useContext(OrderAiContext);
  const [colors, setColors] = useState<string[]>(generateRandomPastelColorsArray(48));
+
  const form = useFormik({
   initialValues: {
    name: "",
-   image: "",
+   imageUrl: "",
    color: colors[0],
   },
   validationSchema: Yup.object({
    name: Yup.string().min(3, "Must be 3 characters or more").required("Required"),
-   image: Yup.string()
-    .min(5, "Must be 5 characters or more")
-    .required("Required")
-    .matches(/.(jpg|jpeg|png|gif|bmp|webp)$/, "Must be a valid image URL"),
    color: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
-   console.log(values);
+   let isCategoryNameExists;
+   if (gptData) {
+    isCategoryNameExists = gptData?.some((category) => category.name === values.name);
+   } else if (jsonData) {
+    isCategoryNameExists = jsonData?.some((category) => category.name === values.name);
+   } else {
+    isCategoryNameExists = categories?.some((category) => category.name === values.name);
+   }
+
+   const errorElement = document.getElementById("error-message");
+   if (isCategoryNameExists) {
+    console.log("Category name already exists!");
+    if (errorElement) {
+     errorElement.textContent = categoryExistsMessage;
+    }
+   } else {
+    console.log("Form submitted!");
+    if (errorElement) {
+     errorElement.textContent = "";
+    }
+    addCategory({
+     name: values.name,
+     imageUrl: values.imageUrl,
+     color: values.color,
+     id: findFreeCategoryId(),
+     products: [],
+    });
+   }
   },
  });
 
- const commonInputsProperties = (key: "name" | "image" | "color") => ({
+ const commonInputsProperties = (key: "name" | "imageUrl" | "color") => ({
   id: key,
   onChange: form.handleChange,
   onBlur: form.handleBlur,
   value: form.values[key],
  });
 
- const handleClearForm = () => {
-  form.resetForm();
- };
 
  const handleColorClick = (color: string) => {
   form.setFieldValue("color", color);
@@ -48,6 +74,7 @@ export const AddCategory = () => {
   setColors(generateRandomPastelColorsArray(48));
   form.values.color = "";
  };
+
  return (
   <StyledAdminContentContainer>
    <form onSubmit={form.handleSubmit}>
@@ -63,6 +90,7 @@ export const AddCategory = () => {
        {...commonInputsProperties("name")}
       />
       <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
+      <ErrorMessage>{categoryExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
@@ -70,9 +98,11 @@ export const AddCategory = () => {
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       <StyledIconButton type="button" onClick={handleClearForm}>
-        <img src="../../../src/assets/clarity_close-line.png" />
-       </StyledIconButton>
+       <Link to="/admin">
+        <StyledIconButton>
+         <img src="../../../src/assets/clarity_close-line.png" />
+        </StyledIconButton>
+       </Link>
       </Grid>
      </Grid>
 

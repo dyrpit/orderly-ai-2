@@ -1,34 +1,64 @@
 import { Grid } from "@mui/material";
-import { Input, Label } from "../../ui";
+import { Input, Label, ErrorMessage } from "../../ui";
 import { ColorCircle, ColorsGrid, StyledAdminContentContainer, StyledColorsGridImage, StyledColorsGridTitle, StyledGridContainer } from "./EditCategory.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useEffect, useState } from "react";
-import { useOrderAi } from "../../Context/useOrderAi";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { generateRandomPastelColorsArray } from "../../Context/utils";
-import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
+import { OrderAiContext } from "../../Context/ContextProvider";
+import { User, UserRole } from "../../Context/types";
+import useDecrypt from "../../Hooks/useDecrypt";
+
+const categoryExistsMessage = "Category name already exists!";
 
 export const EditCategory = () => {
- const { categories } = useOrderAi();
+ const { categories, jsonData, gptData, editCategory, deleteCategory } = useContext(OrderAiContext);
  const { id } = useParams<{ id: string }>();
  const [colors, setColors] = useState<string[]>([]);
+ const { parseJwtToken } = useDecrypt();
+ const user: User | undefined = parseJwtToken();
 
  useEffect(() => {
-  categories.forEach((item) => {
-   if (item.id == Number(id)) {
-    // Set the first local color to the item's color if available, or use the default color
-    const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
-    setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]); // Adjust the number of colors accordingly
-    form.setValues({
-     name: item.name || "",
-     imageUrl: item.imageUrl || "",
-     color: firstLocalColor, // Set the color field to the first local color
-    });
-   }
-  });
- }, [id, categories]);
+  if (gptData) {
+   gptData.forEach((item) => {
+    if (item.id == Number(id)) {
+     const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
+     setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]);
+     form.setValues({
+      name: item.name || "",
+      imageUrl: item.imageUrl || "",
+      color: firstLocalColor,
+     });
+    }
+   });
+  } else if (jsonData) {
+   jsonData.forEach((item) => {
+    if (item.id == Number(id)) {
+     const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
+     setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]);
+     form.setValues({
+      name: item.name || "",
+      imageUrl: item.imageUrl || "",
+      color: firstLocalColor,
+     });
+    }
+   });
+  } else if (categories) {
+   categories.forEach((item) => {
+    if (item.id == Number(id)) {
+     const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
+     setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]);
+     form.setValues({
+      name: item.name || "",
+      imageUrl: item.imageUrl || "",
+      color: firstLocalColor,
+     });
+    }
+   });
+  }
+ }, [id, categories, jsonData]);
 
  const form = useFormik({
   initialValues: {
@@ -45,8 +75,40 @@ export const EditCategory = () => {
    color: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
-   console.log("Form submitted!");
-   console.log(values);
+   let isCategoryNameExists;
+   if (gptData) {
+    isCategoryNameExists = gptData?.some((category) => category.name === values.name);
+   } else if (jsonData) {
+    isCategoryNameExists = jsonData?.some((category) => category.name === values.name);
+   } else {
+    isCategoryNameExists = categories?.some((category) => category.name === values.name);
+   }
+
+   const errorElement = document.getElementById("error-message");
+   if (isCategoryNameExists) {
+    console.log("Category name already exists!");
+    if (errorElement) {
+     errorElement.textContent = categoryExistsMessage;
+    }
+   } else {
+    console.log("Form submitted!");
+    if (errorElement) {
+     errorElement.textContent = "";
+    }
+    let localId = 0;
+    if (id !== undefined) {
+     localId = parseInt(id, 10);
+     editCategory({
+      name: values.name,
+      imageUrl: values.imageUrl,
+      color: values.color,
+      id: localId,
+      products: [],
+     });
+    } else {
+     console.error("Couldn't remove category");
+    }
+   }
   },
  });
 
@@ -57,8 +119,12 @@ export const EditCategory = () => {
   value: form.values[key],
  });
 
- const handleClearForm = () => {
-  form.resetForm();
+ const handleRemoveCategory = () => {
+  if (id !== undefined) {
+   deleteCategory(parseInt(id, 10));
+  } else {
+   console.error("Couldn't remove category");
+  }
  };
 
  const handleColorClick = (color: string) => {
@@ -93,9 +159,16 @@ export const EditCategory = () => {
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       <StyledIconButton type="button" onClick={handleClearForm}>
-        <img src="../../../src/assets/clarity_close-line.png" />
-       </StyledIconButton>
+       {user && user.role === UserRole.admin ? (
+        <StyledIconButton onClick={handleRemoveCategory}>
+         <img src="../../../src/assets/clarity_trash-line.png" />
+        </StyledIconButton>
+       ) : null}
+       <Link to="/admin">
+        <StyledIconButton>
+         <img src="../../../src/assets/clarity_close-line.png" />
+        </StyledIconButton>
+       </Link>
       </Grid>
      </Grid>
 

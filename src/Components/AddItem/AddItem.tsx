@@ -5,21 +5,19 @@ import { StyledIconButton } from "../Menu/Menu.styles";
 import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useOrderAi } from "../../Context/useOrderAi";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
+import { Link } from "react-router-dom";
 
 const names = ["Darmowa", "Płatna"];
+const productExistsMessage = "Product name already exists!";
 const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const AddItem = () => {
  const [youtubeUrl, setyoutubeUrl] = useState("");
  const [validUrl, setValidUrl] = useState(false);
- const { categories } = useOrderAi();
- const categoryNames = categories.map((category) => category.name);
-
- const { getEmbedYTLink } = useContext(OrderAiContext);
-
+ const { categories, jsonData, gptData, addProduct, findFreeProductId, findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
+ const categoryNames = gptData ? gptData.map((category) => category.name) : jsonData ? jsonData.map((category) => category.name) : categories ? categories.map((category) => category.name) : [];
  const form = useFormik({
   initialValues: {
    name: "",
@@ -33,12 +31,47 @@ export const AddItem = () => {
    name: Yup.string().min(3, "Must be 3 characters or more").required("Required"),
    category: Yup.string().required("Required"),
    license: Yup.array().min(1, "Must select at least one option").required("Required"),
-   website: Yup.string().required("Required"),
+   website: Yup.string()
+    .matches(/(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/, "Enter correct url!")
+    .required("Required"),
    youtubeUrl: Yup.string().matches(youtubeUrlRegex, "Invalid YouTube URL").required("Required"),
    description: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
-   console.log(values);
+   let isProductNameExists;
+   if (gptData) {
+    isProductNameExists = gptData?.some((category) => category.products.some((product) => product.name === values.name));
+   } else if (jsonData) {
+    isProductNameExists = jsonData?.some((category) => category.products.some((product) => product.name === values.name));
+   } else if (categories) {
+    isProductNameExists = categories?.some((category) => category.products.some((product) => product.name === values.name));
+   }
+
+   const errorElement = document.getElementById("error-message");
+   if (isProductNameExists) {
+    console.log("Category name already exists!");
+    if (errorElement) {
+     errorElement.textContent = productExistsMessage;
+    }
+   } else {
+    console.log("Form submitted!");
+    if (errorElement) {
+     errorElement.textContent = "";
+    }
+    const categoryId = findCategoryId(form.values.category);
+    console.log(categoryId);
+    addProduct(
+     {
+      id: findFreeProductId(),
+      name: values.name,
+      website: values.website,
+      youtubeUrl: values.youtubeUrl,
+      license: values.license.join(","),
+      description: values.description,
+     },
+     categoryId,
+    );
+   }
   },
  });
 
@@ -58,10 +91,6 @@ export const AddItem = () => {
   value: form.values[key],
  });
 
- const handleClearForm = () => {
-  form.resetForm();
- };
-
  return (
   <StyledAdminContentContainer>
    <form onSubmit={form.handleSubmit}>
@@ -76,7 +105,8 @@ export const AddItem = () => {
        }}
        {...commonInputsProperties("name")}
       />{" "}
-      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>{" "}
+      <ErrorMessage>{productExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
@@ -84,9 +114,11 @@ export const AddItem = () => {
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       <StyledIconButton type="button" onClick={handleClearForm}>
-        <img src="../../../src/assets/clarity_close-line.png" />
-       </StyledIconButton>
+       <Link to="/admin">
+        <StyledIconButton>
+         <img src="../../../src/assets/clarity_close-line.png" />
+        </StyledIconButton>
+       </Link>
       </Grid>
      </Grid>
 

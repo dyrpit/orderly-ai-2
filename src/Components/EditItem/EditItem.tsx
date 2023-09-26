@@ -5,50 +5,98 @@ import { StyledAdminContentContainer, StyledGridContainer, StyledVideoContainer,
 import { StyledIconButton } from "../Menu/Menu.styles";
 import "./EditItem.css";
 import { useParams } from "react-router";
-import { useOrderAi } from "../../Context/useOrderAi";
 import { useFormik } from "formik";
 import { OrderAiContext } from "../../Context/ContextProvider";
-// import { User, UserRole } from "../../Context/ContextProvider";
+import { User, UserRole } from "../../Context/types";
 import * as Yup from "yup";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 import useDecrypt from "../../Hooks/useDecrypt";
+import { Link } from "react-router-dom";
 
 const names = ["Darmowa", "Płatna"];
 const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const EditItem = () => {
- const { categories } = useOrderAi();
+ const { categories, jsonData, gptData, editProduct, deleteProduct, findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
  const { id } = useParams<{ id: string }>();
+ let productIdInt = 0;
+ if (id !== undefined) {
+  productIdInt = parseInt(id, 10);
+ } else {
+  productIdInt = 0;
+ }
  const [youtubeUrl, setyoutubeUrl] = useState<string>("");
  const [validUrl, setValidUrl] = useState(false);
- const categoryNames = categories.map((category) => category.name)
+ const categoryNames = categories ? categories.map((category) => category.name) : [];
  const { parseJwtToken } = useDecrypt();
-//  const user: User | undefined = parseJwtToken();
+ const user: User | undefined = parseJwtToken();
 
  useEffect(() => {
-  categories.forEach((category) => {
-   category.products.forEach((item) => {
-    if (item.id == Number(id)) {
-     let license = item.license.split(",");
-     form.setValues({
-      name: item.name || "",
-      category: category.name || "",
-      license: license || [],
-      website: item.website || "",
-      youtubeUrl: item.youtubeUrl || "",
-      description: item.description || "",
-     });
-     const isValid = youtubeUrlRegex.test(item.youtubeUrl);
-     setValidUrl(isValid);
-     if (isValid) {
-      setyoutubeUrl(getEmbedYTLink(item.youtubeUrl));
+  if (gptData) {
+   gptData.forEach((category) => {
+    category.products.forEach((item) => {
+     if (item.id == Number(id)) {
+      let license = item.license.split(",");
+      form.setValues({
+       name: item.name || "",
+       category: category.name || "",
+       license: license || [],
+       website: item.website || "",
+       youtubeUrl: item.youtubeUrl || "",
+       description: item.description || "",
+      });
+      const isValid = youtubeUrlRegex.test(item.youtubeUrl);
+      setValidUrl(isValid);
+      if (isValid) {
+       setyoutubeUrl(getEmbedYTLink(item.youtubeUrl));
+      }
      }
-    }
+    });
    });
-  });
+  } else if (jsonData) {
+   jsonData.forEach((category) => {
+    category.products.forEach((item) => {
+     if (item.id == Number(id)) {
+      let license = item.license.split(",");
+      form.setValues({
+       name: item.name || "",
+       category: category.name || "",
+       license: license || [],
+       website: item.website || "",
+       youtubeUrl: item.youtubeUrl || "",
+       description: item.description || "",
+      });
+      const isValid = youtubeUrlRegex.test(item.youtubeUrl);
+      setValidUrl(isValid);
+      if (isValid) {
+       setyoutubeUrl(getEmbedYTLink(item.youtubeUrl));
+      }
+     }
+    });
+   });
+  } else if (categories) {
+   categories.forEach((category) => {
+    category.products.forEach((item) => {
+     if (item.id == Number(id)) {
+      let license = item.license.split(",");
+      form.setValues({
+       name: item.name || "",
+       category: category.name || "",
+       license: license || [],
+       website: item.website || "",
+       youtubeUrl: item.youtubeUrl || "",
+       description: item.description || "",
+      });
+      const isValid = youtubeUrlRegex.test(item.youtubeUrl);
+      setValidUrl(isValid);
+      if (isValid) {
+       setyoutubeUrl(getEmbedYTLink(item.youtubeUrl));
+      }
+     }
+    });
+   });
+  }
  }, [categories, id]);
-
- const { getEmbedYTLink } = useContext(OrderAiContext);
 
  const form = useFormik({
   initialValues: {
@@ -70,7 +118,20 @@ export const EditItem = () => {
    description: Yup.string().min(3, "Must be 3 characters or more").max(150, "Must be 150 characters or less").required("Required"),
   }),
   onSubmit: (values) => {
+   console.log("Form submitted!");
    console.log(values);
+   let categoryId = findCategoryId(values.category);
+   editProduct(
+    {
+     id: productIdInt,
+     name: values.name,
+     license: values.license.join(","),
+     website: values.website,
+     youtubeUrl: values.youtubeUrl,
+     description: values.description,
+    },
+    categoryId,
+   );
   },
  });
 
@@ -90,8 +151,8 @@ export const EditItem = () => {
   value: form.values[key],
  });
 
- const handleClearForm = () => {
-  form.resetForm();
+ const handleDeleteProduct = () => {
+  deleteProduct(productIdInt, findCategoryId(form.values.category));
  };
 
  return (
@@ -116,14 +177,16 @@ export const EditItem = () => {
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       {/* {user && user.role === UserRole.admin ? ( */}
-        <StyledIconButton>
+       {user && user.role === UserRole.admin ? (
+        <StyledIconButton onClick={handleDeleteProduct}>
          <img src="../../../src/assets/clarity_trash-line.png" />
         </StyledIconButton>
-       {/* ) : null} */}
-       <StyledIconButton onClick={handleClearForm}>
-        <img src="../../../src/assets/clarity_close-line.png" />
-       </StyledIconButton>
+       ) : null}
+       <Link to="/admin">
+        <StyledIconButton>
+         <img src="../../../src/assets/clarity_close-line.png" />
+        </StyledIconButton>
+       </Link>
       </Grid>
      </Grid>
 

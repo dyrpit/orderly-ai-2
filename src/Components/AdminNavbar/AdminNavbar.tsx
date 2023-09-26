@@ -1,15 +1,15 @@
 import { ANButton, ANButtonSmall, ANContainer, ANList } from "./AdminNavbar.styles";
 import Fade from "@mui/material/Fade";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AdminNavbarListCategory } from "../AdminNavbarListCategory/AdminNavbarListCategory";
 import { Link } from "react-router-dom";
-import { useOrderAi } from "../../Context/useOrderAi";
 import useDecrypt from "../../Hooks/useDecrypt";
 import { User, UserRole } from "../../Context/types";
+import { OrderAiContext } from "../../Context/ContextProvider";
 
 export function AdminNavbar() {
  const [isListVisible, setListVisible] = useState(false);
- const { categories } = useOrderAi();
+ const { jsonData, categories } = useContext(OrderAiContext);
  const { parseJwtToken } = useDecrypt();
  const user: User | undefined = parseJwtToken();
 
@@ -30,9 +30,7 @@ export function AdminNavbar() {
      <Link to="/admin/additem/" style={{ textDecoration: "none" }}>
       {user && user.role === UserRole.admin ? <ANButtonSmall>New Item</ANButtonSmall> : null}
      </Link>
-     {categories.map((categoryData, index) => (
-      <AdminNavbarListCategory category={categoryData} key={index} />
-     ))}
+     {(jsonData && jsonData.length > 0 ? jsonData : categories)?.map((categoryData, index) => <AdminNavbarListCategory category={categoryData} key={index} />)}{" "}
     </ANList>
    </Fade>
    <Link to="/admin/edituser" style={{ textDecoration: "none" }}>
