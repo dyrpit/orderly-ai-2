@@ -2,7 +2,8 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const ModalFooter = styled(Typography)(({ theme: theme }) => ({
- width: "768px",
+ maxWidth: "768px",
+ width: "100%",
  height: "32px",
  textAlign: "center",
  margin: "auto",

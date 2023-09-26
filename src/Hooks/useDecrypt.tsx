@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { User } from "../Context/types";
 
 const useDecrypt = () => {
  const navigate = useNavigate();
 
- const parseJwtToken = () => {
+ const parseJwtToken = (): User | undefined => {
   let token: string = localStorage.authToken;
   try {
    let base64Url = token.split(".")[1];

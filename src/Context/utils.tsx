@@ -16,7 +16,7 @@ export const fetchDataAndSetState = (path: string, setStateCallback: (arg0: any)
    .catch((error) => {
     console.error(`Error fetching JSON data from ${path}:`, error);
    });
- }, []); // Provide an empty dependency array here
+ }, []);
 };
 
 export const toggleRole = (user: User) => {

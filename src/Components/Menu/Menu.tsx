@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { StyledCloseIcon, StyledDrawer, StyledIconButton, StyledIconButtonMenu, StyledLogoContainer, StyledMenu, StyledMenuIcon } from "./Menu.styles";
-import { Box, Divider, ListItem, ListItemButton, ListItemIcon } from "@mui/material";
-import ListItemText from "@mui/material/ListItemText";
+import { Box, Divider, ListItem, ListItemButton } from "@mui/material";
 import List from "@mui/material/List";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
@@ -9,9 +8,9 @@ import { OrderAiContext } from "../../Context/ContextProvider";
 import "./Menu.css";
 import { SignIn } from "..";
 import { SignOut } from "../SignButtons/SignOut";
-import { ImportModal } from "../ImportModal/ImportModal";
 import { AdminPanel } from "../SignButtons/AdminPanel";
 import useAuth from "../../Hooks/useAuth";
+import useClickOutside from "../../Hooks/useClickOutside";
 
 const imgStyle = {
  width: "100%",
@@ -32,27 +31,31 @@ export const Menu = () => {
  const showHideLoginButtons = () => {
   if (showButtons === "none") {
    setShowButtons("block");
-   changeModal("none");
   } else {
    setShowButtons("none");
-   changeModal("none");
   }
  };
 
- const test = () => {
-    handleModalOpen();
-     changeModal("Import");
-  };
+ const Import = () => {
+  handleModalOpen();
+  changeModal("Import");
+ };
+
+ const Export = () => {
+  handleModalOpen();
+  changeModal("Export");
+ };
 
  const optionButtons = [
   {
    name: "Import",
    img: "../../../src/assets/clarity_import-line.png",
-   eventClick: test,
+   eventClick: Import,
   },
   {
    name: "Export",
    img: "../../../src/assets/clarity_export-line.png",
+   eventClick: Export,
   },
   {
    name: "Login",
@@ -66,16 +69,21 @@ export const Menu = () => {
   position: "absolute",
   backgroundColor: "#5C358E",
  };
+
+ const outsideClickRef = useRef(null);
+ const handleClickOutsideMenuButtons = () => {
+  setShowButtons("none");
+ };
+ useClickOutside(outsideClickRef, handleClickOutsideMenuButtons);
+
  return (
   <Box>
    <StyledMenu>
-    {optionButtons.map(({ img, name, eventClick}) => (
+    {optionButtons.map(({ img, name, eventClick }) => (
      <StyledIconButton onClick={eventClick} key={name}>
       <img src={img} />
      </StyledIconButton>
-     
     ))}
-    
    </StyledMenu>
    {open ? (
     <StyledIconButtonMenu onClick={handleDrawerClose} sx={{ display: "flex", justifyContent: "end" }}>
@@ -87,19 +95,23 @@ export const Menu = () => {
    <StyledDrawer variant="persistent" anchor="right" open={open}>
     <Divider />
     <List>
-     {optionButtons.map(({ img, name }) => (
-      <ListItem key={name}>
-       <ListItemButton>
-        <ListItemIcon>
-         <img src={img} />
-        </ListItemIcon>
-        <ListItemText>{name}</ListItemText>
-       </ListItemButton>
-      </ListItem>
-     ))}
+     <ListItem>
+      <ListItemButton>
+       <Box>
+        {getIsTokenExist() ? (
+         <>
+          <SignOut />
+          <AdminPanel />
+         </>
+        ) : (
+         <SignIn />
+        )}
+       </Box>
+      </ListItemButton>
+     </ListItem>
     </List>
    </StyledDrawer>
-   <Box sx={buttonsContainerStyles}>
+   <Box sx={buttonsContainerStyles} ref={outsideClickRef}>
     {getIsTokenExist() ? (
      <>
       <SignOut />

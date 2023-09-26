@@ -20,8 +20,7 @@ const router = createBrowserRouter(
     <Route path="editcategory/:id" element={<EditCategory />} />
     <Route path="edituser" element={<UsersEdit />} />
     <Route path="additem" element={<AddItem />} />
-    <Route path="edititem/:id" element={<EditItem />} />
-   </Route>
+    <Route path="edititem/:id" element={<EditItem />} /></Route>
    <Route path="login" element={<LoginModal />}></Route>
    <Route path="register" element={<RegisterModal />}></Route>
    <Route path="*" element={<NotFound />} />
