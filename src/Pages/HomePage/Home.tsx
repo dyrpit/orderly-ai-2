@@ -1,8 +1,11 @@
 import { Category } from "../../Components";
-import "./Home.css";
+
+import { HomeGrid } from "./Home.styles";
 
 export function Home() {
-  return (
-    <Category />
-  );
+ return (
+  <HomeGrid container>
+   <Category />
+  </HomeGrid>
+ );
 }

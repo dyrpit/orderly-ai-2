@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { StyledCloseIcon, StyledDrawer, StyledIconButton, StyledIconButtonMenu, StyledLogoContainer, StyledMenu, StyledMenuIcon } from "./Menu.styles";
+import { StyledAvatar, StyledCloseIcon, StyledDrawer, StyledIconButton, StyledIconButtonMenu, StyledLogoContainer, StyledMenu, StyledMenuIcon } from "./Menu.styles";
 import { Box, Divider, ListItem, ListItemButton } from "@mui/material";
 import List from "@mui/material/List";
 import { Link } from "react-router-dom";
@@ -18,10 +18,11 @@ const imgStyle = {
 };
 
 export const Menu = () => {
- const { changeModal, handleModalOpen } = useContext(OrderAiContext);
+ const { loggedUserRole, loggedUserEmail, changeModal, handleModalOpen } = useContext(OrderAiContext);
  const { getIsTokenExist } = useAuth();
  const [showButtons, setShowButtons] = useState("none");
  const [open, setOpen] = useState(false);
+
  const handleDrawerOpen = () => {
   setOpen(true);
  };
@@ -30,39 +31,22 @@ export const Menu = () => {
  };
  const showHideLoginButtons = () => {
   if (showButtons === "none") {
-   setShowButtons("block");
+   return setShowButtons("block");
   } else {
-   setShowButtons("none");
+   return setShowButtons("none");
   }
  };
 
- const Import = () => {
+ const handleImport = () => {
   handleModalOpen();
   changeModal("Import");
  };
 
- const Export = () => {
+ const handleExport = () => {
   handleModalOpen();
   changeModal("Export");
  };
 
- const optionButtons = [
-  {
-   name: "Import",
-   img: "../../../src/assets/clarity_import-line.png",
-   eventClick: Import,
-  },
-  {
-   name: "Export",
-   img: "../../../src/assets/clarity_export-line.png",
-   eventClick: Export,
-  },
-  {
-   name: "Login",
-   img: "../../../src/assets/clarity_avatar-line.png",
-   eventClick: showHideLoginButtons,
-  },
- ];
  const buttonsContainerStyles = {
   marginLeft: "auto",
   display: showButtons,
@@ -79,11 +63,21 @@ export const Menu = () => {
  return (
   <Box>
    <StyledMenu>
-    {optionButtons.map(({ img, name, eventClick }) => (
-     <StyledIconButton onClick={eventClick} key={name}>
-      <img src={img} />
+    <StyledIconButton onClick={handleImport}>
+     <img src="../../../src/assets/clarity_import-line.png" />
+    </StyledIconButton>
+    <StyledIconButton onClick={handleExport}>
+     <img src=".../../../src/assets/clarity_export-line.png" />
+    </StyledIconButton>
+    {loggedUserRole ? (
+     <StyledIconButton onClick={showHideLoginButtons}>
+      <StyledAvatar>{loggedUserEmail.slice(0, 2)}</StyledAvatar>
      </StyledIconButton>
-    ))}
+    ) : (
+     <StyledIconButton onClick={showHideLoginButtons}>
+      <img src="../../../src/assets/clarity_avatar-line.png" />
+     </StyledIconButton>
+    )}
    </StyledMenu>
    {open ? (
     <StyledIconButtonMenu onClick={handleDrawerClose} sx={{ display: "flex", justifyContent: "end" }}>
