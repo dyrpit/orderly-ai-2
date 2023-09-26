@@ -27,14 +27,7 @@ export const AddCategory = () => {
    color: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
-   let isCategoryNameExists;
-   if (gptData) {
-    isCategoryNameExists = gptData?.some((category) => category.name === values.name);
-   } else if (jsonData) {
-    isCategoryNameExists = jsonData?.some((category) => category.name === values.name);
-   } else {
-    isCategoryNameExists = categories?.some((category) => category.name === values.name);
-   }
+   let isCategoryNameExists = (gptData || jsonData || categories)?.some((category) => category.name === values.name);
 
    const errorElement = document.getElementById("error-message");
    if (isCategoryNameExists) {
@@ -58,14 +51,6 @@ export const AddCategory = () => {
   },
  });
 
- const commonInputsProperties = (key: "name" | "imageUrl" | "color") => ({
-  id: key,
-  onChange: form.handleChange,
-  onBlur: form.handleBlur,
-  value: form.values[key],
- });
-
-
  const handleColorClick = (color: string) => {
   form.setFieldValue("color", color);
  };
@@ -87,7 +72,7 @@ export const AddCategory = () => {
        InputProps={{
         disableUnderline: true,
        }}
-       {...commonInputsProperties("name")}
+       {...form.getFieldProps("name")}
       />
       <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
       <ErrorMessage>{categoryExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>

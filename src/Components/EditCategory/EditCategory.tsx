@@ -21,32 +21,9 @@ export const EditCategory = () => {
  const user: User | undefined = parseJwtToken();
 
  useEffect(() => {
-  if (gptData) {
-   gptData.forEach((item) => {
-    if (item.id == Number(id)) {
-     const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
-     setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]);
-     form.setValues({
-      name: item.name || "",
-      imageUrl: item.imageUrl || "",
-      color: firstLocalColor,
-     });
-    }
-   });
-  } else if (jsonData) {
-   jsonData.forEach((item) => {
-    if (item.id == Number(id)) {
-     const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
-     setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]);
-     form.setValues({
-      name: item.name || "",
-      imageUrl: item.imageUrl || "",
-      color: firstLocalColor,
-     });
-    }
-   });
-  } else if (categories) {
-   categories.forEach((item) => {
+  let dataToUse = gptData || jsonData || categories;
+  if (dataToUse) {
+   dataToUse.forEach((item) => {
     if (item.id == Number(id)) {
      const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
      setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]);
@@ -58,7 +35,7 @@ export const EditCategory = () => {
     }
    });
   }
- }, [id, categories, jsonData]);
+ }, [id, gptData, jsonData, categories]);
 
  const form = useFormik({
   initialValues: {
@@ -75,16 +52,9 @@ export const EditCategory = () => {
    color: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
-   let isCategoryNameExists;
-   if (gptData) {
-    isCategoryNameExists = gptData?.some((category) => category.name === values.name);
-   } else if (jsonData) {
-    isCategoryNameExists = jsonData?.some((category) => category.name === values.name);
-   } else {
-    isCategoryNameExists = categories?.some((category) => category.name === values.name);
-   }
-
+   let isCategoryNameExists = (gptData || jsonData || categories)?.some((category) => category.name === values.name);
    const errorElement = document.getElementById("error-message");
+
    if (isCategoryNameExists) {
     console.log("Category name already exists!");
     if (errorElement) {
@@ -110,13 +80,6 @@ export const EditCategory = () => {
     }
    }
   },
- });
-
- const commonInputsProperties = (key: "name" | "imageUrl" | "color") => ({
-  id: key,
-  onChange: form.handleChange,
-  onBlur: form.handleBlur,
-  value: form.values[key],
  });
 
  const handleRemoveCategory = () => {
@@ -152,9 +115,10 @@ export const EditCategory = () => {
        InputProps={{
         disableUnderline: true,
        }}
-       {...commonInputsProperties("name")}
+       {...form.getFieldProps("name")}
       />
-      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>{" "}
+      <ErrorMessage>{categoryExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>

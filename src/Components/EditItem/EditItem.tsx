@@ -14,6 +14,7 @@ import useDecrypt from "../../Hooks/useDecrypt";
 import { Link } from "react-router-dom";
 
 const names = ["Darmowa", "Płatna"];
+const productExistsMessage = "Product name already exists!";
 const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const EditItem = () => {
@@ -32,50 +33,9 @@ export const EditItem = () => {
  const user: User | undefined = parseJwtToken();
 
  useEffect(() => {
-  if (gptData) {
-   gptData.forEach((category) => {
-    category.products.forEach((item) => {
-     if (item.id == Number(id)) {
-      let license = item.license.split(",");
-      form.setValues({
-       name: item.name || "",
-       category: category.name || "",
-       license: license || [],
-       website: item.website || "",
-       youtubeUrl: item.youtubeUrl || "",
-       description: item.description || "",
-      });
-      const isValid = youtubeUrlRegex.test(item.youtubeUrl);
-      setValidUrl(isValid);
-      if (isValid) {
-       setyoutubeUrl(getEmbedYTLink(item.youtubeUrl));
-      }
-     }
-    });
-   });
-  } else if (jsonData) {
-   jsonData.forEach((category) => {
-    category.products.forEach((item) => {
-     if (item.id == Number(id)) {
-      let license = item.license.split(",");
-      form.setValues({
-       name: item.name || "",
-       category: category.name || "",
-       license: license || [],
-       website: item.website || "",
-       youtubeUrl: item.youtubeUrl || "",
-       description: item.description || "",
-      });
-      const isValid = youtubeUrlRegex.test(item.youtubeUrl);
-      setValidUrl(isValid);
-      if (isValid) {
-       setyoutubeUrl(getEmbedYTLink(item.youtubeUrl));
-      }
-     }
-    });
-   });
-  } else if (categories) {
-   categories.forEach((category) => {
+  let dataToUse = gptData || jsonData || categories;
+  if (dataToUse) {
+   dataToUse.forEach((category) => {
     category.products.forEach((item) => {
      if (item.id == Number(id)) {
       let license = item.license.split(",");
@@ -118,38 +78,44 @@ export const EditItem = () => {
    description: Yup.string().min(3, "Must be 3 characters or more").max(150, "Must be 150 characters or less").required("Required"),
   }),
   onSubmit: (values) => {
-   console.log("Form submitted!");
-   console.log(values);
-   let categoryId = findCategoryId(values.category);
-   editProduct(
-    {
-     id: productIdInt,
-     name: values.name,
-     license: values.license.join(","),
-     website: values.website,
-     youtubeUrl: values.youtubeUrl,
-     description: values.description,
-    },
-    categoryId,
-   );
+   let isProductNameExists = (gptData || jsonData || categories)?.some((category) => category.name === values.name);
+   const errorElement = document.getElementById("error-message");
+   if (isProductNameExists) {
+    console.log("Category name already exists!");
+    if (errorElement) {
+     errorElement.textContent = productExistsMessage;
+    }
+   } else {
+    console.log("Form submitted!");
+    if (errorElement) {
+     errorElement.textContent = "";
+    }
+    console.log("Form submitted!");
+    console.log(values);
+    let categoryId = findCategoryId(values.category);
+    editProduct(
+     {
+      id: productIdInt,
+      name: values.name,
+      license: values.license.join(","),
+      website: values.website,
+      youtubeUrl: values.youtubeUrl,
+      description: values.description,
+     },
+     categoryId,
+    );
+   }
   },
  });
 
- const commonInputsProperties = (key: "name" | "category" | "license" | "youtubeUrl" | "website" | "description") => ({
-  id: key,
-  onChange: (e: { target: { value: string } }) => {
-   if (key === "youtubeUrl") {
-    const isValid = youtubeUrlRegex.test(e.target.value);
-    setValidUrl(isValid);
-    if (isValid) {
-     setyoutubeUrl(getEmbedYTLink(e.target.value));
-    }
-   }
-   form.handleChange(e);
-  },
-  onBlur: form.handleBlur,
-  value: form.values[key],
- });
+ const handleYoutubeUrlChange = (e: { target: { value: string } }) => {
+  const isValid = youtubeUrlRegex.test(e.target.value);
+  setValidUrl(isValid);
+  if (isValid) {
+   setyoutubeUrl(getEmbedYTLink(e.target.value));
+  }
+  form.handleChange(e);
+ };
 
  const handleDeleteProduct = () => {
   const shouldDelete = window.confirm("Are you sure you want to delete this product?");
@@ -170,9 +136,10 @@ export const EditItem = () => {
        InputProps={{
         disableUnderline: true,
        }}
-       {...commonInputsProperties("name")}
+       {...form.getFieldProps("name")}
       />{" "}
-      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>{" "}
+      <ErrorMessage>{productExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
@@ -217,20 +184,21 @@ export const EditItem = () => {
        InputProps={{
         disableUnderline: true,
        }}
-       {...commonInputsProperties("website")}
+       {...form.getFieldProps("website")}
       />{" "}
       <ErrorMessage>{form.touched.website && form.errors.website ? <div>{form.errors.website}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-      <Label htmlFor="ytUrl">YouTube URL:</Label>
+      <Label htmlFor="youtubeUrl">YouTube URL:</Label>
       <Input
        variant="standard"
        placeholder="Enter YouTube Url"
        InputProps={{
         disableUnderline: true,
        }}
-       {...commonInputsProperties("youtubeUrl")}
+       {...form.getFieldProps("youtubeUrl")}
+       onChange={handleYoutubeUrlChange}
       />{" "}
       <ErrorMessage>{form.touched.youtubeUrl && form.errors.youtubeUrl ? <div>{form.errors.youtubeUrl}</div> : null}</ErrorMessage>
      </Grid>
@@ -246,7 +214,7 @@ export const EditItem = () => {
         minRows: 3,
         maxRows: 4,
        }}
-       {...commonInputsProperties("description")}
+       {...form.getFieldProps("description")}
        multiline
       />{" "}
       <ErrorMessage>{form.touched.description && form.errors.description ? <div>{form.errors.description}</div> : null}</ErrorMessage>

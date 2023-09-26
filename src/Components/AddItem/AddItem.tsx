@@ -18,6 +18,7 @@ export const AddItem = () => {
  const [validUrl, setValidUrl] = useState(false);
  const { categories, jsonData, gptData, addProduct, findFreeProductId, findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
  const categoryNames = gptData ? gptData.map((category) => category.name) : jsonData ? jsonData.map((category) => category.name) : categories ? categories.map((category) => category.name) : [];
+
  const form = useFormik({
   initialValues: {
    name: "",
@@ -38,14 +39,7 @@ export const AddItem = () => {
    description: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
-   let isProductNameExists;
-   if (gptData) {
-    isProductNameExists = gptData?.some((category) => category.products.some((product) => product.name === values.name));
-   } else if (jsonData) {
-    isProductNameExists = jsonData?.some((category) => category.products.some((product) => product.name === values.name));
-   } else if (categories) {
-    isProductNameExists = categories?.some((category) => category.products.some((product) => product.name === values.name));
-   }
+   const isProductNameExists = (gptData || jsonData || categories)?.some((category) => category.products.some((product) => product.name === values.name));
 
    const errorElement = document.getElementById("error-message");
    if (isProductNameExists) {
@@ -58,8 +52,8 @@ export const AddItem = () => {
     if (errorElement) {
      errorElement.textContent = "";
     }
+
     const categoryId = findCategoryId(form.values.category);
-    console.log(categoryId);
     addProduct(
      {
       id: findFreeProductId(),
@@ -75,21 +69,14 @@ export const AddItem = () => {
   },
  });
 
- const commonInputsProperties = (key: "name" | "category" | "license" | "youtubeUrl" | "website" | "description") => ({
-  id: key,
-  onChange: (e: { target: { value: string } }) => {
-   if (key === "youtubeUrl") {
-    const isValid = youtubeUrlRegex.test(e.target.value);
-    setValidUrl(isValid);
-    if (isValid) {
-     setyoutubeUrl(getEmbedYTLink(e.target.value));
-    }
-   }
-   form.handleChange(e);
-  },
-  onBlur: form.handleBlur,
-  value: form.values[key],
- });
+ const handleYoutubeUrlChange = (e: { target: { value: string } }) => {
+  const isValid = youtubeUrlRegex.test(e.target.value);
+  setValidUrl(isValid);
+  if (isValid) {
+   setyoutubeUrl(getEmbedYTLink(e.target.value));
+  }
+  form.handleChange(e);
+ };
 
  return (
   <StyledAdminContentContainer>
@@ -103,7 +90,7 @@ export const AddItem = () => {
        InputProps={{
         disableUnderline: true,
        }}
-       {...commonInputsProperties("name")}
+       {...form.getFieldProps("name")}
       />{" "}
       <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>{" "}
       <ErrorMessage>{productExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
@@ -146,20 +133,21 @@ export const AddItem = () => {
        InputProps={{
         disableUnderline: true,
        }}
-       {...commonInputsProperties("website")}
+       {...form.getFieldProps("website")}
       />{" "}
       <ErrorMessage>{form.touched.website && form.errors.website ? <div>{form.errors.website}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-      <Label htmlFor="ytUrl">YouTube URL:</Label>
+      <Label htmlFor="youtubeUrl">YouTube URL:</Label>
       <Input
        variant="standard"
        placeholder="Enter YouTube Url"
        InputProps={{
         disableUnderline: true,
        }}
-       {...commonInputsProperties("youtubeUrl")}
+       {...form.getFieldProps("youtubeUrl")}
+       onChange={handleYoutubeUrlChange}
       />{" "}
       <ErrorMessage>{form.touched.youtubeUrl && form.errors.youtubeUrl ? <div>{form.errors.youtubeUrl}</div> : null}</ErrorMessage>
      </Grid>
@@ -175,7 +163,7 @@ export const AddItem = () => {
         minRows: 3,
         maxRows: 4,
        }}
-       {...commonInputsProperties("description")}
+       {...form.getFieldProps("description")}
        multiline
       />{" "}
       <ErrorMessage>{form.touched.description && form.errors.description ? <div>{form.errors.description}</div> : null}</ErrorMessage>
