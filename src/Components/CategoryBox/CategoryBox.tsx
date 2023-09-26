@@ -8,15 +8,13 @@ export function Category() {
  const { jsonData, categories } = useContext(OrderAiContext);
 
  const renderedCategoryBoxes = (jsonData ?? categories ?? []).map((category, index) => (
-  <Grid desktop={5} mobile={12} sx={{ gap: "20px", justifyContent: "center" }}>
+  <Grid desktop={5} mobile={12} key={category.name}>
    <Link to={`${category.name}`} key={index} style={{ textDecoration: "none" }}>
-    {/* <Grid container flexDirection={"column"} alignItems={"center"} sx={{ backgroundColor: category.color, width: "100%", minHeight: "240px", borderRadius: "20px", margin: "20px 0px 20px 20px" }}>
-
-
-    </Grid> */}
-    <Grid item mobile={12}>
+    <Grid>
      <Box sx={{ backgroundColor: category.color, minHeight: "240px", borderRadius: "20px" }}>
-      <h2>{category.name}</h2>
+      <div>
+       <h2>{category.name}</h2>
+      </div>
      </Box>
     </Grid>
    </Link>
