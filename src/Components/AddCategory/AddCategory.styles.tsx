@@ -35,6 +35,9 @@ export const ColorsGrid = styled("div")({
  flexWrap: "wrap",
  gap: "20px",
  justifyContent: "center",
+ overflowY: "scroll",
+ paddingTop: "20px",
+ maxHeight: "200px",
 });
 
 export const ColorCircle = styled("div")({
@@ -90,3 +93,8 @@ export const StyledPreviewText = styled(Typography)({
  color: "#666",
  variant: "subtitle2",
 });
+
+
+export const StyledColorsGridTitle = styled("div")({ display: "flex", justifyContent: "space-between", width: "100%" });
+
+export const StyledColorsGridImage = styled("img")({ height: "20px", paddingRight: "10px", cursor: "pointer" });

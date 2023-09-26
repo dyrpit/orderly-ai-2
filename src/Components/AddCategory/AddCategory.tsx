@@ -1,13 +1,25 @@
 import { Grid } from "@mui/material";
 import { Input, Label, ModalErrorMessage } from "../../ui";
-import { ColorCircle, ColorsGrid, StyledAdminContentContainer, StyledGridContainer, StyledImage, StyledImageContainer, StyledImagePreview, StyledPreviewText } from "./AddCategory.styles";
+import {
+ ColorCircle,
+ ColorsGrid,
+ StyledAdminContentContainer,
+ StyledColorsGridImage,
+ StyledColorsGridTitle,
+ StyledGridContainer,
+ StyledImage,
+ StyledImageContainer,
+ StyledImagePreview,
+ StyledPreviewText,
+} from "./AddCategory.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { generateRandomPastelColorsArray } from "../../Context/utils";
+import { useRef, useEffect, useState } from "react";
 
 export const AddCategory = () => {
- const colors = ["#52877A", "#875252", "#528758", "#868752", "#527787", "#875272", "#FF99C8", "#9D82B0", "#7067CF", "#374785", "#011936", "#465362"];
-
+ const [colors, setColors] = useState<string[]>(generateRandomPastelColorsArray(48));
  const form = useFormik({
   initialValues: {
    name: "",
@@ -20,6 +32,7 @@ export const AddCategory = () => {
     .min(5, "Must be 5 characters or more")
     .required("Required")
     .matches(/.(jpg|jpeg|png|gif|bmp|webp)$/, "Must be a valid image URL"),
+   color: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
    console.log(values);
@@ -41,6 +54,10 @@ export const AddCategory = () => {
   form.setFieldValue("color", color);
  };
 
+ const reloadColors = () => {
+  setColors(generateRandomPastelColorsArray(48));
+  form.values.color = "";
+ };
  return (
   <StyledAdminContentContainer>
    <form onSubmit={form.handleSubmit}>
@@ -70,7 +87,7 @@ export const AddCategory = () => {
      </Grid>
 
      <Grid container spacing={2} justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
-      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      {/* <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
        <Label htmlFor="name">Image:</Label>
        <Input
         variant="standard"
@@ -90,17 +107,31 @@ export const AddCategory = () => {
          <StyledPreviewText variant="subtitle2">Preview</StyledPreviewText>
         </StyledImagePreview>
        )}
-      </Grid>
-      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-       <Label htmlFor="colour">Colour:</Label>
+      </Grid> */}
+      <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
+       <StyledColorsGridTitle>
+        <Label htmlFor="name" style={{ alignSelf: "flex-start" }}>
+         Image:
+        </Label>
+        <Label
+         htmlFor="name"
+         style={{
+          alignSelf: "flex-end",
+          display: "flex",
+          alignItems: "center",
+         }}>
+         {" "}
+         <StyledColorsGridImage src="../../../src/assets/clarity_refresh-line.png" onClick={() => reloadColors()} /> Reload colors
+        </Label>
+       </StyledColorsGridTitle>
        <ColorsGrid>
         {colors.map((color, index) => (
          <ColorCircle key={index} className={`color-circle ${form.values.color === color ? "selected" : ""}`} style={{ backgroundColor: color }} onClick={() => handleColorClick(color)}></ColorCircle>
         ))}
        </ColorsGrid>
+       {form.touched.color && form.errors.color ? <div>{form.errors.color}</div> : null}
       </Grid>
      </Grid>
-
     </StyledGridContainer>
    </form>
   </StyledAdminContentContainer>

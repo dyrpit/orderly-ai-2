@@ -93,19 +93,14 @@ export const AddItem = () => {
       <Label htmlFor="category" sx={{ marginRight: "8px" }}>
        Category:{" "}
       </Label>
-      <SelectList
-       name="category"
-       items={categoryNames}
-       field={form.getFieldProps("category")}
-       form={form}
-      />
+      <SelectList name="category" items={categoryNames} field={form.getFieldProps("category")} />
      </Grid>
 
      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
       <Label htmlFor="license" sx={{ marginRight: "8px" }}>
        License:{" "}
       </Label>
-      <SelectListCheckmarks name="license" items={names} field={form.getFieldProps("license")} form={form} />
+      <SelectListCheckmarks name="license" items={names} field={form.getFieldProps("license")} />
      </Grid>
 
      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
