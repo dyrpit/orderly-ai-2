@@ -7,7 +7,8 @@ import "./EditItem.css";
 import { useParams } from "react-router";
 import { useOrderAi } from "../../Context/useOrderAi";
 import { useFormik } from "formik";
-import { OrderAiContext, User, UserRole } from "../../Context/ContextProvider";
+import { OrderAiContext } from "../../Context/ContextProvider";
+// import { User, UserRole } from "../../Context/ContextProvider";
 import * as Yup from "yup";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 import useDecrypt from "../../Hooks/useDecrypt";
@@ -20,17 +21,9 @@ export const EditItem = () => {
  const { id } = useParams<{ id: string }>();
  const [youtubeUrl, setyoutubeUrl] = useState<string>("");
  const [validUrl, setValidUrl] = useState(false);
- const categoryNames = categories.map((category) => category.name);
-
- const [foundData, setFoundData] = useState<{ product: ProductData | null; category: CategoryData | null }>({
-  product: null,
-  category: null,
- });
- const { product, category } = foundData ?? { product: null, category: null };
- const { name, license = "", website, youtubeUrl, description } = product || {};
- const categoryName = category?.name ?? "";
+ const categoryNames = categories.map((category) => category.name)
  const { parseJwtToken } = useDecrypt();
- const user: User | undefined = parseJwtToken();
+//  const user: User | undefined = parseJwtToken();
 
  useEffect(() => {
   categories.forEach((category) => {
@@ -123,12 +116,12 @@ export const EditItem = () => {
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       {user && user.role === UserRole.admin ? (
+       {/* {user && user.role === UserRole.admin ? ( */}
         <StyledIconButton>
          <img src="../../../src/assets/clarity_trash-line.png" />
         </StyledIconButton>
-       ) : null}
-       <StyledIconButton>
+       {/* ) : null} */}
+       <StyledIconButton onClick={handleClearForm}>
         <img src="../../../src/assets/clarity_close-line.png" />
        </StyledIconButton>
       </Grid>
