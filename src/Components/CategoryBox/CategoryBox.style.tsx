@@ -1,37 +1,22 @@
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import { theme } from "../../Theme/ThemeProvider";
 
-export const BoxesContainer = styled("div")(() => ({
+export const BoxesContainer = styled(Box)(() => ({
+ display: "flex",
+ flexWrap: "wrap",
+ gap: "10%",
+ justifyContent: "center",
+ marginBottom: "5%",
+ "& :hover": {
+  transform: "scale(1.02)",
+  transition: "transform 0.2s ease",
+ },
+ "& h2": {
   display: "flex",
-  flexWrap: "wrap",
-  justifyContent: "space-between",
-  width: '100%',
-}));
-
-export const CategoryBoxContainer = styled(Box)(() => ({
-  borderRadius: '20px',
-  width: '470px',
-  height: '300px',
-  margin: '20px',
-  display: 'flex',
-  flexWrap: 'wrap',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  [theme.breakpoints.down("tablet")]: {
-    width: "100%",
-  },
-
-}));
-
-export const CategoryBoxContent = styled(Box)(() => ({
-  padding: '20px',
-  color: theme.palette.text.primary,
-  textDecoration: 'none',
-  '& h1, & h3': {
-    textDecoration: 'none',
-  },
-  '& a': {
-    textDecoration: 'none',
-  },
+  color: "white",
+  textShadow: "2px 2px 2px black",
+  justifyContent: "center",
+  fontFamily: "Montserrat",
+  padding: "25% 0% 25% 0%",
+ },
 }));

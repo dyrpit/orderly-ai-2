@@ -9,6 +9,7 @@ export const ModalErrorMessage = styled(Box)(({ theme: theme }) => ({
  marginLeft: "20%",
  marginTop: "-20px",
  color: "red",
+ fontFamily: "Montserrat",
  [theme.breakpoints.down("tablet")]: {
   width: "100%",
  },
