@@ -4,56 +4,81 @@ import { CategoryData, User } from "./types";
 import { fetchDataAndSetState, toggleRole } from "./utils";
 
 export const useOrderAi = () => {
- const [isModalOpen, setIsModalOpen] = useState(false);
- const [currentModal, setCurrentModal] = useState("none");
- const [categories, setCategories] = useState<CategoryData[]>([]);
- const [users, setUsers] = useState<User[]>([]);
- const [jsonData, setJsonData] = useState<CategoryData[] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentModal, setCurrentModal] = useState("none");
+  const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [jsonData, setJsonData] = useState<CategoryData[] | null>(null);
+  const [loggedUserRole, setLoggedUserRole] = useState("");
+  const [loggedUserEmail, setLoggedUserEmail] = useState("");
 
- fetchDataAndSetState("/src/Data/categories.json", setCategories);
- fetchDataAndSetState("/src/Data/users.json", ({ users }) => setUsers(users));
+  fetchDataAndSetState("/src/Data/categories.json", setCategories);
+  fetchDataAndSetState("/src/Data/users.json", ({ users }) => setUsers(users));
 
- const handleToggleRoleChange = (id: number) => {
-  setUsers((users) =>
-   users.map((user) => {
-    return user.id === id ? { ...user, role: toggleRole(user) } : user;
-   }),
-  );
- };
+  const handleToggleRoleChange = (id: number) => {
+    setUsers((users) =>
+      users.map((user) => {
+        return user.id === id ? { ...user, role: toggleRole(user) } : user;
+      }),
+    );
+  };
 
- const changeModal = (element: string) => {
-  setCurrentModal(element);
- };
+  const changeModal = (element: string) => {
+    setCurrentModal(element);
+  };
 
- const getEmbedYTLink = (ytLink: string): string => {
-  const url = new URL(ytLink);
-  const ytId = url.searchParams.get("v");
-  if (!ytId) {
-   throw new Error("Not correct yt link");
-  }
-  return `https://www.youtube.com/embed/${ytId}`;
- };
+  const getEmbedYTLink = (ytLink: string): string => {
+    const url = new URL(ytLink);
+    const ytId = url.searchParams.get("v");
+    if (!ytId) {
+      throw new Error("Not correct yt link");
+    }
+    return `https://www.youtube.com/embed/${ytId}`;
+  };
 
- const handleModalOpen = () => setIsModalOpen(true);
+  const saveLoggedUserRole = (string: string) => {
+    if (!string) return;
+    setLoggedUserRole(string);
+  };
 
- const handleModalClose = () => setIsModalOpen(false);
+  const saveLoggedUserEmail = (string: string) => {
+    if (!string) return;
+    setLoggedUserEmail(string);
+  };
 
- return {
-  isModalOpen,
-  currentModal,
-  categories,
-  users,
-  jsonData,
-  setJsonData,
-  changeModal,
-  handleModalOpen,
-  handleModalClose,
-  handleToggleRoleChange,
-  getEmbedYTLink,
-  setUsers,
- };
+  const clearLoggedUserRole = () => {
+    setLoggedUserRole('');
+  };
+  const clearLoggedUserEmail = () => {
+    setLoggedUserEmail('');
+  };
+
+  const handleModalOpen = () => setIsModalOpen(true);
+
+  const handleModalClose = () => setIsModalOpen(false);
+
+  return {
+    isModalOpen,
+    currentModal,
+    categories,
+    users,
+    jsonData,
+    loggedUserRole,
+    loggedUserEmail,
+    setJsonData,
+    changeModal,
+    handleModalOpen,
+    handleModalClose,
+    handleToggleRoleChange,
+    getEmbedYTLink,
+    setUsers,
+    saveLoggedUserRole,
+    saveLoggedUserEmail,
+    clearLoggedUserRole,
+    clearLoggedUserEmail,
+  };
 };
 
 export const useOrderAiContext = () => {
- return useContext(OrderAiContext);
+  return useContext(OrderAiContext);
 };
