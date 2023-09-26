@@ -1,9 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { User } from "../Context/types";
 
 const useDecrypt = () => {
- const navigate = useNavigate();
-
  const parseJwtToken = (): User | undefined => {
   const token: string = localStorage.authToken;
   try {
@@ -21,7 +18,6 @@ const useDecrypt = () => {
    return JSON.parse(jsonPayload);
   } catch (error) {
    console.error("Problem with decoding token");
-   navigate("/");
   }
  };
 
