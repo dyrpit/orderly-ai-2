@@ -24,11 +24,9 @@ export const Menu = () => {
  const [open, setOpen] = useState(false);
 
  const handleDrawerOpen = () => {
-  setOpen(true);
+  setOpen((prev) => !prev);
  };
- const handleDrawerClose = () => {
-  setOpen(false);
- };
+
  const showHideLoginButtons = () => {
   if (showButtons === "none") {
    return setShowButtons("block");
@@ -80,7 +78,7 @@ export const Menu = () => {
     )}
    </StyledMenu>
    {open ? (
-    <StyledIconButtonMenu onClick={handleDrawerClose} sx={{ display: "flex", justifyContent: "end" }}>
+    <StyledIconButtonMenu onClick={handleDrawerOpen} sx={{ display: "flex", justifyContent: "end" }}>
      {<StyledCloseIcon />}
     </StyledIconButtonMenu>
    ) : (
