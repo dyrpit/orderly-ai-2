@@ -8,13 +8,26 @@ type SwitchProps = MUISwitchProps;
 
 export const Switch = (props: SwitchProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const { changeModal, handleModalOpen } = useContext(OrderAiContext);
   const { setJsonData } = useContext(OrderAiContext); 
   const [responseFromAPI, setResponseFromAPI] = useState<string | null>(null);
 
+
+  const handleLoading = () => {
+    handleModalOpen();
+    changeModal("Loading");
+    
+   };
+
   const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCheckedState = event.target.checked;
+
+   if (!isChecked && newCheckedState) 
+   {
+      handleLoading();
+   }
+
     setIsChecked(newCheckedState);
-    console.log('Switch changed');
     const prompt = `
       Tworzę stronę, która ma być zbiorowiskiem innych stron oferujących gotowe rozwiązania AI. Potrzebuję pliku JSON, który zawierałby takie informacje.
       Stwórz 6 kategorii, do których można by przypisać strony.
@@ -41,7 +54,7 @@ export const Switch = (props: SwitchProps) => {
     `;
 
     if (newCheckedState) {
-      const apiKey = "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";
+      const apiKey = "key";
       const apiUrl = "https://api.openai.com/v1/chat/completions";
 
       const requestOptions = {
