@@ -1,16 +1,15 @@
 import { useRef, useState } from "react";
-import { StyledAvatar, StyledCloseIcon, StyledDrawer, StyledIconButton, StyledIconButtonMenu, StyledLogoContainer, StyledMenu, StyledMenuIcon } from "./Menu.styles";
+import { StyledAvatar, StyledButtonContainer, StyledCloseIcon, StyledDrawer, StyledIconButton, StyledIconButtonMenu, StyledLogoContainer, StyledMenu, StyledMenuIcon } from "./Menu.styles";
 import { Box, Divider, ListItem, ListItemButton } from "@mui/material";
 import List from "@mui/material/List";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
-import "./Menu.css";
 import { SignIn } from "..";
 import { SignOut } from "../SignButtons/SignOut";
 import { AdminPanel } from "../SignButtons/AdminPanel";
-import useAuth from "../../Hooks/useAuth";
 import useClickOutside from "../../Hooks/useClickOutside";
+import "./Menu.css";
 
 const imgStyle = {
  width: "100%",
@@ -19,7 +18,6 @@ const imgStyle = {
 
 export const Menu = () => {
  const { loggedUserRole, loggedUserEmail, changeModal, handleModalOpen } = useContext(OrderAiContext);
- const { getIsTokenExist } = useAuth();
  const [showButtons, setShowButtons] = useState("none");
  const [open, setOpen] = useState(false);
 
@@ -89,23 +87,24 @@ export const Menu = () => {
     <Divider />
     <List>
      <ListItem>
-      <ListItemButton sx={{ display: "flex", justifyContent: "center" }}>
-       <Box>
-        {getIsTokenExist() ? (
+      <ListItemButton sx={{ display: "flex", justifyContent: "center" }} onClick={handleDrawerOpen}>
+       <StyledButtonContainer>
+        {loggedUserRole ? (
          <>
           <SignOut />
           <AdminPanel />
+          <StyledAvatar>{loggedUserEmail.slice(0, 2)}</StyledAvatar>
          </>
         ) : (
          <SignIn />
         )}
-       </Box>
+       </StyledButtonContainer>
       </ListItemButton>
      </ListItem>
     </List>
    </StyledDrawer>
    <Box sx={buttonsContainerStyles} ref={outsideClickRef}>
-    {getIsTokenExist() ? (
+    {loggedUserRole ? (
      <>
       <SignOut />
       <AdminPanel />
