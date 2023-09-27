@@ -14,3 +14,4 @@ export * from "./TopBarContainer/TopBarContainer.styles";
 export * from "./StyledButton/StyledButton";
 export * from "./ImportExportContainer/ImportExportContainer.styles";
 export * from "./ErrorMessage/ErrorMessage.styles"
+export * from "./CloseModalButtonMobile/CloseModalButtonMobile.styles";

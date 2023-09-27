@@ -18,5 +18,6 @@ export const BoxesContainer = styled(Box)(() => ({
   justifyContent: "center",
   fontFamily: "Montserrat",
   padding: "25% 0% 25% 0%",
+  textAlign: "center",
  },
 }));

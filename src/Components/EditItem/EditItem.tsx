@@ -7,9 +7,9 @@ import "./EditItem.css";
 import { useParams } from "react-router";
 import { useFormik } from "formik";
 import { OrderAiContext } from "../../Context/ContextProvider";
-import { User, UserRole } from "../../Context/types";
 import * as Yup from "yup";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
+import { UserRole } from "../../Context/types";
 import useDecrypt from "../../Hooks/useDecrypt";
 import { Link } from "react-router-dom";
 
@@ -19,6 +19,8 @@ const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const EditItem = () => {
  const { categories, jsonData, gptData, editProduct, deleteProduct, findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
+ const { getEmbedYTLink, loggedUserRole } = useContext(OrderAiContext);
+ const { categories } = useOrderAi();
  const { id } = useParams<{ id: string }>();
  let productIdInt = 0;
  if (id !== undefined) {
@@ -147,8 +149,8 @@ export const EditItem = () => {
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       {user && user.role === UserRole.admin ? (
-        <StyledIconButton onClick={handleDeleteProduct}>
+       {loggedUserRole === UserRole.admin ? (
+        <StyledIconButton  onClick={handleDeleteProduct}>
          <img src="../../../src/assets/clarity_trash-line.png" />
         </StyledIconButton>
        ) : null}

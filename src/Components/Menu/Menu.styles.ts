@@ -95,3 +95,11 @@ export const StyledAvatar = styled(Avatar)(({ theme }) => ({
   textTransform: "uppercase",
   textAlign: "center"
 }));
+
+export const StyledButtonContainer = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "16px"
+}); 
