@@ -107,7 +107,7 @@ export const EditCategory = () => {
   <StyledAdminContentContainer>
    <form onSubmit={form.handleSubmit}>
     <StyledGridContainer container spacing={2}>
-     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={8} laptop={8} tablet={8} mobile={12} order={{ tablet: 1, mobile: 2 }}>
       <Label htmlFor="name">Name:</Label>
       <Input
        variant="standard"
@@ -121,7 +121,7 @@ export const EditCategory = () => {
       <ErrorMessage>{categoryExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
+     <Grid container justifyContent={"end"} item desktop={4} laptop={4} tablet={4} mobile={12} order={{ tablet: 2, mobile: 1 }}>
       <Grid container justifyContent={"space-between"}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
@@ -131,15 +131,15 @@ export const EditCategory = () => {
          <img src="../../../src/assets/clarity_trash-line.png" />
         </StyledIconButton>
        ) : null}
-       <Link to="/admin">
-        <StyledIconButton>
+       <StyledIconButton>
+        <Link to="/admin">
          <img src="../../../src/assets/clarity_close-line.png" />
-        </StyledIconButton>
-       </Link>
+        </Link>
+       </StyledIconButton>
       </Grid>
      </Grid>
 
-     <Grid container spacing={2} justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12} order={{ tablet: 2, mobile: 2 }}>
       <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
        <StyledColorsGridTitle>
         <Label htmlFor="name" style={{ alignSelf: "flex-start" }}>

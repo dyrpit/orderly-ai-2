@@ -28,12 +28,12 @@ export const EditItem = () => {
  }
  const [youtubeUrl, setyoutubeUrl] = useState<string>("");
  const [validUrl, setValidUrl] = useState(false);
- const categoryNames = categories ? categories.map((category) => category.name) : [];
+ const dataToUse = gptData || jsonData || categories;
+ const categoryNames = dataToUse ? dataToUse.map((category) => category.name) : [];
  const { parseJwtToken } = useDecrypt();
  const user: User | undefined = parseJwtToken();
 
  useEffect(() => {
-  let dataToUse = gptData || jsonData || categories;
   if (dataToUse) {
    dataToUse.forEach((category) => {
     category.products.forEach((item) => {
@@ -128,7 +128,7 @@ export const EditItem = () => {
   <StyledAdminContentContainer>
    <form onSubmit={form.handleSubmit}>
     <StyledGridContainer container spacing={2}>
-     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={8} laptop={8} tablet={8} mobile={12} order={{ tablet: 1, mobile: 2 }}>
       <Label htmlFor="name">Name:</Label>
       <Input
        variant="standard"
@@ -142,7 +142,7 @@ export const EditItem = () => {
       <ErrorMessage>{productExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
+     <Grid container justifyContent={"end"} item desktop={4} laptop={4} tablet={4} mobile={12} order={{ tablet: 2, mobile: 1 }}>
       <Grid container justifyContent={"space-between"}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
@@ -152,15 +152,15 @@ export const EditItem = () => {
          <img src="../../../src/assets/clarity_trash-line.png" />
         </StyledIconButton>
        ) : null}
-       <Link to="/admin">
-        <StyledIconButton>
+       <StyledIconButton>
+        <Link to="/admin">
          <img src="../../../src/assets/clarity_close-line.png" />
-        </StyledIconButton>
-       </Link>
+        </Link>
+       </StyledIconButton>
       </Grid>
      </Grid>
 
-     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12} order={{ mobile: 3 }}>
       <Label htmlFor="category" sx={{ marginRight: "8px" }}>
        Category:{" "}
       </Label>
@@ -168,7 +168,7 @@ export const EditItem = () => {
       <ErrorMessage>{form.touched.category && form.errors.category ? <div>{form.errors.category}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12} order={{ mobile: 4 }}>
       <Label htmlFor="license" sx={{ marginRight: "8px" }}>
        License:{" "}
       </Label>
@@ -176,7 +176,7 @@ export const EditItem = () => {
       <ErrorMessage>{form.touched.license && form.errors.license ? <div>{form.errors.license}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12} order={{ mobile: 5 }}>
       <Label htmlFor="website">Website:</Label>
       <Input
        variant="standard"
@@ -189,7 +189,7 @@ export const EditItem = () => {
       <ErrorMessage>{form.touched.website && form.errors.website ? <div>{form.errors.website}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12} order={{ mobile: 6 }}>
       <Label htmlFor="youtubeUrl">YouTube URL:</Label>
       <Input
        variant="standard"
@@ -203,7 +203,7 @@ export const EditItem = () => {
       <ErrorMessage>{form.touched.youtubeUrl && form.errors.youtubeUrl ? <div>{form.errors.youtubeUrl}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"left"} item laptop={12} desktop={12} tablet={12} mobile={12}>
+     <Grid container justifyContent={"left"} item laptop={12} desktop={12} tablet={12} mobile={12} order={{ mobile: 7 }}>
       <Label htmlFor="description">Description:</Label>
       <Input
        sx={{ height: "120px" }}
@@ -220,7 +220,7 @@ export const EditItem = () => {
       <ErrorMessage>{form.touched.description && form.errors.description ? <div>{form.errors.description}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={12} mobile={12} display={"flex"}>
+     <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={12} mobile={12} display={"flex"} order={{ mobile: 8 }}>
       <Grid item laptop={6} desktop={6} tablet={6} mobile={12}>
        <StyledVideoContainer>
         <StyledVideoPreview>

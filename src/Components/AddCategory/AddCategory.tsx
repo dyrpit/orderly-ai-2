@@ -64,12 +64,12 @@ export const AddCategory = () => {
   <StyledAdminContentContainer>
    <form onSubmit={form.handleSubmit}>
     <StyledGridContainer container spacing={2}>
-     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={8} laptop={8} tablet={8} mobile={12} order={{ tablet: 1, mobile: 2 }}>
       <Label htmlFor="name">Name:</Label>
       <Input
        variant="standard"
        placeholder="chatbots"
-       InputProps={{
+       InputProps={{    
         disableUnderline: true,
        }}
        {...form.getFieldProps("name")}
@@ -78,21 +78,21 @@ export const AddCategory = () => {
       <ErrorMessage>{categoryExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
+     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12} order={{ tablet: 2, mobile: 1 }}>
       <Grid container justifyContent={"space-between"}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       <Link to="/admin">
-        <StyledIconButton>
+       <StyledIconButton>
+        <Link to="/admin">
          <img src="../../../src/assets/clarity_close-line.png" />
-        </StyledIconButton>
-       </Link>
+        </Link>
+       </StyledIconButton>
       </Grid>
      </Grid>
 
-     <Grid container spacing={2} justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
-      {/* <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     {/* <Grid container spacing={2} justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12} >
+      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
        <Label htmlFor="name">Image:</Label>
        <Input
         variant="standard"
@@ -113,29 +113,28 @@ export const AddCategory = () => {
         </StyledImagePreview>
        )}
       </Grid> */}
-      <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
-       <StyledColorsGridTitle>
-        <Label htmlFor="color" style={{ alignSelf: "flex-start" }}>
-         Color:
-        </Label>
-        <Label
-         htmlFor="color"
-         style={{
-          alignSelf: "flex-end",
-          display: "flex",
-          alignItems: "center",
-         }}>
-         {" "}
-         <StyledColorsGridImage src="../../../src/assets/clarity_refresh-line.png" onClick={() => reloadColors()} /> Reload colors
-        </Label>
-       </StyledColorsGridTitle>
-       <ColorsGrid>
-        {colors.map((color, index) => (
-         <ColorCircle key={index} className={`color-circle ${form.values.color === color ? "selected" : ""}`} style={{ backgroundColor: color }} onClick={() => handleColorClick(color)}></ColorCircle>
-        ))}
-       </ColorsGrid>
-       <ErrorMessage>{form.touched.color && form.errors.color ? <div>{form.errors.color}</div> : null}</ErrorMessage>
-      </Grid>
+     <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12} order={{ tablet: 2, mobile: 2 }}>
+      <StyledColorsGridTitle>
+       <Label htmlFor="color" style={{ alignSelf: "flex-start" }}>
+        Color:
+       </Label>
+       <Label
+        htmlFor="color"
+        style={{
+         alignSelf: "flex-end",
+         display: "flex",
+         alignItems: "center",
+        }}>
+        {" "}
+        <StyledColorsGridImage src="../../../src/assets/clarity_refresh-line.png" onClick={() => reloadColors()} /> Reload colors
+       </Label>
+      </StyledColorsGridTitle>
+      <ColorsGrid>
+       {colors.map((color, index) => (
+        <ColorCircle key={index} className={`color-circle ${form.values.color === color ? "selected" : ""}`} style={{ backgroundColor: color }} onClick={() => handleColorClick(color)}></ColorCircle>
+       ))}
+      </ColorsGrid>
+      <ErrorMessage>{form.touched.color && form.errors.color ? <div>{form.errors.color}</div> : null}</ErrorMessage>
      </Grid>
     </StyledGridContainer>
    </form>
