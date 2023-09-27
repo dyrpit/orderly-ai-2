@@ -17,7 +17,7 @@ export const useUserSession = () => {
 
  const updateExpireTime = () => {
   if (getIsTokenExist()) {
-   const expireTime: number = Date.now() + 500000;
+   const expireTime: number = Date.now() + 300000;
    localStorage.setItem("expireTime", expireTime.toString());
   }
  };
