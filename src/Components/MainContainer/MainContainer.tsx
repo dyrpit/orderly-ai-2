@@ -1,5 +1,5 @@
 import { Container } from "./MainContainer.styles";
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 interface MainContainerProps {
   children?: ReactNode;
