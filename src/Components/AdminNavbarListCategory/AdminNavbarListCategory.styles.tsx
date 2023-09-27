@@ -2,17 +2,17 @@ import { Box, List, ListItem, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { fontSizeVar } from "../../Theme/variables";
 
-export const AdminNavbarListContainer = styled(Box)(({}) => ({
+export const AdminNavbarListContainer = styled(Box)(() => ({
  padding: "0px 0 10px 0",
  maxWidth: "200px",
  margin: "0px",
 }));
 
-export const ANTitleContainer = styled(Box)(({}) => ({
+export const ANTitleContainer = styled(Box)(({ theme }) => ({
  fontSize: "18px",
  width: "100%",
  border: "none",
- color: "#fff",
+ color: theme.palette.common.white,
  display: "flex",
  alignItems: "center",
  padding: "0",
@@ -28,14 +28,14 @@ export const ANTitle = styled(Typography)(({ theme: theme }) => ({
  textAlign: "left",
  "&:hover": {
   borderRadius: "10px",
-  backgroundColor: "#603795",
+  backgroundColor: theme.palette.background.paper,
  },
  "&.active": {
   color: "turquoise",
  },
 }));
 
-export const ANArrow = styled("span")(({}) => ({
+export const ANArrow = styled("span")(() => ({
  borderLeft: "8px solid transparent",
  borderRight: "8px solid transparent",
  borderTop: "10px solid #fff",
@@ -47,7 +47,7 @@ export const ANArrow = styled("span")(({}) => ({
  },
 }));
 
-export const ANList = styled(List)(({}) => ({
+export const ANList = styled(List)(() => ({
  paddingLeft: "20px",
  margin: "0px",
 }));
@@ -58,7 +58,7 @@ export const ANListItemContainer = styled(Typography)(({ theme: theme }) => ({
  color: fontSizeVar.loginModalDefault,
 }));
 
-export const ANListItem = styled(ListItem)(({}) => ({
+export const ANListItem = styled(ListItem)(() => ({
  cursor: "pointer",
  padding: "4px 8px 4px 8px",
 }));

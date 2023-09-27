@@ -1,7 +1,5 @@
 import React from "react";
 import { MenuItem, Select, OutlinedInput, FormControl, SelectChangeEvent } from "@mui/material";
-import { theme } from "../../Theme/ThemeProvider";
-
 interface SelectListProps {
  field: {
   name: string;
@@ -18,7 +16,7 @@ export const SelectList: React.FC<SelectListProps> = ({ field, name, items }) =>
   <FormControl fullWidth variant="outlined">
    <Select
     //*Nie narzekac ze tutaj jest SX, bo jak dam w styles.tsx i dam importa to się cały komponent rozwala
-    sx={{
+    sx={(theme) => ({
      borderRadius: "10px",
      height: "36px",
      backgroundColor: theme.palette.info.main,
@@ -26,7 +24,7 @@ export const SelectList: React.FC<SelectListProps> = ({ field, name, items }) =>
      overflow: "hidden",
      textOverflow: "ellipsis",
      width: "100%",
-    }}
+    })}
     {...field}
     value={field.value || ""}
     input={<OutlinedInput label={name} />}>
