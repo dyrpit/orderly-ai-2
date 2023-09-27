@@ -24,11 +24,9 @@ export const Menu = () => {
  const [open, setOpen] = useState(false);
 
  const handleDrawerOpen = () => {
-  setOpen(true);
+  setOpen((prev) => !prev);
  };
- const handleDrawerClose = () => {
-  setOpen(false);
- };
+
  const showHideLoginButtons = () => {
   if (showButtons === "none") {
    return setShowButtons("block");
@@ -52,6 +50,7 @@ export const Menu = () => {
   display: showButtons,
   position: "absolute",
   backgroundColor: "#5C358E",
+  zIndex: "1000",
  };
 
  const outsideClickRef = useRef(null);
@@ -80,7 +79,7 @@ export const Menu = () => {
     )}
    </StyledMenu>
    {open ? (
-    <StyledIconButtonMenu onClick={handleDrawerClose} sx={{ display: "flex", justifyContent: "end" }}>
+    <StyledIconButtonMenu onClick={handleDrawerOpen} sx={{ display: "flex", justifyContent: "end" }}>
      {<StyledCloseIcon />}
     </StyledIconButtonMenu>
    ) : (
@@ -90,7 +89,7 @@ export const Menu = () => {
     <Divider />
     <List>
      <ListItem>
-      <ListItemButton>
+      <ListItemButton sx={{ display: "flex", justifyContent: "center" }}>
        <Box>
         {getIsTokenExist() ? (
          <>
