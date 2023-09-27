@@ -1,11 +1,8 @@
-import { useContext } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { CustomButton } from "../../ui";
-import { OrderAiContext } from "../../Context/ContextProvider";
 
 export function SignOut() {
  const { removeAuthToken } = useAuth();
- const { clearLoggedUserEmail, clearLoggedUserRole } = useContext(OrderAiContext);
  const signOutStyles = {
   display: "flex",
   margin: "0",
@@ -13,15 +10,9 @@ export function SignOut() {
   marginLeft: "auto",
  };
 
- const handleOnSignOut = () => {
-  removeAuthToken();
-  clearLoggedUserRole();
-  clearLoggedUserEmail();
- };
-
  return (
   <>
-   <CustomButton sx={signOutStyles} onClick={handleOnSignOut}>
+   <CustomButton sx={signOutStyles} onClick={removeAuthToken}>
     Sign Out
    </CustomButton>
   </>
