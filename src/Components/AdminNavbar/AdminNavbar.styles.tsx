@@ -17,7 +17,10 @@ export const ANContainer = styled(Box)(({ theme: theme }) => ({
  textAlign: "center",
  borderRadius: "15px",
  [theme.breakpoints.down("laptop")]: {
-  display: "none",
+  position: "absolute",
+  left: "0",
+  border: "1px solid #2f3238",
+  zIndex: "999",
  },
 }));
 
