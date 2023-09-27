@@ -14,3 +14,4 @@ export * from './AddCategory/AddCategory';
 export * from './AddItem/AddItem';
 export * from './EditCategory/EditCategory';
 export * from './ProtectedRoute/ProtectedRoute';
+export * from './ModeToggle/ModeToggle';

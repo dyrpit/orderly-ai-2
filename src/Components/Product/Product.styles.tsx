@@ -17,7 +17,6 @@ export const StyledProductContainer = styled(Box)(({ theme }) => ({
 
 export const StyledName = styled(Typography)(({ theme }) => ({
  fontSize: "40px",
- color: "#fff",
  fontWeight: theme.typography.fontWeightBold,
  textOverflow: "ellipsis",
  whiteSpace: "nowrap",
@@ -95,7 +94,7 @@ export const StyledLinkText = styled(Typography)(({ theme }) => ({
 
 export const StyledTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
  [`& .${tooltipClasses.tooltip}`]: {
-  backgroundColor: "#7C5DA4",
+  backgroundColor: theme.palette.info.light,
   color: theme.palette.text.secondary,
   boxShadow: theme.shadows[1],
   fontSize: 16,
@@ -106,7 +105,7 @@ export const StyledTooltip = styled(({ className, ...props }: TooltipProps) => <
 
 export const StyledNameTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
  [`& .${tooltipClasses.tooltip}`]: {
-  backgroundColor: "#7C5DA4",
+  backgroundColor: theme.palette.info.light,
   color: theme.palette.text.secondary,
   boxShadow: theme.shadows[1],
   fontSize: 24,

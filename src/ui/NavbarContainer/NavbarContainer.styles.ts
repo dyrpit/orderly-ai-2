@@ -10,7 +10,7 @@ export const StyledNavBarContainer = styled(Box)(({ theme }) => ({
   gridTemplateColumns: "1fr 4fr 1fr",
   justifyContent: "center",
   alignItems: "center",
-  color: "#fff",
+  color: theme.palette.common.white,
 }));
 
 export const NavbarContainerWrapper = styled(Box)(({ theme }) => ({

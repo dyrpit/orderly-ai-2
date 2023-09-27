@@ -90,7 +90,7 @@ export const StyledLogoContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  backgroundColor: "#fff",
+  backgroundColor: theme.palette.common.white,
   color: theme.palette.info.main,
   textTransform: "uppercase",
   textAlign: "center"

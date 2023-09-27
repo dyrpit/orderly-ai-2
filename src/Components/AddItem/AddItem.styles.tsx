@@ -1,6 +1,5 @@
 import { styled } from "@mui/material/styles";
 import { Box, Grid, Typography } from "@mui/material";
-import { theme } from "../../Theme/ThemeProvider";
 
 export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
  backgroundColor: theme.palette.background.paper,
@@ -15,14 +14,14 @@ export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
 
 export const StyledName = styled(Typography)(({ theme }) => ({
  fontSize: "60px",
- color: "#fff",
+ color: theme.palette.common.white,
  fontWeight: theme.typography.fontWeightBold,
  [theme.breakpoints.down("laptop")]: {
   fontSize: "40px",
  },
 }));
 
-export const StyledGridContainer = styled(Grid)({
+export const StyledGridContainer = styled(Grid)(({ theme }) => ({
  display: "flex",
  justifyContent: "space-between",
  alignItems: "center",
@@ -30,9 +29,9 @@ export const StyledGridContainer = styled(Grid)({
   display: "flex",
   flexDirection: "column",
  },
-});
+}));
 
-export const StyledVideoContainer = styled("div")(({}) => ({
+export const StyledVideoContainer = styled("div")(() => ({
  display: "flex",
  flexDirection: "column",
  justifyContent: "center",
