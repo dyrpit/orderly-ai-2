@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { BoxesContainer } from "./CategoryBox.style";
 import { Link } from "react-router-dom";
-
 import { OrderAiContext } from "../../Context/ContextProvider";
 import { Box, Grid } from "@mui/material";
 

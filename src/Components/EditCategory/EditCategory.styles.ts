@@ -111,7 +111,6 @@ export const ColorCircle = styled("div")({
 //  border: "2px solid #fff",
 // });
 
-
 export const StyledPreviewText = styled(Typography)({
  color: "#666",
  variant: "subtitle2",

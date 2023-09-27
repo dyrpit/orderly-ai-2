@@ -8,7 +8,7 @@ import { OrderAiContext } from "../../Context/ContextProvider";
 
 export function AdminNavbar() {
  const [isListVisible, setListVisible] = useState(false);
- const { categories, loggedUserRole } = useContext(OrderAiContext);
+ const { categories, jsonData, gptData, loggedUserRole } = useContext(OrderAiContext);
  const isAdmin = loggedUserRole === UserRole.admin;
 
  const toggleListVisibility = () => {
@@ -28,9 +28,7 @@ export function AdminNavbar() {
      <Link to="/admin/additem/" style={{ textDecoration: "none" }}>
       {isAdmin ? <ANButtonSmall>New Item</ANButtonSmall> : null}
      </Link>
-     {(categories ?? []).map((categoryData, index) => (
-      <AdminNavbarListCategory category={categoryData} key={index} />
-     ))}
+     {(jsonData && jsonData.length > 0 ? jsonData : categories)?.map((categoryData, index) => <AdminNavbarListCategory category={categoryData} key={index} />)}{" "}
     </ANList>
    </Fade>
    <Link to="/admin/edituser" style={{ textDecoration: "none" }}>
