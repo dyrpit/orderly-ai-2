@@ -54,7 +54,7 @@ export const Switch = (props: SwitchProps) => {
     `;
 
     if (newCheckedState) {
-      const apiKey = "key";
+      const apiKey = "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";
       const apiUrl = "https://api.openai.com/v1/chat/completions";
 
       const requestOptions = {
@@ -78,7 +78,8 @@ export const Switch = (props: SwitchProps) => {
         .then((response) => response.json())
         .then((data) => {
           console.log("Chat response:", data.choices[0]?.message?.content);
-          setJsonData(data);
+          const jsonData = JSON.parse(data.choices[0]?.message?.content);
+          setJsonData(jsonData);
           setResponseFromAPI(data);
         })
         .catch((error) => {
@@ -87,6 +88,7 @@ export const Switch = (props: SwitchProps) => {
     }
   };
   useEffect(() => {
+    
   }, [responseFromAPI]);
 
   return (
