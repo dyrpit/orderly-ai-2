@@ -5,9 +5,10 @@ import { OrderAiContext } from "../../Context/ContextProvider";
 import { Box, Grid } from "@mui/material";
 
 export function Category() {
- const { jsonData, categories } = useContext(OrderAiContext);
+ const { jsonData, categories, gptData } = useContext(OrderAiContext);
+ const dataToUse = gptData || jsonData || categories || [];
 
- const renderedCategoryBoxes = (jsonData ?? categories ?? []).map((category, index) => (
+ const renderedCategoryBoxes = dataToUse.map((category, index) => (
   <Grid desktop={5} mobile={12} key={category.name}>
    <Link to={`${category.name}`} key={index} style={{ textDecoration: "none" }}>
     <Grid>

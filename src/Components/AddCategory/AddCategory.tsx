@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Alert, AlertColor, Grid, Snackbar } from "@mui/material";
 import { Input, Label } from "../../ui";
 import { ColorCircle, ColorsGrid, StyledAdminContentContainer, StyledColorsGridImage, StyledColorsGridTitle, StyledGridContainer } from "./AddCategory.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
@@ -15,6 +15,18 @@ const categoryExistsMessage = "Category name already exists!";
 export const AddCategory = () => {
  const { categories, jsonData, gptData, addCategory, findFreeCategoryId } = useContext(OrderAiContext);
  const [colors, setColors] = useState<string[]>(generateRandomPastelColorsArray(48));
+ const dataToUse = gptData || jsonData || categories || [];
+ const [open, setOpen] = useState(false);
+ const [message, setMessage] = useState("");
+ const [severity, setSeverity] = useState<AlertColor | undefined>(undefined);
+
+ const handleClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
+  if (reason === "clickaway") {
+   return;
+  }
+
+  setOpen(false);
+ };
 
  const form = useFormik({
   initialValues: {
@@ -27,16 +39,14 @@ export const AddCategory = () => {
    color: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
-   let isCategoryNameExists = (gptData || jsonData || categories)?.some((category) => category.name === values.name);
+   let isCategoryNameExists = dataToUse.some((category) => category.name === values.name);
 
    const errorElement = document.getElementById("error-message");
    if (isCategoryNameExists) {
-    console.log("Category name already exists!");
     if (errorElement) {
      errorElement.textContent = categoryExistsMessage;
     }
    } else {
-    console.log("Form submitted!");
     if (errorElement) {
      errorElement.textContent = "";
     }
@@ -47,6 +57,9 @@ export const AddCategory = () => {
      id: findFreeCategoryId(),
      products: [],
     });
+    setOpen(true);
+    setMessage("Category added successfully!");
+    setSeverity("success");
    }
   },
  });
@@ -69,7 +82,7 @@ export const AddCategory = () => {
       <Input
        variant="standard"
        placeholder="chatbots"
-       InputProps={{    
+       InputProps={{
         disableUnderline: true,
        }}
        {...form.getFieldProps("name")}
@@ -138,6 +151,11 @@ export const AddCategory = () => {
      </Grid>
     </StyledGridContainer>
    </form>
+   <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+    <Alert variant="filled" onClose={handleClose} severity={severity}>
+     {message}
+    </Alert>
+   </Snackbar>{" "}
   </StyledAdminContentContainer>
  );
 };

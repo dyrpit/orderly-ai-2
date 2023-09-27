@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Grid } from "@mui/material";
+import { Alert, AlertColor, Grid, Snackbar } from "@mui/material";
 import { Input, Label, SelectList, SelectListCheckmarks } from "../../ui";
 import { StyledAdminContentContainer, StyledGridContainer, StyledVideoContainer, StyledVideoPreview } from "./EditItem.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
@@ -11,48 +11,60 @@ import * as Yup from "yup";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 import { UserRole } from "../../Context/types";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const names = ["Darmowa", "Płatna"];
 const productExistsMessage = "Product name already exists!";
 const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const EditItem = () => {
- const { categories, jsonData, gptData, editProduct, deleteProduct, loggedUserRole , findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
+ const navigate = useNavigate();
+
+ const { categories, jsonData, gptData, editProduct, deleteProduct, loggedUserRole, findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
  const { id } = useParams<{ id: string }>();
+ const dataToUse = gptData || jsonData || categories || [];
+
  let productIdInt = 0;
- if (id !== undefined) {  
+ if (id !== undefined) {
   productIdInt = parseInt(id, 10);
  } else {
   productIdInt = 0;
  }
  const [youtubeUrl, setyoutubeUrl] = useState<string>("");
  const [validUrl, setValidUrl] = useState(false);
- const dataToUse = gptData || jsonData || categories;
  const categoryNames = dataToUse ? dataToUse.map((category) => category.name) : [];
+ const [open, setOpen] = useState(false);
+ const [message, setMessage] = useState("");
+ const [severity, setSeverity] = useState<AlertColor | undefined>(undefined);
+
+ const handleClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
+  if (reason === "clickaway") {
+   return;
+  }
+  setOpen(false);
+ };
 
  useEffect(() => {
-  if (dataToUse) {
-   dataToUse.forEach((category) => {
-    category.products.forEach((item) => {
-     if (item.id == Number(id)) {
-      let license = item.license.split(",");
-      form.setValues({
-       name: item.name || "",
-       category: category.name || "",
-       license: license || [],
-       website: item.website || "",
-       youtubeUrl: item.youtubeUrl || "",
-       description: item.description || "",
-      });
-      const isValid = youtubeUrlRegex.test(item.youtubeUrl);
-      setValidUrl(isValid);
-      if (isValid) {
-       setyoutubeUrl(getEmbedYTLink(item.youtubeUrl));
-      }
+  dataToUse.forEach((category) => {
+   category.products.forEach((item) => {
+    if (item.id == Number(id)) {
+     let license = item.license.split(",");
+     form.setValues({
+      name: item.name || "",
+      category: category.name || "",
+      license: license || [],
+      website: item.website || "",
+      youtubeUrl: item.youtubeUrl || "",
+      description: item.description || "",
+     });
+     const isValid = youtubeUrlRegex.test(item.youtubeUrl);
+     setValidUrl(isValid);
+     if (isValid) {
+      setyoutubeUrl(getEmbedYTLink(item.youtubeUrl));
      }
-    });
+    }
    });
-  }
+  });
  }, [categories, id]);
 
  const form = useFormik({
@@ -75,20 +87,16 @@ export const EditItem = () => {
    description: Yup.string().min(3, "Must be 3 characters or more").max(150, "Must be 150 characters or less").required("Required"),
   }),
   onSubmit: (values) => {
-   let isProductNameExists = (gptData || jsonData || categories)?.some((category) => category.name === values.name);
+   let isProductNameExists = dataToUse.some((category) => category.name === values.name);
    const errorElement = document.getElementById("error-message");
    if (isProductNameExists) {
-    console.log("Category name already exists!");
     if (errorElement) {
      errorElement.textContent = productExistsMessage;
     }
    } else {
-    console.log("Form submitted!");
     if (errorElement) {
      errorElement.textContent = "";
     }
-    console.log("Form submitted!");
-    console.log(values);
     let categoryId = findCategoryId(values.category);
     editProduct(
      {
@@ -101,6 +109,9 @@ export const EditItem = () => {
      },
      categoryId,
     );
+    setOpen(true);
+    setMessage("Product edited successfully!");
+    setSeverity("success");
    }
   },
  });
@@ -115,9 +126,21 @@ export const EditItem = () => {
  };
 
  const handleDeleteProduct = () => {
-  const shouldDelete = window.confirm("Are you sure you want to delete this product?");
-  if (shouldDelete) {
-   deleteProduct(productIdInt, findCategoryId(form.values.category));
+  if (id !== undefined) {
+   const shouldDelete = window.confirm("Are you sure you want to delete this category?");
+   if (shouldDelete) {
+    deleteProduct(productIdInt, findCategoryId(form.values.category));
+    setOpen(true);
+    setMessage("Product deleted successfully!");
+    setSeverity("success");
+    setTimeout(() => {
+     navigate("/admin");
+    }, 1500);
+   }
+  } else {
+   setOpen(true);
+   setMessage("Couldn't delete product!");
+   setSeverity("error");
   }
  };
 
@@ -145,7 +168,7 @@ export const EditItem = () => {
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
        {loggedUserRole === UserRole.admin ? (
-        <StyledIconButton  onClick={handleDeleteProduct}>
+        <StyledIconButton onClick={handleDeleteProduct}>
          <img src="../../../src/assets/clarity_trash-line.png" />
         </StyledIconButton>
        ) : null}
@@ -236,6 +259,11 @@ export const EditItem = () => {
      </Grid>
     </StyledGridContainer>
    </form>
+   <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+    <Alert variant="filled" onClose={handleClose} severity={severity}>
+     {message}
+    </Alert>
+   </Snackbar>{" "}
   </StyledAdminContentContainer>
  );
 };

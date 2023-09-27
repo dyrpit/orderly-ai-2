@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Alert, AlertColor, Grid, Snackbar } from "@mui/material";
 import { Input, Label, SelectList, SelectListCheckmarks } from "../../ui";
 import { StyledAdminContentContainer, StyledGridContainer, StyledVideoContainer, StyledVideoPreview } from "./AddItem.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
@@ -17,8 +17,18 @@ export const AddItem = () => {
  const [youtubeUrl, setyoutubeUrl] = useState("");
  const [validUrl, setValidUrl] = useState(false);
  const { categories, jsonData, gptData, addProduct, findFreeProductId, findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
- const categoryNames = gptData ? gptData.map((category) => category.name) : jsonData ? jsonData.map((category) => category.name) : categories ? categories.map((category) => category.name) : [];
+ const dataToUse = gptData || jsonData || categories || [];
+ const [open, setOpen] = useState(false);
+ const [message, setMessage] = useState("");
+ const [severity, setSeverity] = useState<AlertColor | undefined>(undefined);
 
+ const handleClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
+  if (reason !== "clickaway") {
+   setOpen(false);
+  }
+ };
+
+ const categoryNames = dataToUse?.map((category) => category.name);
  const form = useFormik({
   initialValues: {
    name: "",
@@ -43,12 +53,10 @@ export const AddItem = () => {
 
    const errorElement = document.getElementById("error-message");
    if (isProductNameExists) {
-    console.log("Category name already exists!");
     if (errorElement) {
      errorElement.textContent = productExistsMessage;
     }
    } else {
-    console.log("Form submitted!");
     if (errorElement) {
      errorElement.textContent = "";
     }
@@ -65,6 +73,9 @@ export const AddItem = () => {
      },
      categoryId,
     );
+    setOpen(true);
+    setMessage("Category added successfully!");
+    setSeverity("success");
    }
   },
  });
@@ -188,6 +199,11 @@ export const AddItem = () => {
      </Grid>
     </StyledGridContainer>
    </form>
+   <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+    <Alert variant="filled" onClose={handleClose} severity={severity}>
+     {message}
+    </Alert>
+   </Snackbar>{" "}
   </StyledAdminContentContainer>
  );
 };
