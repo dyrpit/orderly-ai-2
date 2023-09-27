@@ -8,28 +8,26 @@ import { useParams } from "react-router";
 import { useOrderAi } from "../../Context/useOrderAi";
 import { useFormik } from "formik";
 import { OrderAiContext } from "../../Context/ContextProvider";
-// import { User, UserRole } from "../../Context/ContextProvider";
 import * as Yup from "yup";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
-import useDecrypt from "../../Hooks/useDecrypt";
+import { UserRole } from "../../Context/types";
 
 const names = ["Darmowa", "Płatna"];
 const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const EditItem = () => {
+ const { getEmbedYTLink, loggedUserRole } = useContext(OrderAiContext);
  const { categories } = useOrderAi();
  const { id } = useParams<{ id: string }>();
  const [youtubeUrl, setyoutubeUrl] = useState<string>("");
  const [validUrl, setValidUrl] = useState(false);
- const categoryNames = categories.map((category) => category.name)
- const { parseJwtToken } = useDecrypt();
-//  const user: User | undefined = parseJwtToken();
+ const categoryNames = categories.map((category) => category.name);
 
  useEffect(() => {
   categories.forEach((category) => {
    category.products.forEach((item) => {
     if (item.id == Number(id)) {
-     let license = item.license.split(",");
+     const license = item.license.split(",");
      form.setValues({
       name: item.name || "",
       category: category.name || "",
@@ -47,8 +45,6 @@ export const EditItem = () => {
    });
   });
  }, [categories, id]);
-
- const { getEmbedYTLink } = useContext(OrderAiContext);
 
  const form = useFormik({
   initialValues: {
@@ -107,20 +103,20 @@ export const EditItem = () => {
         disableUnderline: true,
        }}
        {...commonInputsProperties("name")}
-      />{" "}
+      />
       <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
-      <Grid container justifyContent={"space-between"}>
+     <Grid container justifyContent={"end"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Grid container justifyContent={{ mobile: "center", tablet: "end" }}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       {/* {user && user.role === UserRole.admin ? ( */}
+       {loggedUserRole === UserRole.admin ? (
         <StyledIconButton>
          <img src="../../../src/assets/clarity_trash-line.png" />
         </StyledIconButton>
-       {/* ) : null} */}
+       ) : null}
        <StyledIconButton onClick={handleClearForm}>
         <img src="../../../src/assets/clarity_close-line.png" />
        </StyledIconButton>
