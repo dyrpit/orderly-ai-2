@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { LoginModalContainer } from "./LoginModal.styles";
 import { StyledButton } from "../../ui/StyledButton/StyledButton.styles";
-import { ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader } from "../../ui";
+import { CloseModalButtonMobile, ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader } from "../../ui";
 import { useContext } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import Modal from "@mui/material/Modal";
@@ -46,10 +46,12 @@ export function LoginModal() {
   onBlur: formik.handleBlur,
   value: formik.values[key],
  });
-
  return (
   <Modal open={isModalOpen} onClose={handleModalClose}>
    <LoginModalContainer>
+    <CloseModalButtonMobile>
+     <img src="../../../src/assets/clarity_close-line.png" onClick={handleModalClose} />
+    </CloseModalButtonMobile>
     <ModalHeader>Sign In</ModalHeader>
     <ModalSubHeader>Welcome back. Sign in to continue</ModalSubHeader>
     <form onSubmit={formik.handleSubmit}>

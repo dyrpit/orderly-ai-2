@@ -52,6 +52,7 @@ export const Menu = () => {
   display: showButtons,
   position: "absolute",
   backgroundColor: "#5C358E",
+  zIndex: "1000",
  };
 
  const outsideClickRef = useRef(null);
@@ -90,7 +91,7 @@ export const Menu = () => {
     <Divider />
     <List>
      <ListItem>
-      <ListItemButton>
+      <ListItemButton sx={{ display: "flex", justifyContent: "center" }}>
        <Box>
         {getIsTokenExist() ? (
          <>
