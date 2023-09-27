@@ -18,7 +18,7 @@ export const Product = ({ product, categoryName }: ProductProps) => {
  return (
   <StyledProductContainer>
    <Grid container spacing={0} margin={0}>
-    <Grid container flexDirection={"column"} alignItems={"center"} justifyContent={"space-around"} desktop={6} laptop={6} tablet={12} mobile={12}>
+    <Grid container flexDirection={"column"} alignItems={"center"} justifyContent={"space-between"} desktop={6} laptop={6} tablet={12} mobile={12} sx={{ padding: "16px 0" }}>
      <Grid sx={{ width: "50%" }} item>
       {name.length > 15 ? (
        <StyledNameTooltip title={name}>
@@ -35,7 +35,7 @@ export const Product = ({ product, categoryName }: ProductProps) => {
      </Grid>
     </Grid>
     <Grid container flexDirection={"column"} desktop={6} laptop={6} mobile={12} tablet={12}>
-     <Grid container justifyContent={"space-between"} gap={{ mobile: 0, tablet: 0, laptop: 1, desktop: 2 }}>
+     <Grid container justifyContent={"space-between"} gap={{ mobile: 0, tablet: 0, laptop: 1, desktop: 2 }} sx={{ paddingBottom: "16px" }}>
       <StyledTextBox>
        <StyledTitle>Category:</StyledTitle>
        <StyledText>{categoryName}</StyledText>
