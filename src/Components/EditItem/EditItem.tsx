@@ -10,7 +10,6 @@ import { OrderAiContext } from "../../Context/ContextProvider";
 import * as Yup from "yup";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 import { UserRole } from "../../Context/types";
-import useDecrypt from "../../Hooks/useDecrypt";
 import { Link } from "react-router-dom";
 
 const names = ["Darmowa", "Płatna"];
@@ -18,12 +17,10 @@ const productExistsMessage = "Product name already exists!";
 const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const EditItem = () => {
- const { categories, jsonData, gptData, editProduct, deleteProduct, findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
- const { getEmbedYTLink, loggedUserRole } = useContext(OrderAiContext);
- const { categories } = useOrderAi();
+ const { categories, jsonData, gptData, editProduct, deleteProduct, loggedUserRole , findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
  const { id } = useParams<{ id: string }>();
  let productIdInt = 0;
- if (id !== undefined) {
+ if (id !== undefined) {  
   productIdInt = parseInt(id, 10);
  } else {
   productIdInt = 0;
@@ -32,8 +29,6 @@ export const EditItem = () => {
  const [validUrl, setValidUrl] = useState(false);
  const dataToUse = gptData || jsonData || categories;
  const categoryNames = dataToUse ? dataToUse.map((category) => category.name) : [];
- const { parseJwtToken } = useDecrypt();
- const user: User | undefined = parseJwtToken();
 
  useEffect(() => {
   if (dataToUse) {

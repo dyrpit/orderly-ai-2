@@ -13,23 +13,16 @@ export const useOrderAi = () => {
  const [users, setUsers] = useState<User[]>([]);
  const [loggedUserRole, setLoggedUserRole] = useState("");
  const [loggedUserEmail, setLoggedUserEmail] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentModal, setCurrentModal] = useState("none");
-  const [categories, setCategories] = useState<CategoryData[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
-  const [jsonData, setJsonData] = useState<CategoryData[] | null>(null);
-  const [loggedUserRole, setLoggedUserRole] = useState("");
-  const [loggedUserEmail, setLoggedUserEmail] = useState("");
-  const { parseJwtToken } = useDecrypt();
+ const { parseJwtToken } = useDecrypt();
 
-  useEffect(() => {
-    const token = parseJwtToken();
-    if (!token) {
-      return;
-    }
-    setLoggedUserEmail(token.email);
-    setLoggedUserRole(token.role);
-  }, []);
+ useEffect(() => {
+  const token = parseJwtToken();
+  if (!token) {
+   return;
+  }
+  setLoggedUserEmail(token.email);
+  setLoggedUserRole(token.role);
+ }, []);
 
  fetchDataAndSetState("/src/Data/categories.json", setCategories);
  fetchDataAndSetState("/src/Data/users.json", ({ users }) => setUsers(users));
@@ -167,66 +160,65 @@ export const useOrderAi = () => {
   }
  };
 
-const editProduct = (product: ProductData, categoryId: number) => {
- if (gptData || jsonData || categories) {
-  const targetCategory =
-   gptData?.find((category) => category.id === categoryId) || jsonData?.find((category) => category.id === categoryId) || categories?.find((category) => category.id === categoryId);
+ const editProduct = (product: ProductData, categoryId: number) => {
+  if (gptData || jsonData || categories) {
+   const targetCategory =
+    gptData?.find((category) => category.id === categoryId) || jsonData?.find((category) => category.id === categoryId) || categories?.find((category) => category.id === categoryId);
 
-  if (targetCategory) {
-   const updatedCategory: CategoryData = {
-    ...targetCategory,
-    products: targetCategory.products.map((p) => (p.id === product.id ? { ...product } : p)),
-   };
+   if (targetCategory) {
+    const updatedCategory: CategoryData = {
+     ...targetCategory,
+     products: targetCategory.products.map((p) => (p.id === product.id ? { ...product } : p)),
+    };
 
-   if (gptData) {
-    const updatedGptData = gptData.map((category) => (category.id === categoryId ? updatedCategory : category));
-    setGptData(updatedGptData);
-   } else if (jsonData) {
-    const updatedJsonData = jsonData.map((category) => (category.id === categoryId ? updatedCategory : category));
-    setJsonData(updatedJsonData);
-   } else if (categories) {
-    const updatedCategories = categories.map((category) => (category.id === categoryId ? updatedCategory : category));
-    setCategories(updatedCategories);
+    if (gptData) {
+     const updatedGptData = gptData.map((category) => (category.id === categoryId ? updatedCategory : category));
+     setGptData(updatedGptData);
+    } else if (jsonData) {
+     const updatedJsonData = jsonData.map((category) => (category.id === categoryId ? updatedCategory : category));
+     setJsonData(updatedJsonData);
+    } else if (categories) {
+     const updatedCategories = categories.map((category) => (category.id === categoryId ? updatedCategory : category));
+     setCategories(updatedCategories);
+    }
+   } else {
+    console.error(`Category with ID ${categoryId} not found.`);
    }
   } else {
-   console.error(`Category with ID ${categoryId} not found.`);
+   console.error("No data source available to edit the product.");
   }
- } else {
-  console.error("No data source available to edit the product.");
- }
-};
+ };
 
-const deleteProduct = (productId: number, categoryId: number) => {
- if (gptData || jsonData || categories) {
-  const targetCategory =
-   gptData?.find((category) => category.id === categoryId) || jsonData?.find((category) => category.id === categoryId) || categories?.find((category) => category.id === categoryId);
+ const deleteProduct = (productId: number, categoryId: number) => {
+  if (gptData || jsonData || categories) {
+   const targetCategory =
+    gptData?.find((category) => category.id === categoryId) || jsonData?.find((category) => category.id === categoryId) || categories?.find((category) => category.id === categoryId);
 
-  if (targetCategory) {
-   const updatedProducts = targetCategory.products.filter((product) => product.id !== productId);
+   if (targetCategory) {
+    const updatedProducts = targetCategory.products.filter((product) => product.id !== productId);
 
-   const updatedCategory: CategoryData = {
-    ...targetCategory,
-    products: updatedProducts,
-   };
+    const updatedCategory: CategoryData = {
+     ...targetCategory,
+     products: updatedProducts,
+    };
 
-   if (gptData) {
-    const updatedGptData = gptData.map((category) => (category.id === categoryId ? updatedCategory : category));
-    setGptData(updatedGptData);
-   } else if (jsonData) {
-    const updatedJsonData = jsonData.map((category) => (category.id === categoryId ? updatedCategory : category));
-    setJsonData(updatedJsonData);
-   } else if (categories) {
-    const updatedCategories = categories.map((category) => (category.id === categoryId ? updatedCategory : category));
-    setCategories(updatedCategories);
+    if (gptData) {
+     const updatedGptData = gptData.map((category) => (category.id === categoryId ? updatedCategory : category));
+     setGptData(updatedGptData);
+    } else if (jsonData) {
+     const updatedJsonData = jsonData.map((category) => (category.id === categoryId ? updatedCategory : category));
+     setJsonData(updatedJsonData);
+    } else if (categories) {
+     const updatedCategories = categories.map((category) => (category.id === categoryId ? updatedCategory : category));
+     setCategories(updatedCategories);
+    }
+   } else {
+    console.error(`Category with ID ${categoryId} not found.`);
    }
   } else {
-   console.error(`Category with ID ${categoryId} not found.`);
+   console.error("No data source available to delete the product.");
   }
- } else {
-  console.error("No data source available to delete the product.");
- }
-};
-
+ };
 
  const handleToggleRoleChange = (id: number) => {
   setUsers((users) =>

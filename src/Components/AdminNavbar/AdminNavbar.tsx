@@ -8,7 +8,7 @@ import { OrderAiContext } from "../../Context/ContextProvider";
 
 export function AdminNavbar() {
  const [isListVisible, setListVisible] = useState(false);
- const { categories, loggedUserRole } = useContext(OrderAiContext);
+ const { categories, jsonData, gptData, loggedUserRole } = useContext(OrderAiContext);
  const isAdmin = loggedUserRole === UserRole.admin;
 
  const toggleListVisibility = () => {

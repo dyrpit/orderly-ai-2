@@ -1,4 +1,4 @@
-import { Grid, Button } from "@mui/material";
+import { Grid } from "@mui/material";
 import { AdminNavbar } from "../../Components/AdminNavbar/AdminNavbar";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
@@ -29,7 +29,7 @@ export const AdminPage = () => {
      </ANButton>
     )}
    </Grid>
-   <Grid item laptop={12} tablet={12} mobile={12}>
+   <Grid item laptop={9} tablet={12} mobile={12}>
     <Outlet />
    </Grid>
   </Grid>
