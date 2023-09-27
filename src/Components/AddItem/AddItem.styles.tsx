@@ -5,9 +5,11 @@ import { theme } from "../../Theme/ThemeProvider";
 export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
  backgroundColor: theme.palette.background.paper,
  borderRadius: "16px",
- padding: "36px",
+ padding: "30px",
+ marginBottom: "30px",
  [theme.breakpoints.down("laptop")]: {
-  padding: "8px",
+  margin: "8px",
+  marginBottom: "30px",
  },
 }));
 
@@ -19,6 +21,7 @@ export const StyledName = styled(Typography)(({ theme }) => ({
   fontSize: "40px",
  },
 }));
+
 export const StyledGridContainer = styled(Grid)({
  display: "flex",
  justifyContent: "space-between",
@@ -27,4 +30,22 @@ export const StyledGridContainer = styled(Grid)({
   display: "flex",
   flexDirection: "column",
  },
+});
+
+export const StyledVideoContainer = styled("div")(({}) => ({
+ display: "flex",
+ flexDirection: "column",
+ justifyContent: "center",
+ alignItems: "center",
+ maxWidth: "100%",
+ height: "200px",
+ margin: "10px auto",
+}));
+
+export const StyledVideoPreview = styled("div")({
+ height: "200px",
+ display: "flex",
+ width: "100%",
+ borderRadius: "20px",
+ border: "2px solid #fff",
 });

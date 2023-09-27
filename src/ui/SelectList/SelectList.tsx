@@ -1,53 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { MenuItem, Select, OutlinedInput, SelectChangeEvent } from "@mui/material";
+import React from "react";
+import { MenuItem, Select, OutlinedInput, FormControl, SelectChangeEvent } from "@mui/material";
 import { theme } from "../../Theme/ThemeProvider";
 
 interface SelectListProps {
+ field: {
+  name: string;
+  value: any;
+  onChange: (event: SelectChangeEvent<any>, child: React.ReactNode) => void;
+  onBlur: (e: React.FocusEvent<any>) => void;
+ };
+ name: string;
  items: string[];
- defaultSelected: string;
 }
 
-export const SelectList: React.FC<SelectListProps> = (props) => {
- const { items, defaultSelected } = props;
- const [selectedItems, setSelectedItems] = useState<string[]>([]);
- const isDefaultSelectedValid = items.includes(defaultSelected);
-
- useEffect(() => {
-  if (isDefaultSelectedValid) {
-   setSelectedItems([defaultSelected]);
-  } else {
-   setSelectedItems([]);
-  }
- }, [defaultSelected, isDefaultSelectedValid]);
-
- const handleChange = (event: SelectChangeEvent<string[]>) => {
-  setSelectedItems(event.target.value as string[]);
- };
-
+export const SelectList: React.FC<SelectListProps> = ({ field, name, items }) => {
  return (
-  <Select
-   value={selectedItems}
-   onChange={handleChange}
-   input={<OutlinedInput label="Tag" />}
-   sx={{
-    borderRadius: "10px",
-    height: "36px",
-    backgroundColor: theme.palette.info.main,
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    width: "100%",
-   }}>
-   {items.map((name, index) => (
-    <MenuItem
-     value={name}
-     key={index}
-     sx={{
-      width: "100%",
-     }}>
-     {name}
-    </MenuItem>
-   ))}
-  </Select>
+  <FormControl fullWidth variant="outlined">
+   <Select
+    //*Nie narzekac ze tutaj jest SX, bo jak dam w styles.tsx i dam importa to się cały komponent rozwala
+    sx={{
+     borderRadius: "10px",
+     height: "36px",
+     backgroundColor: theme.palette.info.main,
+     whiteSpace: "nowrap",
+     overflow: "hidden",
+     textOverflow: "ellipsis",
+     width: "100%",
+    }}
+    {...field}
+    value={field.value || ""}
+    input={<OutlinedInput label={name} />}>
+    {items.map((item) => (
+     <MenuItem value={item} key={item}>
+      {item}
+     </MenuItem>
+    ))}
+   </Select>
+  </FormControl>
  );
 };

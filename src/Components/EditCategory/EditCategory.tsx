@@ -1,48 +1,78 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Input, Label } from "../../ui";
-import { ColourCircle, ColoursGrid, StyledEditCategoryContainer, StyledGridContainer } from "./EditCategory.styles";
+import { ColorCircle, ColorsGrid, StyledAdminContentContainer, StyledColorsGridImage, StyledColorsGridTitle, StyledGridContainer } from "./EditCategory.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
-import "./EditCategory.css";
-import { useEditCategoryEffects } from "./EditCategory.effect";
-import { SetStateAction, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useEffect, useState } from "react";
 import { useOrderAi } from "../../Context/useOrderAi";
+import { useParams } from "react-router-dom";
+import { generateRandomPastelColorsArray } from "../../Context/utils";
+import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 
 export const EditCategory = () => {
- const { form } = useEditCategoryEffects();
- const colors = ["#52877A", "#875252", "#528758", "#868752", "#527787", "#875272", "#FF99C8", "#9D82B0", "#7067CF", "#374785", "#011936", "#465362"];
- const [itemColor, setItemColor] = useState(colors[0]);
- const [imageUrl, setImageUrl] = useState("");
- const [name, setName] = useState("");
- const { id } = useParams<{ id: string }>();
-
  const { categories } = useOrderAi();
+ const { id } = useParams<{ id: string }>();
+ const [colors, setColors] = useState<string[]>([]);
 
  useEffect(() => {
-  if (id && categories) {
-   for (var i = 0; i < categories.length; i++) {
-    if (categories[i].id == id) {
-     setName(categories[i].name);
-     setImageUrl(categories[i].imageUrl);
-     setItemColor(categories[i].color);
-     break;
-    }
+  categories.forEach((item) => {
+   if (item.id == Number(id)) {
+    // Set the first local color to the item's color if available, or use the default color
+    const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
+    setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]); // Adjust the number of colors accordingly
+    form.setValues({
+     name: item.name || "",
+     imageUrl: item.imageUrl || "",
+     color: firstLocalColor, // Set the color field to the first local color
+    });
    }
-  }
+  });
  }, [id, categories]);
 
- const handleColorClick = (color: string) => {
-  setItemColor(color);
+ const form = useFormik({
+  initialValues: {
+   name: "",
+   imageUrl: "",
+   color: colors[0],
+  },
+  validationSchema: Yup.object({
+   name: Yup.string().min(3, "Must be 3 characters or more").required("Required"),
+   imageUrl: Yup.string()
+    .min(5, "Must be 5 characters or more")
+    .required("Required")
+    .matches(/.(jpg|jpeg|png|gif|bmp|webp)$/, "Must be a valid image URL"),
+   color: Yup.string().required("Required"),
+  }),
+  onSubmit: (values) => {
+   console.log("Form submitted!");
+   console.log(values);
+  },
+ });
 
-  console.log(color);
+ const commonInputsProperties = (key: "name" | "imageUrl" | "color") => ({
+  id: key,
+  onChange: form.handleChange,
+  onBlur: form.handleBlur,
+  value: form.values[key],
+ });
+
+ const handleClearForm = () => {
+  form.resetForm();
  };
 
- const handleImageUrlChange = (event: { target: { value: SetStateAction<string> } }) => {
-  setImageUrl(event.target.value);
+ const handleColorClick = (color: string) => {
+  form.setFieldValue("color", color);
+ };
+
+ const reloadColors = () => {
+  const firstLocalColor = form.values.color || generateRandomPastelColorsArray(1)[0];
+  setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]);
+  form.values.color = "";
  };
 
  return (
-  <StyledEditCategoryContainer>
+  <StyledAdminContentContainer>
    <form onSubmit={form.handleSubmit}>
     <StyledGridContainer container spacing={2}>
      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
@@ -53,93 +83,49 @@ export const EditCategory = () => {
        InputProps={{
         disableUnderline: true,
        }}
-       id="name"
-       value={name}
+       {...commonInputsProperties("name")}
       />
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
      </Grid>
+
      <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
       <Grid container justifyContent={"space-between"}>
-       <StyledIconButton>
+       <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       <StyledIconButton>
+       <StyledIconButton type="button" onClick={handleClearForm}>
         <img src="../../../src/assets/clarity_close-line.png" />
        </StyledIconButton>
       </Grid>
      </Grid>
+
      <Grid container spacing={2} justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
-      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-       <Label htmlFor="name">Image:</Label>
-       <Input
-        variant="standard"
-        placeholder="Enter Image URL"
-        value={imageUrl}
-        onChange={handleImageUrlChange}
-        InputProps={{
-         disableUnderline: true,
-        }}
-        id="img"
-       />
-       {imageUrl != "" ? (
-        <div
+      <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
+       <StyledColorsGridTitle>
+        <Label htmlFor="name" style={{ alignSelf: "flex-start" }}>
+         Image:
+        </Label>
+        <Label
+         htmlFor="name"
          style={{
+          alignSelf: "flex-end",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
           alignItems: "center",
-          maxWidth: "100%",
-          height: "260px",
-          margin: "10px auto",
          }}>
-         <img
-          src={imageUrl}
-          alt="Image"
-          style={{
-           width: "auto",
-           maxWidth: "100%",
-           height: "auto",
-           maxHeight: "100%",
-           display: "block",
-           margin: "10px auto",
-           borderRadius: "10px",
-           border: "2px solid #fff",
-          }}
-         />
-        </div>
-       ) : (
-        <div
-         style={{
-          height: "260px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-          margin: "10px auto",
-          borderRadius: "10px",
-          border: "2px solid #fff",
-         }}>
-         <Typography
-          variant="subtitle2"
-          style={{
-           color: "#666",
-          }}>
-          Preview
-         </Typography>
-        </div>
-       )}
-      </Grid>
-      <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-       <Label htmlFor="colour">Colour:</Label>
-       <ColoursGrid>
+         {" "}
+         <StyledColorsGridImage src="../../../src/assets/clarity_refresh-line.png" onClick={() => reloadColors()} /> Reload colors
+        </Label>
+       </StyledColorsGridTitle>
+       <ColorsGrid>
         {colors.map((color, index) => (
-         <ColourCircle key={index} className={`color-circle ${itemColor === color ? "selected" : ""}`} style={{ backgroundColor: color }} onClick={() => handleColorClick(color)}></ColourCircle>
+         <ColorCircle key={index} className={`color-circle ${form.values.color === color ? "selected" : ""}`} style={{ backgroundColor: color }} onClick={() => handleColorClick(color)}></ColorCircle>
         ))}
-       </ColoursGrid>
+       </ColorsGrid>{" "}
+       <ErrorMessage>{form.touched.color && form.errors.color ? <div>{form.errors.color}</div> : null}</ErrorMessage>
       </Grid>
      </Grid>
     </StyledGridContainer>
    </form>
-  </StyledEditCategoryContainer>
+  </StyledAdminContentContainer>
  );
 };

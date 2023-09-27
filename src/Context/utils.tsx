@@ -22,3 +22,19 @@ export const fetchDataAndSetState = (path: string, setStateCallback: (arg0: any)
 export const toggleRole = (user: User) => {
  return user.role === UserRole.admin ? UserRole.user : UserRole.admin;
 };
+
+//* Function to generate a random pastel color
+function generateRandomPastelColor() {
+ const hue = Math.floor(Math.random() * 360);
+ const lightness = Math.floor(Math.random() * 41) + 30;
+ return `hsl(${hue}, 100%, ${lightness}%)`;
+}
+
+//* Function to generate an array of random pastel colors of a given size
+export function generateRandomPastelColorsArray(size: number) {
+ const colorsArray = [];
+ for (let i = 0; i < size; i++) {
+  colorsArray.push(generateRandomPastelColor());
+ }
+ return colorsArray;
+}

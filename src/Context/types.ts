@@ -31,12 +31,3 @@ export interface User {
   password: string;
   role: UserRole;
 }
-
-export interface ProductType {
-  category: string;
-  name: string;
-  website: string;
-  license: string;
-  youTube: string;
-  description: string;
-}

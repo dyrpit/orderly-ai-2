@@ -8,6 +8,8 @@ type OrderAiContextType = {
  categories: CategoryData[] | null;
  users: User[];
  jsonData: CategoryData[] | null;
+ loggedUserRole: string;
+ loggedUserEmail: string;
  changeModal: (element: string) => void;
  handleModalOpen: VoidFunction;
  handleModalClose: VoidFunction;
@@ -15,6 +17,10 @@ type OrderAiContextType = {
  setUsers: (element: User[]) => void;
  setJsonData: (data: CategoryData[] | null) => void;
  getEmbedYTLink: (link: string) => string;
+ saveLoggedUserRole: (string: string) => void;
+ saveLoggedUserEmail: (string: string) => void;
+ clearLoggedUserRole: () => void;
+ clearLoggedUserEmail: () => void;
 };
 
 type OrderAiContextProviderProps = {
@@ -27,6 +33,8 @@ export const OrderAiContext = createContext<OrderAiContextType>({
  categories: null,
  users: [],
  jsonData: null,
+ loggedUserRole: "",
+ loggedUserEmail: "",
  changeModal: () => null,
  handleModalOpen: () => null,
  handleModalClose: () => null,
@@ -34,13 +42,14 @@ export const OrderAiContext = createContext<OrderAiContextType>({
  setUsers: () => null,
  setJsonData: () => null,
  getEmbedYTLink: () => "",
+ saveLoggedUserRole: () => null,
+ saveLoggedUserEmail: () => null,
+ clearLoggedUserRole: () => null,
+ clearLoggedUserEmail: () => null,
 });
 
 export const OrderAiContextProvider = ({ children }: OrderAiContextProviderProps) => {
- 
-
  const value = useOrderAi();
-
 
  return <OrderAiContext.Provider value={value}>{children}</OrderAiContext.Provider>;
 };

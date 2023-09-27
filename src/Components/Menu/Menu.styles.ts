@@ -1,4 +1,4 @@
-import { Box, Drawer, IconButton } from "@mui/material";
+import { Avatar, Box, Drawer, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -87,4 +87,11 @@ export const StyledLogoContainer = styled(Box)(({ theme }) => ({
     height: "100%",
     overflow: "hidden"
   },
+}));
+
+export const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  backgroundColor: "#fff",
+  color: theme.palette.info.main,
+  textTransform: "uppercase",
+  textAlign: "center"
 }));

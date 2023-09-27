@@ -1,163 +1,206 @@
-import { Box, Grid } from "@mui/material";
-import { Input, Label, SelectListCheckmarks } from "../../ui";
-import { StyledEditItemContainer, StyledGridContainer } from "./EditItem.styles";
+import { useEffect, useState, useContext } from "react";
+import { Grid } from "@mui/material";
+import { Input, Label, SelectList, SelectListCheckmarks } from "../../ui";
+import { StyledAdminContentContainer, StyledGridContainer, StyledVideoContainer, StyledVideoPreview } from "./EditItem.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
 import "./EditItem.css";
-import { useEditItemEffects } from "./EditItem.effect";
 import { useParams } from "react-router";
 import { useOrderAi } from "../../Context/useOrderAi";
-import { CategoryData, ProductData, User, UserRole } from "../../Context/types";
-import { useEffect, useState } from "react";
-import useDecrypt from "../../Hooks/useDecrypt";
+import { useFormik } from "formik";
+import { OrderAiContext } from "../../Context/ContextProvider";
+import * as Yup from "yup";
+import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
+import { UserRole } from "../../Context/types";
 
 const names = ["Darmowa", "Płatna"];
+const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const EditItem = () => {
+ const { getEmbedYTLink, loggedUserRole } = useContext(OrderAiContext);
  const { categories } = useOrderAi();
- const { form } = useEditItemEffects();
  const { id } = useParams<{ id: string }>();
- const [foundData, setFoundData] = useState<{ product: ProductData | null; category: CategoryData | null }>({
-  product: null,
-  category: null,
- });
- const { product, category } = foundData ?? { product: null, category: null };
- const { name, license = "", website, youtubeUrl, description } = product || {};
- const categoryName = category?.name ?? "";
- const { parseJwtToken } = useDecrypt();
- const user: User | undefined = parseJwtToken();
+ const [youtubeUrl, setyoutubeUrl] = useState<string>("");
+ const [validUrl, setValidUrl] = useState(false);
+ const categoryNames = categories.map((category) => category.name);
 
  useEffect(() => {
-  if (!id || !categories) {
-   console.log("null dziwko");
-   return;
-  }
+  categories.forEach((category) => {
+   category.products.forEach((item) => {
+    if (item.id == Number(id)) {
+     const license = item.license.split(",");
+     form.setValues({
+      name: item.name || "",
+      category: category.name || "",
+      license: license || [],
+      website: item.website || "",
+      youtubeUrl: item.youtubeUrl || "",
+      description: item.description || "",
+     });
+     const isValid = youtubeUrlRegex.test(item.youtubeUrl);
+     setValidUrl(isValid);
+     if (isValid) {
+      setyoutubeUrl(getEmbedYTLink(item.youtubeUrl));
+     }
+    }
+   });
+  });
+ }, [categories, id]);
 
-  for (const currentCategory of categories) {
-   const currentProduct = currentCategory.products.find((p) => p.id.toString() === id);
-   if (currentProduct) {
-    setFoundData({ product: currentProduct, category: currentCategory });
-    break;
+ const form = useFormik({
+  initialValues: {
+   name: "",
+   category: "",
+   license: [] as string[],
+   website: "",
+   youtubeUrl: "",
+   description: "",
+  },
+  validationSchema: Yup.object({
+   name: Yup.string().min(3, "Must be 3 characters or more").required("Required"),
+   category: Yup.string().required("Required"),
+   license: Yup.array().min(1, "Array must not be empty").required("Required"),
+   website: Yup.string()
+    .matches(/(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/, "Enter correct url!")
+    .required("Required"),
+   youtubeUrl: Yup.string().matches(youtubeUrlRegex, "Invalid YouTube URL").required("Required"),
+   description: Yup.string().min(3, "Must be 3 characters or more").max(150, "Must be 150 characters or less").required("Required"),
+  }),
+  onSubmit: (values) => {
+   console.log(values);
+  },
+ });
+
+ const commonInputsProperties = (key: "name" | "category" | "license" | "youtubeUrl" | "website" | "description") => ({
+  id: key,
+  onChange: (e: { target: { value: string } }) => {
+   if (key === "youtubeUrl") {
+    const isValid = youtubeUrlRegex.test(e.target.value);
+    setValidUrl(isValid);
+    if (isValid) {
+     setyoutubeUrl(getEmbedYTLink(e.target.value));
+    }
    }
-  }
- }, [id, categories]);
+   form.handleChange(e);
+  },
+  onBlur: form.handleBlur,
+  value: form.values[key],
+ });
+
+ const handleClearForm = () => {
+  form.resetForm();
+ };
 
  return (
-  <StyledEditItemContainer>
+  <StyledAdminContentContainer>
    <form onSubmit={form.handleSubmit}>
     <StyledGridContainer container spacing={2}>
-     <Grid container justifyContent={"center"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-      <Label htmlFor="category">Name:</Label>
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Label htmlFor="name">Name:</Label>
       <Input
        variant="standard"
+       placeholder="name"
        InputProps={{
         disableUnderline: true,
        }}
-       placeholder={form.touched.category && form.errors.category ? "please insert category- max 15 characters" : "category"}
-       id="name"
-       name="name"
-       type="text"
-       value={name}
-       onChange={form.handleChange}
+       {...commonInputsProperties("name")}
       />
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
      </Grid>
+
      <Grid container justifyContent={"end"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-      <Grid container justifyContent={"end"}>
+      <Grid container justifyContent={{ mobile: "center", tablet: "end" }}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       {user && user.role === UserRole.admin ? (
+       {loggedUserRole === UserRole.admin ? (
         <StyledIconButton>
          <img src="../../../src/assets/clarity_trash-line.png" />
         </StyledIconButton>
        ) : null}
-       <StyledIconButton>
+       <StyledIconButton onClick={handleClearForm}>
         <img src="../../../src/assets/clarity_close-line.png" />
        </StyledIconButton>
       </Grid>
      </Grid>
 
-     <Grid container justifyContent={"center"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-      <Label htmlFor="category">Category:</Label>
-      <Input
-       variant="standard"
-       InputProps={{
-        disableUnderline: true,
-       }}
-       placeholder={form.touched.category && form.errors.category ? "please insert category- max 15 characters" : "category"}
-       id="category"
-       name="category"
-       type="text"
-       value={categoryName}
-       onChange={form.handleChange}
-      />
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Label htmlFor="category" sx={{ marginRight: "8px" }}>
+       Category:{" "}
+      </Label>
+      <SelectList name="category" items={categoryNames} field={form.getFieldProps("category")} />
+      <ErrorMessage>{form.touched.category && form.errors.category ? <div>{form.errors.category}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"center"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-      <Label htmlFor="license">License:</Label>
-      <SelectListCheckmarks items={names} defaultSelected={license}></SelectListCheckmarks>
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Label htmlFor="license" sx={{ marginRight: "8px" }}>
+       License:{" "}
+      </Label>
+      <SelectListCheckmarks name="license" items={names} field={form.getFieldProps("license")} />
+      <ErrorMessage>{form.touched.license && form.errors.license ? <div>{form.errors.license}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"center"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
       <Label htmlFor="website">Website:</Label>
       <Input
        variant="standard"
+       placeholder="web url"
        InputProps={{
         disableUnderline: true,
        }}
-       placeholder={form.touched.website && form.errors.website ? "please insert corect url" : "website url"}
-       id="website"
-       name="website"
-       type="url"
-       value={website}
-       onChange={form.handleChange}
-      />
+       {...commonInputsProperties("website")}
+      />{" "}
+      <ErrorMessage>{form.touched.website && form.errors.website ? <div>{form.errors.website}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"center"} item desktop={6} laptop={6} tablet={6} mobile={12}>
-      <Label htmlFor="ytUrl">URL:</Label>
+     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+      <Label htmlFor="ytUrl">YouTube URL:</Label>
       <Input
        variant="standard"
+       placeholder="Enter YouTube Url"
        InputProps={{
         disableUnderline: true,
        }}
-       id="ytUrl"
-       name="ytUrl"
-       type="url"
-       placeholder={form.touched.ytUrl && form.errors.ytUrl ? "please insert corect YouTube url" : "YouTube url"}
-       value={youtubeUrl}
-       onChange={form.handleChange}
-      />
+       {...commonInputsProperties("youtubeUrl")}
+      />{" "}
+      <ErrorMessage>{form.touched.youtubeUrl && form.errors.youtubeUrl ? <div>{form.errors.youtubeUrl}</div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={12} mobile={12}>
+     <Grid container justifyContent={"left"} item laptop={12} desktop={12} tablet={12} mobile={12}>
       <Label htmlFor="description">Description:</Label>
       <Input
        sx={{ height: "120px" }}
        variant="standard"
+       placeholder="description"
        InputProps={{
         disableUnderline: true,
         minRows: 3,
         maxRows: 4,
        }}
+       {...commonInputsProperties("description")}
        multiline
-       placeholder={form.touched.description && form.errors.description ? "please insert description (min 10 - max 150 characters)" : "description"}
-       id="description"
-       name="description"
-       type="text"
-       value={description}
-       onChange={form.handleChange}
-      />
+      />{" "}
+      <ErrorMessage>{form.touched.description && form.errors.description ? <div>{form.errors.description}</div> : null}</ErrorMessage>
      </Grid>
 
      <Grid container justifyContent={"center"} item laptop={12} desktop={12} tablet={12} mobile={12} display={"flex"}>
       <Grid item laptop={6} desktop={6} tablet={6} mobile={12}>
-       <Box>
-        <iframe src="https://www.youtube.com/embed/E7wJTI-1dvQ" allow="autoplay; encrypted-media" title="video" />
-       </Box>
+       <StyledVideoContainer>
+        <StyledVideoPreview>
+         {validUrl && (
+          <iframe
+           width="100%"
+           height="100%"
+           src={youtubeUrl}
+           title="YouTube Video"
+           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+           allowFullScreen></iframe>
+         )}
+        </StyledVideoPreview>
+       </StyledVideoContainer>
       </Grid>
      </Grid>
     </StyledGridContainer>
    </form>
-  </StyledEditItemContainer>
+  </StyledAdminContentContainer>
  );
 };

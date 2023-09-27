@@ -23,10 +23,10 @@ export function AdminNavbarListCategory({ category }: { category: CategoryData }
    {isActive && (
     <ANList>
      <ANListItemContainer>
-      {category.products.map((product: any, index: any) => (
-       <Fade in={true} unmountOnExit key={index}>
-        <Link to={`edititem/${product.id}`} style={{ textDecoration: "none", color: "white" }}>
-         <ANListItem>• {product.name}</ANListItem>
+      {category.products.map(({id, name}) => (
+       <Fade in={true} unmountOnExit key={id}>
+        <Link to={`edititem/${id}`} style={{ textDecoration: "none", color: "white" }}>
+         <ANListItem>• {name}</ANListItem>
         </Link>
        </Fade>
       ))}
