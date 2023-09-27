@@ -14,6 +14,7 @@ export const useOrderAi = () => {
  const [loggedUserRole, setLoggedUserRole] = useState("");
  const [loggedUserEmail, setLoggedUserEmail] = useState("");
  const { parseJwtToken } = useDecrypt();
+ const dataToUse = gptData || jsonData || categories || [];
 
  useEffect(() => {
   const token = parseJwtToken();
@@ -29,35 +30,18 @@ export const useOrderAi = () => {
 
  //*Used to return categoryId by it's given name. Used in Add/Edit Item.
  const findCategoryId = (categoryName: string): number => {
-  if (!categories && !jsonData && !gptData) return 0;
-  if (gptData) {
-   return gptData.find((category) => category.name === categoryName)?.id || 0;
-  }
-  if (jsonData) {
-   return jsonData.find((category) => category.name === categoryName)?.id || 0;
-  }
-  return categories.find((category) => category.name === categoryName)?.id || 0;
+  if (!dataToUse) return 0;
+  return dataToUse.find((category) => category.name === categoryName)?.id || 0;
  };
 
  //*Used to return random Id to be used for category
  const findFreeCategoryId = (): number => {
-  if (!categories && !jsonData && !gptData) return 0;
+  if (!dataToUse) return 0;
 
   let randomId: number = 0;
-  if (gptData) {
-   do {
-    randomId = Math.floor(Math.random() * 1000000);
-   } while (gptData.some((category) => category.id === randomId));
-  } else if (jsonData) {
-   do {
-    randomId = Math.floor(Math.random() * 1000000);
-   } while (jsonData.some((category) => category.id === randomId));
-  } else if (categories) {
-   do {
-    randomId = Math.floor(Math.random() * 1000000);
-   } while (categories.some((category) => category.id === randomId));
-  }
-
+  do {
+   randomId = Math.floor(Math.random() * 1000000);
+  } while (dataToUse.some((category) => category.id === randomId));
   return randomId;
  };
 
@@ -75,8 +59,8 @@ export const useOrderAi = () => {
  };
 
  const editCategory = (category: CategoryData) => {
-  if (gptData !== null || jsonData !== null || categories !== null) {
-   const targetCategory = gptData?.find((c) => c.id === category.id) || jsonData?.find((c) => c.id === category.id) || categories?.find((c) => c.id === category.id);
+  if (dataToUse !== null) {
+   const targetCategory = dataToUse.find((c) => c.id === category.id);
 
    if (targetCategory) {
     if (gptData !== null) {
@@ -98,9 +82,8 @@ export const useOrderAi = () => {
  };
 
  const deleteCategory = (categoryId: number) => {
-  if (gptData !== null || jsonData !== null || categories !== null) {
-   const targetCategory = gptData?.find((c) => c.id === categoryId) || jsonData?.find((c) => c.id === categoryId) || categories?.find((c) => c.id === categoryId);
-
+  if (dataToUse !== null) {
+   const targetCategory = dataToUse.find((c) => c.id === categoryId);
    if (targetCategory) {
     if (gptData !== null) {
      const updatedGptData = gptData.filter((c) => c.id !== categoryId);
@@ -121,21 +104,19 @@ export const useOrderAi = () => {
  };
 
  const findFreeProductId = (): number => {
-  if (!categories && !jsonData && !gptData) return 0;
+  if (!dataToUse) return 0;
 
   let randomId: number;
   do {
    randomId = Math.floor(Math.random() * 1000000);
-  } while (categories.some((category) => category.id === randomId));
+  } while (dataToUse.some((category) => category.id === randomId));
 
   return randomId;
  };
 
  const addProduct = (product: ProductData, categoryId: number) => {
-  if (gptData || jsonData || categories) {
-   const targetCategory =
-    gptData?.find((category) => category.id === categoryId) || jsonData?.find((category) => category.id === categoryId) || categories?.find((category) => category.id === categoryId);
-
+  if (dataToUse) {
+   const targetCategory = dataToUse.find((category) => category.id === categoryId);
    if (targetCategory) {
     const updatedCategory: CategoryData = {
      ...targetCategory,
@@ -161,28 +142,45 @@ export const useOrderAi = () => {
  };
 
  const editProduct = (product: ProductData, categoryId: number) => {
-  if (gptData || jsonData || categories) {
-   const targetCategory =
-    gptData?.find((category) => category.id === categoryId) || jsonData?.find((category) => category.id === categoryId) || categories?.find((category) => category.id === categoryId);
+  if (dataToUse) {
+   const sourceCategory = dataToUse.find((category) => category.products.some((p) => p.id === product.id));
 
-   if (targetCategory) {
-    const updatedCategory: CategoryData = {
-     ...targetCategory,
-     products: targetCategory.products.map((p) => (p.id === product.id ? { ...product } : p)),
+   if (sourceCategory) {
+    const updatedSourceCategory: CategoryData = {
+     ...sourceCategory,
+     products: sourceCategory.products.filter((p) => p.id !== product.id),
     };
 
-    if (gptData) {
-     const updatedGptData = gptData.map((category) => (category.id === categoryId ? updatedCategory : category));
-     setGptData(updatedGptData);
-    } else if (jsonData) {
-     const updatedJsonData = jsonData.map((category) => (category.id === categoryId ? updatedCategory : category));
-     setJsonData(updatedJsonData);
-    } else if (categories) {
-     const updatedCategories = categories.map((category) => (category.id === categoryId ? updatedCategory : category));
-     setCategories(updatedCategories);
+    const targetCategory = dataToUse.find((category) => category.id === categoryId);
+
+    if (targetCategory) {
+     const updatedTargetCategory: CategoryData = {
+      ...targetCategory,
+      products: [...targetCategory.products, product],
+     };
+
+     const updatedData: CategoryData[] = dataToUse.map((category) => {
+      if (category.id === updatedSourceCategory.id) {
+       return updatedSourceCategory;
+      } else if (category.id === updatedTargetCategory.id) {
+       return updatedTargetCategory;
+      } else {
+       return category;
+      }
+     });
+
+     if (gptData) {
+      setGptData(updatedData);
+     } else if (jsonData) {
+      setJsonData(updatedData);
+     } else if (categories) {
+      setCategories(updatedData);
+     }
+    } else {
+     console.error(`Category with ID ${categoryId} not found.`);
     }
    } else {
-    console.error(`Category with ID ${categoryId} not found.`);
+    console.error(`Product with ID ${product.id} not found in any category.`);
    }
   } else {
    console.error("No data source available to edit the product.");
@@ -190,10 +188,8 @@ export const useOrderAi = () => {
  };
 
  const deleteProduct = (productId: number, categoryId: number) => {
-  if (gptData || jsonData || categories) {
-   const targetCategory =
-    gptData?.find((category) => category.id === categoryId) || jsonData?.find((category) => category.id === categoryId) || categories?.find((category) => category.id === categoryId);
-
+  if (dataToUse) {
+   const targetCategory = dataToUse.find((category) => category.id === categoryId);
    if (targetCategory) {
     const updatedProducts = targetCategory.products.filter((product) => product.id !== productId);
 
@@ -281,6 +277,7 @@ export const useOrderAi = () => {
   editProduct,
   deleteProduct,
   setJsonData,
+  setGptData,
   changeModal,
   handleModalOpen,
   handleModalClose,

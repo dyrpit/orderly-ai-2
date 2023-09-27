@@ -5,11 +5,11 @@ import { Button } from "@mui/material";
 import { ImportExportContainer } from "../../ui";
 
 export function ExportModal() {
- const { handleModalClose, isModalOpen, jsonData, categories } = useContext(OrderAiContext);
+ const { handleModalClose, isModalOpen, gptData, jsonData, categories } = useContext(OrderAiContext);
  const [exportedData, setExportedData] = useState<string | null>(null);
 
  const exportToJson = () => {
-  const dataToExport = jsonData || categories || {};
+  const dataToExport = gptData || jsonData || categories || {};
   const jsonDataString = JSON.stringify(dataToExport, null, 2);
   const blob = new Blob([jsonDataString], { type: "application/json" });
   const url = URL.createObjectURL(blob);

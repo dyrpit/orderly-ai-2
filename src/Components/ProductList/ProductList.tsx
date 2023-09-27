@@ -7,9 +7,10 @@ import { useParams } from "react-router-dom";
 
 export const ProductList = () => {
  const { categoryName } = useParams();
- const { categories, jsonData } = useContext(OrderAiContext);
- const category = categories?.find(({ name }) => name === categoryName);
- const uploadedCategory = jsonData?.find(({ name }) => name === categoryName);
+ const { categories, jsonData, gptData } = useContext(OrderAiContext);
+ const dataToUse = gptData || jsonData || categories;
+ const category = dataToUse?.find(({ name }) => name === categoryName);
+ const uploadedCategory = dataToUse?.find(({ name }) => name === categoryName);
  const products: ProductData[] = uploadedCategory ? uploadedCategory.products : category ? category.products : [];
 
  return (

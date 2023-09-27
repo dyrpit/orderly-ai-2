@@ -23,7 +23,7 @@ export function AdminNavbarListCategory({ category }: { category: CategoryData }
    {isActive && (
     <ANList>
      <ANListItemContainer>
-      {category.products.map(({id, name}) => (
+      {category.products.map(({ id, name }) => (
        <Fade in={true} unmountOnExit key={id}>
         <Link to={`edititem/${id}`} style={{ textDecoration: "none", color: "white" }}>
          <ANListItem>• {name}</ANListItem>
