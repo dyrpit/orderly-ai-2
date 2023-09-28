@@ -44,9 +44,10 @@ export const Menu = () => {
  };
 
  const buttonsContainerStyles = {
-  marginLeft: "auto",
   display: showButtons,
   position: "absolute",
+  marginTop: "20px",
+  marginLeft: "30px",
   backgroundColor: "transparent",
   zIndex: "1000",
  };
@@ -58,7 +59,7 @@ export const Menu = () => {
  useClickOutside(outsideClickRef, handleClickOutsideMenuButtons);
 
  return (
-  <Box>
+  <Box sx={{ justifySelf: "center" }}>
    <StyledMenu>
     <ModeToggle />
     <StyledIconButton onClick={handleImport}>
