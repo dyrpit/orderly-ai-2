@@ -8,11 +8,12 @@ import { generateRandomPastelColorsArray } from "../../Context/utils";
 import { useContext, useState } from "react";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
 import { OrderAiContext } from "../../Context/ContextProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const categoryExistsMessage = "Category name already exists!";
 
 export const AddCategory = () => {
+ const navigate = useNavigate();
  const { categories, jsonData, gptData, addCategory, findFreeCategoryId } = useContext(OrderAiContext);
  const [colors, setColors] = useState<string[]>(generateRandomPastelColorsArray(48));
  const dataToUse = gptData || jsonData || categories || [];
@@ -60,6 +61,9 @@ export const AddCategory = () => {
     setOpen(true);
     setMessage("Category added successfully!");
     setSeverity("success");
+    setTimeout(() => {
+     navigate("/admin");
+    }, 500);
    }
   },
  });
@@ -91,7 +95,7 @@ export const AddCategory = () => {
       <ErrorMessage>{categoryExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12} order={{ tablet: 2, mobile: 1 }}>
+     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={4} mobile={12} order={{ tablet: 2, mobile: 1 }}>
       <Grid container justifyContent={"space-between"}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />

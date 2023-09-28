@@ -7,13 +7,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const names = ["Darmowa", "Płatna"];
 const productExistsMessage = "Product name already exists!";
 const youtubeUrlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
 
 export const AddItem = () => {
+ const navigate = useNavigate();
  const [youtubeUrl, setyoutubeUrl] = useState("");
  const [validUrl, setValidUrl] = useState(false);
  const { categories, jsonData, gptData, addProduct, findFreeProductId, findCategoryId, getEmbedYTLink } = useContext(OrderAiContext);
@@ -76,6 +77,9 @@ export const AddItem = () => {
     setOpen(true);
     setMessage("Category added successfully!");
     setSeverity("success");
+    setTimeout(() => {
+     navigate("/admin");
+    }, 500);
    }
   },
  });
@@ -107,7 +111,7 @@ export const AddItem = () => {
       <ErrorMessage>{productExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12} order={{ tablet: 2, mobile: 1 }}>
+     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={4} mobile={12} order={{ tablet: 2, mobile: 1 }}>
       <Grid container justifyContent={"space-between"}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />

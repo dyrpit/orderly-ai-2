@@ -7,7 +7,6 @@ export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
  padding: "30px",
  marginBottom: "30px",
  [theme.breakpoints.down("laptop")]: {
-  margin: "8px",
   marginBottom: "30px",
  },
 }));
