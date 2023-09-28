@@ -146,35 +146,21 @@ export const useOrderAi = () => {
    const sourceCategory = dataToUse.find((category) => category.products.some((p) => p.id === product.id));
 
    if (sourceCategory) {
-    const updatedSourceCategory: CategoryData = {
-     ...sourceCategory,
-     products: sourceCategory.products.filter((p) => p.id !== product.id),
-    };
+    // Remove the product from the source category
+    sourceCategory.products = sourceCategory.products.filter((p) => p.id !== product.id);
 
     const targetCategory = dataToUse.find((category) => category.id === categoryId);
 
     if (targetCategory) {
-     const updatedTargetCategory: CategoryData = {
-      ...targetCategory,
-      products: [...targetCategory.products, product],
-     };
-
-     const updatedData: CategoryData[] = dataToUse.map((category) => {
-      if (category.id === updatedSourceCategory.id) {
-       return updatedSourceCategory;
-      } else if (category.id === updatedTargetCategory.id) {
-       return updatedTargetCategory;
-      } else {
-       return category;
-      }
-     });
+     // Add the product to the target category
+     targetCategory.products.push(product);
 
      if (gptData) {
-      setGptData(updatedData);
+      setGptData([...dataToUse]); // Update the state with the modified data
      } else if (jsonData) {
-      setJsonData(updatedData);
+      setJsonData([...dataToUse]);
      } else if (categories) {
-      setCategories(updatedData);
+      setCategories([...dataToUse]);
      }
     } else {
      console.error(`Category with ID ${categoryId} not found.`);
