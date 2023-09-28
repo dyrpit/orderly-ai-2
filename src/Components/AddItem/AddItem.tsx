@@ -111,7 +111,7 @@ export const AddItem = () => {
       <ErrorMessage>{productExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12} order={{ tablet: 2, mobile: 1 }}>
+     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={4} mobile={12} order={{ tablet: 2, mobile: 1 }}>
       <Grid container justifyContent={"space-between"}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />

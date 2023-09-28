@@ -8,7 +8,6 @@ export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
   maxHeight: `calc(100vh - 250px)`,
   marginBottom: "30px",
   [theme.breakpoints.down("laptop")]: {
-    margin: "8px",
     marginBottom: "30px",
   },
 }));
