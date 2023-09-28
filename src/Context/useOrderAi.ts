@@ -3,7 +3,7 @@ import { OrderAiContext } from "./ContextProvider";
 import { CategoryData, ProductData, User } from "./types";
 import { fetchDataAndSetState, toggleRole } from "./utils";
 import useDecrypt from "../Hooks/useDecrypt";
-
+import { categoriesPath, usersPath } from "../Data/paths";
 export const useOrderAi = () => {
  const [isModalOpen, setIsModalOpen] = useState(false);
  const [currentModal, setCurrentModal] = useState("none");
@@ -15,7 +15,6 @@ export const useOrderAi = () => {
  const [loggedUserEmail, setLoggedUserEmail] = useState("");
  const { parseJwtToken } = useDecrypt();
  const dataToUse = gptData || jsonData || categories || [];
-
  useEffect(() => {
   const token = parseJwtToken();
   if (!token) {
@@ -25,8 +24,8 @@ export const useOrderAi = () => {
   setLoggedUserRole(token.role);
  }, []);
 
- fetchDataAndSetState("/src/Data/categories.json", setCategories);
- fetchDataAndSetState("/src/Data/users.json", ({ users }) => setUsers(users));
+ fetchDataAndSetState(categoriesPath, setCategories);
+ fetchDataAndSetState(usersPath, ({ users }) => setUsers(users));
 
  //*Used to return categoryId by it's given name. Used in Add/Edit Item.
  const findCategoryId = (categoryName: string): number => {
