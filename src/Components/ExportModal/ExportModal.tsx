@@ -5,11 +5,11 @@ import { Button } from "@mui/material";
 import { ImportExportContainer } from "../../ui";
 
 export function ExportModal() {
- const { handleModalClose, isModalOpen, jsonData, categories } = useContext(OrderAiContext);
+ const { handleModalClose, isModalOpen, gptData, jsonData, categories } = useContext(OrderAiContext);
  const [exportedData, setExportedData] = useState<string | null>(null);
 
  const exportToJson = () => {
-  const dataToExport = jsonData || categories || {};
+  const dataToExport = gptData || jsonData || categories || {};
   const jsonDataString = JSON.stringify(dataToExport, null, 2);
   const blob = new Blob([jsonDataString], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -27,7 +27,7 @@ export function ExportModal() {
     {exportedData ? (
      <div>
       <a href={exportedData} download="exported_data.json">
-       <Button variant="contained" sx={{ backgroundColor: "#5C358E" }}>
+       <Button variant="contained" sx={(theme) => ({ backgroundColor: theme.palette.background.paper })}>
         Download JSON
        </Button>
       </a>
@@ -36,7 +36,7 @@ export function ExportModal() {
       </Button>
      </div>
     ) : (
-     <Button variant="contained" onClick={exportToJson} sx={{ backgroundColor: "#5C358E" }}>
+     <Button variant="contained" onClick={exportToJson} sx={(theme) => ({ backgroundColor: theme.palette.background.paper })}>
       Export to JSON
      </Button>
     )}

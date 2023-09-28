@@ -1,6 +1,5 @@
 import { styled } from "@mui/material/styles";
 import { Box, Grid, Typography } from "@mui/material";
-import { theme } from "../../Theme/ThemeProvider";
 
 export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
  backgroundColor: theme.palette.background.paper,
@@ -9,20 +8,19 @@ export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
  maxHeight: `calc(100vh - 250px)`,
  marginBottom: "30px",
  [theme.breakpoints.down("laptop")]: {
-  margin: "8px",
   marginBottom: "30px",
  },
 }));
 
 export const StyledName = styled(Typography)(({ theme }) => ({
  fontSize: "60px",
- color: "#fff",
+ color: theme.palette.common.white,
  fontWeight: theme.typography.fontWeightBold,
  [theme.breakpoints.down("laptop")]: {
   fontSize: "40px",
  },
 }));
-export const StyledGridContainer = styled(Grid)({
+export const StyledGridContainer = styled(Grid)(({ theme }) => ({
  display: "flex",
  justifyContent: "space-between",
  alignItems: "center",
@@ -30,7 +28,7 @@ export const StyledGridContainer = styled(Grid)({
   display: "flex",
   flexDirection: "column",
  },
-});
+}));
 
 export const ColorsGrid = styled("div")({
  display: "flex",
@@ -111,10 +109,10 @@ export const ColorCircle = styled("div")({
 //  border: "2px solid #fff",
 // });
 
-export const StyledPreviewText = styled(Typography)({
+export const StyledPreviewText = styled(Typography)(() => ({
  color: "#666",
  variant: "subtitle2",
-});
+}));
 
 export const StyledColorsGridTitle = styled("div")({ display: "flex", justifyContent: "space-between", width: "100%" });
 

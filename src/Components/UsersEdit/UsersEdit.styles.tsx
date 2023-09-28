@@ -3,7 +3,6 @@ import { fontSizeVar } from "../../Theme/variables";
 import { StyledButton } from "../../ui";
 
 export const UsersEditContainer = styled(Box)(({ theme: theme }) => ({
- width: "100%",
  height: "fit-content",
  maxHeight: "880px",
  backgroundColor: theme.palette.background.paper,

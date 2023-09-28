@@ -1,16 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import { ThemeProvider } from "@emotion/react";
-import { theme } from "./Theme/ThemeProvider.ts";
 import { OrderAiContextProvider } from "./Context/ContextProvider.tsx";
+import App from "./App.tsx";
+import { ThemeContextProvider } from "./Theme/ThemeContextProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <OrderAiContextProvider>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </OrderAiContextProvider>
-  </React.StrictMode>,
+ <React.StrictMode>
+  <ThemeContextProvider>
+   <OrderAiContextProvider>
+    <App />
+   </OrderAiContextProvider>
+  </ThemeContextProvider>
+ </React.StrictMode>,
 );

@@ -13,4 +13,3 @@ export const fontSizeVar: Record<string, string> = {
   loginModalDefault: "#FFFFFF",
 }
 
-

@@ -1,34 +1,54 @@
-import { Grid } from "@mui/material";
-import { Input, Label } from "../../ui";
+import { Alert, AlertColor, Grid, Snackbar } from "@mui/material";
+import { Input, Label, ErrorMessage } from "../../ui";
 import { ColorCircle, ColorsGrid, StyledAdminContentContainer, StyledColorsGridImage, StyledColorsGridTitle, StyledGridContainer } from "./EditCategory.styles";
 import { StyledIconButton } from "../Menu/Menu.styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useEffect, useState } from "react";
-import { useOrderAi } from "../../Context/useOrderAi";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { generateRandomPastelColorsArray } from "../../Context/utils";
-import { ErrorMessage } from "../../ui/ErrorMessage/ErrorMessage.styles";
+import { OrderAiContext } from "../../Context/ContextProvider";
+import { ProductData, User, UserRole } from "../../Context/types";
+import useDecrypt from "../../Hooks/useDecrypt";
+
+const categoryExistsMessage = "Category name already exists!";
 
 export const EditCategory = () => {
- const { categories } = useOrderAi();
+ const navigate = useNavigate();
+ const { categories, jsonData, gptData, editCategory, deleteCategory } = useContext(OrderAiContext);
+ const dataToUse = gptData || jsonData || categories || [];
+
  const { id } = useParams<{ id: string }>();
  const [colors, setColors] = useState<string[]>([]);
+ const { parseJwtToken } = useDecrypt();
+ const user: User | undefined = parseJwtToken();
+ const [categoryProducts, setCategoryProducts] = useState<ProductData[]>([]);
+ const [open, setOpen] = useState(false);
+ const [message, setMessage] = useState("");
+ const [severity, setSeverity] = useState<AlertColor | undefined>(undefined);
+
+ const handleClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
+  if (reason === "clickaway") {
+   return;
+  }
+
+  setOpen(false);
+ };
 
  useEffect(() => {
-  categories.forEach((item) => {
+  dataToUse.forEach((item) => {
    if (item.id == Number(id)) {
-    // Set the first local color to the item's color if available, or use the default color
     const firstLocalColor = item.color || generateRandomPastelColorsArray(1)[0];
-    setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]); // Adjust the number of colors accordingly
+    setColors([firstLocalColor, ...generateRandomPastelColorsArray(47)]);
     form.setValues({
      name: item.name || "",
      imageUrl: item.imageUrl || "",
-     color: firstLocalColor, // Set the color field to the first local color
+     color: firstLocalColor,
     });
+    setCategoryProducts(item.products || []);
    }
   });
- }, [id, categories]);
+ }, [id, gptData, jsonData, categories]);
 
  const form = useFormik({
   initialValues: {
@@ -38,27 +58,60 @@ export const EditCategory = () => {
   },
   validationSchema: Yup.object({
    name: Yup.string().min(3, "Must be 3 characters or more").required("Required"),
-   imageUrl: Yup.string()
-    .min(5, "Must be 5 characters or more")
-    .required("Required")
-    .matches(/.(jpg|jpeg|png|gif|bmp|webp)$/, "Must be a valid image URL"),
+   imageUrl: Yup.string(),
    color: Yup.string().required("Required"),
   }),
   onSubmit: (values) => {
-   console.log("Form submitted!");
-   console.log(values);
+   const isCategoryNameExists = dataToUse.some((category) => category.name === values.name && category.id !== Number(id));
+   const errorElement = document.getElementById("error-message");
+
+   if (isCategoryNameExists) {
+    if (errorElement) {
+     errorElement.textContent = categoryExistsMessage;
+    }
+   } else {
+    if (errorElement) {
+     errorElement.textContent = "";
+    }
+    let localId = 0;
+    if (id !== undefined) {
+     localId = parseInt(id, 10);
+     editCategory({
+      name: values.name,
+      imageUrl: values.imageUrl,
+      color: values.color,
+      id: localId,
+      products: categoryProducts,
+     });
+     setOpen(true);
+     setMessage("Category edited successfully!");
+     setSeverity("success");
+    } else {
+     setOpen(true);
+     setMessage("Couldn't add category!");
+     setSeverity("error");
+    }
+   }
   },
  });
 
- const commonInputsProperties = (key: "name" | "imageUrl" | "color") => ({
-  id: key,
-  onChange: form.handleChange,
-  onBlur: form.handleBlur,
-  value: form.values[key],
- });
-
- const handleClearForm = () => {
-  form.resetForm();
+ const handleRemoveCategory = () => {
+  if (id !== undefined) {
+   const shouldDelete = window.confirm("Are you sure you want to delete this category?");
+   if (shouldDelete) {
+    deleteCategory(parseInt(id, 10));
+    setOpen(true);
+    setMessage("Category deleted successfully!");
+    setSeverity("success");
+    setTimeout(() => {
+     navigate("/admin");
+    }, 500);
+   }
+  } else {
+   setOpen(true);
+   setMessage("Couldn't delete category!");
+   setSeverity("error");
+  }
  };
 
  const handleColorClick = (color: string) => {
@@ -75,7 +128,7 @@ export const EditCategory = () => {
   <StyledAdminContentContainer>
    <form onSubmit={form.handleSubmit}>
     <StyledGridContainer container spacing={2}>
-     <Grid container justifyContent={"left"} item desktop={6} laptop={6} tablet={6} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={8} laptop={8} tablet={8} mobile={12} order={{ tablet: 1, mobile: 2 }}>
       <Label htmlFor="name">Name:</Label>
       <Input
        variant="standard"
@@ -83,23 +136,31 @@ export const EditCategory = () => {
        InputProps={{
         disableUnderline: true,
        }}
-       {...commonInputsProperties("name")}
+       {...form.getFieldProps("name")}
       />
-      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>
+      <ErrorMessage>{form.touched.name && form.errors.name ? <div>{form.errors.name}</div> : null}</ErrorMessage>{" "}
+      <ErrorMessage>{categoryExistsMessage ? <div id="error-message"></div> : null}</ErrorMessage>
      </Grid>
 
-     <Grid container justifyContent={"end"} item desktop={2} laptop={2} tablet={2} mobile={12}>
+     <Grid container justifyContent={"end"} item desktop={4} laptop={4} tablet={4} mobile={12} order={{ tablet: 2, mobile: 1 }}>
       <Grid container justifyContent={"space-between"}>
        <StyledIconButton type="submit">
         <img src="../../../src/assets/clarity_check-line.png" />
        </StyledIconButton>
-       <StyledIconButton type="button" onClick={handleClearForm}>
-        <img src="../../../src/assets/clarity_close-line.png" />
+       {user && user.role === UserRole.admin ? (
+        <StyledIconButton onClick={handleRemoveCategory}>
+         <img src="../../../src/assets/clarity_trash-line.png" />
+        </StyledIconButton>
+       ) : null}
+       <StyledIconButton>
+        <Link to="/admin">
+         <img src="../../../src/assets/clarity_close-line.png" />
+        </Link>
        </StyledIconButton>
       </Grid>
      </Grid>
 
-     <Grid container spacing={2} justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
+     <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12} order={{ tablet: 2, mobile: 2 }}>
       <Grid container justifyContent={"left"} item desktop={12} laptop={12} tablet={12} mobile={12}>
        <StyledColorsGridTitle>
         <Label htmlFor="name" style={{ alignSelf: "flex-start" }}>
@@ -126,6 +187,11 @@ export const EditCategory = () => {
      </Grid>
     </StyledGridContainer>
    </form>
+   <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+    <Alert variant="filled" onClose={handleClose} severity={severity}>
+     {message}
+    </Alert>
+   </Snackbar>{" "}
   </StyledAdminContentContainer>
  );
 };

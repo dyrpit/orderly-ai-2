@@ -1,17 +1,16 @@
 import { ANButton, ANButtonSmall, ANContainer, ANList } from "./AdminNavbar.styles";
 import Fade from "@mui/material/Fade";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AdminNavbarListCategory } from "../AdminNavbarListCategory/AdminNavbarListCategory";
 import { Link } from "react-router-dom";
-import { useOrderAi } from "../../Context/useOrderAi";
-import useDecrypt from "../../Hooks/useDecrypt";
-import { User, UserRole } from "../../Context/types";
+import { UserRole } from "../../Context/types";
+import { OrderAiContext } from "../../Context/ContextProvider";
 
 export function AdminNavbar() {
  const [isListVisible, setListVisible] = useState(false);
- const { categories } = useOrderAi();
- const { parseJwtToken } = useDecrypt();
- const user: User | undefined = parseJwtToken();
+ const { categories, jsonData, gptData, loggedUserRole } = useContext(OrderAiContext);
+ const isAdmin = loggedUserRole === UserRole.admin;
+ const dataToUse = gptData || jsonData || categories || [];
 
  const toggleListVisibility = () => {
   setListVisible(!isListVisible);
@@ -19,25 +18,27 @@ export function AdminNavbar() {
 
  return (
   <ANContainer>
-   <ANButton sx={{ height: "60px" }} onClick={toggleListVisibility}>
-    Categories/Items
-   </ANButton>
+   <div style={{ display: "flex", gap: "16px", flexDirection: "column", alignItems: "center", width: "100%" }}>
+    <Link to="/admin/edituser" style={{ textDecoration: "none" }}>
+     {isAdmin ? <ANButton>Edit Users</ANButton> : null}
+    </Link>
+    <ANButton sx={{ height: "60px" }} onClick={toggleListVisibility}>
+     Categories / Items
+    </ANButton>
+   </div>
    <Fade in={isListVisible} unmountOnExit>
     <ANList>
      <Link to="/admin/addcategory" style={{ textDecoration: "none" }}>
-      {user && user.role === UserRole.admin ? <ANButtonSmall>New Category</ANButtonSmall> : null}
+      {isAdmin ? <ANButtonSmall>New Category</ANButtonSmall> : null}
      </Link>
      <Link to="/admin/additem/" style={{ textDecoration: "none" }}>
-      {user && user.role === UserRole.admin ? <ANButtonSmall>New Item</ANButtonSmall> : null}
+      {isAdmin ? <ANButtonSmall>New Item</ANButtonSmall> : null}
      </Link>
-     {categories.map((categoryData, index) => (
+     {dataToUse.map((categoryData, index) => (
       <AdminNavbarListCategory category={categoryData} key={index} />
-     ))}
+     ))}{" "}
     </ANList>
    </Fade>
-   <Link to="/admin/edituser" style={{ textDecoration: "none" }}>
-    {user && user.role === UserRole.admin ? <ANButton>Edit Users</ANButton> : null}
-   </Link>
   </ANContainer>
  );
 }

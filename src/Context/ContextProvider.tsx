@@ -1,21 +1,32 @@
 import { ReactNode, createContext } from "react";
 import { useOrderAi } from "./useOrderAi";
-import { CategoryData, User } from "./types";
+import { CategoryData, ProductData, User } from "./types";
 
 type OrderAiContextType = {
  isModalOpen: boolean;
  currentModal: string;
  categories: CategoryData[] | null;
- users: User[];
  jsonData: CategoryData[] | null;
+ gptData: CategoryData[] | null;
+ users: User[];
  loggedUserRole: string;
  loggedUserEmail: string;
+ findCategoryId: (categoryName: string) => number;
+ findFreeCategoryId: () => number;
+ addCategory: (category: CategoryData) => void;
+ editCategory: (category: CategoryData) => void;
+ deleteCategory: (categoryId: number) => void;
+ findFreeProductId: () => number;
+ addProduct: (product: ProductData, categoryId: number) => void;
+ editProduct: (product: ProductData, categoryId: number) => void;
+ deleteProduct: (productId: number, categoryId: number) => void;
  changeModal: (element: string) => void;
  handleModalOpen: VoidFunction;
  handleModalClose: VoidFunction;
  handleToggleRoleChange: (id: number) => void;
  setUsers: (element: User[]) => void;
  setJsonData: (data: CategoryData[] | null) => void;
+ setGptData: (data: CategoryData[] | null) => void;
  getEmbedYTLink: (link: string) => string;
  saveLoggedUserRole: (string: string) => void;
  saveLoggedUserEmail: (string: string) => void;
@@ -31,16 +42,27 @@ export const OrderAiContext = createContext<OrderAiContextType>({
  isModalOpen: false,
  currentModal: "none",
  categories: null,
- users: [],
  jsonData: null,
+ gptData: null,
+ users: [],
  loggedUserRole: "",
  loggedUserEmail: "",
+ findCategoryId: () => 0,
+ findFreeCategoryId: () => 0,
+ addCategory: () => null,
+ editCategory: () => null,
+ deleteCategory: () => null,
+ findFreeProductId: () => 0,
+ addProduct: () => null,
+ editProduct: () => null,
+ deleteProduct: () => null,
  changeModal: () => null,
  handleModalOpen: () => null,
  handleModalClose: () => null,
  handleToggleRoleChange: () => {},
  setUsers: () => null,
  setJsonData: () => null,
+ setGptData: () => null,
  getEmbedYTLink: () => "",
  saveLoggedUserRole: () => null,
  saveLoggedUserEmail: () => null,

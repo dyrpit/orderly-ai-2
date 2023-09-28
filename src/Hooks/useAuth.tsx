@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const useAuth = () => {
  const savedToken = localStorage.getItem("authToken");
  const [authToken, setAuthToken] = useState(savedToken || "");
- const { users } = useContext(OrderAiContext);
+ const { users, clearLoggedUserRole, clearLoggedUserEmail } = useContext(OrderAiContext);
  const navigate = useNavigate();
  const saveAuthToken = (token: string) => {
   localStorage.setItem("authToken", token);
@@ -14,11 +14,16 @@ const useAuth = () => {
  const removeAuthToken = () => {
   localStorage.removeItem("authToken");
   setAuthToken("");
+  clearLoggedUserRole();
+  clearLoggedUserEmail();
   navigate("/");
  };
 
  const generateToken = (user: any) => {
-  const HMACSHA256 = (stringToSign: string, secret: string) => "not_implemented";
+  const HMACSHA256 = (stringToSign: string, secret: string) => {
+   console.log(stringToSign[0], secret[0]);
+   return "not_implemented";
+  };
 
   const header = {
    algorithm: "HS256",

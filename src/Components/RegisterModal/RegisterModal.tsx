@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { RegisterModalContainer } from "../RegisterModal/RegisterModal.styles";
-import { ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader, StyledButton } from "../../ui";
+import { CloseModalButtonMobile, ModalErrorMessage, ModalFooter, ModalHeader, ModalInput, ModalSubHeader, StyledButton } from "../../ui";
 import { useContext } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
 import Modal from "@mui/material/Modal";
@@ -36,8 +36,10 @@ export function RegisterModal() {
   onSubmit: (values) => {
    try {
     registerUser({
+     id: 0,
      email: values.email,
      password: values.password,
+     role: "user",
     });
     alert(`Successfully registered as ${values.email}`);
     handleModalClose();
@@ -59,6 +61,9 @@ export function RegisterModal() {
  return (
   <Modal open={isModalOpen} onClose={handleModalClose}>
    <RegisterModalContainer>
+    <CloseModalButtonMobile>
+     <img src="../../../src/assets/clarity_close-line.png" onClick={handleModalClose} />
+    </CloseModalButtonMobile>
     <ModalHeader>Sign Up</ModalHeader>
     <ModalSubHeader>Start using OrderlyAI today!</ModalSubHeader>
     <form onSubmit={formik.handleSubmit}>
