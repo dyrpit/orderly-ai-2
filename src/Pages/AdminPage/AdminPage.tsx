@@ -1,18 +1,8 @@
 import { Grid } from "@mui/material";
 import { AdminNavbar } from "../../Components/AdminNavbar/AdminNavbar";
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
-import { ANButton } from "../../Components/AdminNavbar/AdminNavbar.styles";
-import MenuIcon from "@mui/icons-material/Menu";
-import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 
 export const AdminPage = () => {
- const [adminNavbarVisible, setAdminNavbarVisible] = useState(true);
-
- const toggleAdminNavbar = () => {
-  setAdminNavbarVisible(!adminNavbarVisible);
- };
-
  return (
   <Grid container spacing={2} sx={{ marginTop: "20px" }}>
    <Grid item laptop={3} tablet={4} tabletsmall={4} mobile={12} sx={{ height: "fit-content" }}>

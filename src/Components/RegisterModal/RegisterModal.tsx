@@ -36,8 +36,10 @@ export function RegisterModal() {
   onSubmit: (values) => {
    try {
     registerUser({
+     id: 0,
      email: values.email,
      password: values.password,
+     role: "user",
     });
     alert(`Successfully registered as ${values.email}`);
     handleModalClose();

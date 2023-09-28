@@ -20,7 +20,10 @@ const useAuth = () => {
  };
 
  const generateToken = (user: any) => {
-  const HMACSHA256 = (stringToSign: string, secret: string) => "not_implemented";
+  const HMACSHA256 = (stringToSign: string, secret: string) => {
+   console.log(stringToSign[0], secret[0]);
+   return "not_implemented";
+  };
 
   const header = {
    algorithm: "HS256",
