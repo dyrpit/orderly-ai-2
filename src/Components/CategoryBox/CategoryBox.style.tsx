@@ -7,6 +7,7 @@ export const BoxesContainer = styled(Box)(() => ({
  gap: "10%",
  justifyContent: "center",
  marginBottom: "5%",
+ minWidth: "486px",
  "& :hover": {
   transform: "scale(1.02)",
   transition: "transform 0.2s ease",
