@@ -1,7 +1,7 @@
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 
-export const BoxesContainer = styled(Box)(() => ({
+export const BoxesContainer = styled(Box)(({ theme: theme }) => ({
  display: "flex",
  flexWrap: "wrap",
  gap: "10%",
@@ -17,7 +17,6 @@ export const BoxesContainer = styled(Box)(() => ({
   textShadow: "2px 2px 2px black",
   justifyContent: "center",
   fontFamily: "Montserrat",
-  padding: "25% 0% 25% 0%",
   textAlign: "center",
  },
 }));
