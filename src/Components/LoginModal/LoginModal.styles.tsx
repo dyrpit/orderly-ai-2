@@ -5,7 +5,7 @@ export const LoginModalContainer = styled(Box)(({ theme: theme }) => ({
  backgroundColor: theme.palette.background.default,
  maxWidth: "828px",
  width: "100%",
- height: "550px",
+ height: "500px",
  margin: "0 auto",
  justifyContent: "center",
  position: "absolute",

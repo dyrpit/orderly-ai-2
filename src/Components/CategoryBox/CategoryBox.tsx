@@ -12,7 +12,7 @@ export function Category() {
   <Grid desktop={5} mobile={12} key={category.name}>
    <Link to={`${category.name}`} key={index} style={{ textDecoration: "none" }}>
     <Grid>
-     <Box sx={{ backgroundColor: category.color, minHeight: "240px", borderRadius: "20px" }}>
+     <Box sx={{ backgroundColor: category.color, minHeight: "240px", height: "300px", borderRadius: "20px" }}>
       <div>
        <h2>{category.name}</h2>
       </div>
