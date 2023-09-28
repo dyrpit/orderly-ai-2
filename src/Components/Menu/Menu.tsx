@@ -1,5 +1,17 @@
 import { useRef, useState } from "react";
-import { StyledAvatar, StyledButtonContainer, StyledCloseIcon, StyledDrawer, StyledIconButton, StyledIconButtonMenu, StyledLogoContainer, StyledMenu, StyledMenuIcon } from "./Menu.styles";
+import {
+ LogoDesktop,
+ LogoMobile,
+ StyledAvatar,
+ StyledButtonContainer,
+ StyledCloseIcon,
+ StyledDrawer,
+ StyledIconButton,
+ StyledIconButtonMenu,
+ StyledLogoContainer,
+ StyledMenu,
+ StyledMenuIcon,
+} from "./Menu.styles";
 import { Box, Divider, ListItem, ListItemButton } from "@mui/material";
 import List from "@mui/material/List";
 import { Link } from "react-router-dom";
@@ -9,12 +21,6 @@ import { ModeToggle, SignIn } from "..";
 import { SignOut } from "../SignButtons/SignOut";
 import { AdminPanel } from "../SignButtons/AdminPanel";
 import useClickOutside from "../../Hooks/useClickOutside";
-import "./Menu.css";
-
-const imgStyle = {
- width: "100%",
- height: "100%",
-};
 
 export const Menu = () => {
  const { loggedUserRole, loggedUserEmail, changeModal, handleModalOpen } = useContext(OrderAiContext);
@@ -44,9 +50,10 @@ export const Menu = () => {
  };
 
  const buttonsContainerStyles = {
-  marginLeft: "auto",
   display: showButtons,
   position: "absolute",
+  marginTop: "20px",
+  marginLeft: "30px",
   backgroundColor: "transparent",
   zIndex: "1000",
  };
@@ -58,7 +65,7 @@ export const Menu = () => {
  useClickOutside(outsideClickRef, handleClickOutsideMenuButtons);
 
  return (
-  <Box>
+  <Box sx={{ justifySelf: "center" }}>
    <StyledMenu>
     <ModeToggle />
     <StyledIconButton onClick={handleImport}>
@@ -126,9 +133,12 @@ export const LogoContainer = () => {
  return (
   <Link to="/">
    <StyledLogoContainer>
-    <div className="logo-wrapper">
-     <img style={imgStyle} src="../../../src/assets/logo.png" />
-    </div>
+    <LogoMobile>
+     <img src="../../../src/assets/logo_mobile.png" alt="logo mobile" />
+    </LogoMobile>
+    <LogoDesktop>
+     <img src="../../../src/assets/logo.png" alt="logo desktop" />
+    </LogoDesktop>
    </StyledLogoContainer>
   </Link>
  );
