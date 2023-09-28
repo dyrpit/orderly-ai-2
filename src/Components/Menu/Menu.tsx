@@ -5,7 +5,7 @@ import List from "@mui/material/List";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { OrderAiContext } from "../../Context/ContextProvider";
-import { SignIn } from "..";
+import { ModeToggle, SignIn } from "..";
 import { SignOut } from "../SignButtons/SignOut";
 import { AdminPanel } from "../SignButtons/AdminPanel";
 import useClickOutside from "../../Hooks/useClickOutside";
@@ -47,7 +47,7 @@ export const Menu = () => {
   marginLeft: "auto",
   display: showButtons,
   position: "absolute",
-  backgroundColor: "#5C358E",
+  backgroundColor: "transparent",
   zIndex: "1000",
  };
 
@@ -60,6 +60,7 @@ export const Menu = () => {
  return (
   <Box>
    <StyledMenu>
+    <ModeToggle />
     <StyledIconButton onClick={handleImport}>
      <img src="../../../src/assets/clarity_import-line.png" />
     </StyledIconButton>
@@ -94,9 +95,13 @@ export const Menu = () => {
           <SignOut />
           <AdminPanel />
           <StyledAvatar>{loggedUserEmail.slice(0, 2)}</StyledAvatar>
+          <ModeToggle />
          </>
         ) : (
-         <SignIn />
+         <>
+          <SignIn />
+          <ModeToggle />
+         </>
         )}
        </StyledButtonContainer>
       </ListItemButton>

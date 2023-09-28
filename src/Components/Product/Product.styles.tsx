@@ -10,13 +10,13 @@ export const StyledProductContainer = styled(Box)(({ theme }) => ({
  width: "100%",
  boxSizing: "border-box",
  [theme.breakpoints.down("laptop")]: {
-  // padding: "8px"
+  width: "90%",
+  margin: "0 5% 5% 5%",
  },
 }));
 
 export const StyledName = styled(Typography)(({ theme }) => ({
  fontSize: "40px",
- color: "#fff",
  fontWeight: theme.typography.fontWeightBold,
  textOverflow: "ellipsis",
  whiteSpace: "nowrap",
@@ -35,17 +35,20 @@ export const StyledTextBox = styled(Box)(({ theme }) => ({
  padding: "8px",
  [theme.breakpoints.down("tablet")]: {
   width: "100%",
-  padding: "8px",
+  padding: "8px 16px",
  },
 }));
 
-export const StyledDescriptionBox = styled(Box)({
+export const StyledDescriptionBox = styled(Box)(({ theme }) => ({
  width: "100%",
  padding: "8px",
- minHeight: "140px",
  maxHeight: "140px",
  overflowY: "hidden",
-});
+ [theme.breakpoints.down("tablet")]: {
+  width: "100%",
+  padding: "8px 16px",
+ },
+}));
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
  fontFamily: theme.typography.fontFamily,
@@ -64,6 +67,7 @@ export const StyledText = styled(Typography)(({ theme }) => ({
  fontWeight: theme.typography.fontWeightRegular,
  padding: "0",
  lineHeight: "1.2",
+ WebkitLineClamp: 3,
  color: theme.palette.text.primary,
  [theme.breakpoints.down("tablet")]: {
   fontSize: "16px",
@@ -79,7 +83,7 @@ export const StyledLinkText = styled(Typography)(({ theme }) => ({
  fontWeight: theme.typography.fontWeightRegular,
  padding: "0",
  lineHeight: "1.2",
- [theme.breakpoints.down("laptop")]: {
+ [theme.breakpoints.down("tablet")]: {
   fontSize: "16px",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -90,7 +94,7 @@ export const StyledLinkText = styled(Typography)(({ theme }) => ({
 
 export const StyledTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
  [`& .${tooltipClasses.tooltip}`]: {
-  backgroundColor: "#7C5DA4",
+  backgroundColor: theme.palette.info.light,
   color: theme.palette.text.secondary,
   boxShadow: theme.shadows[1],
   fontSize: 16,
@@ -101,7 +105,7 @@ export const StyledTooltip = styled(({ className, ...props }: TooltipProps) => <
 
 export const StyledNameTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
  [`& .${tooltipClasses.tooltip}`]: {
-  backgroundColor: "#7C5DA4",
+  backgroundColor: theme.palette.info.light,
   color: theme.palette.text.secondary,
   boxShadow: theme.shadows[1],
   fontSize: 24,

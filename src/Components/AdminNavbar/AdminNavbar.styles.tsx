@@ -54,9 +54,9 @@ export const ANList = styled(List)(() => ({
  },
 }));
 
-export const ANListItem = styled(ListItem)(() => ({
+export const ANListItem = styled(ListItem)(({ theme }) => ({
  display: "flex",
- background: "#2f3238",
+ background: theme.palette.background.default,
  borderRadius: "0.5em",
  position: "relative",
  left: "-100%",
@@ -64,20 +64,20 @@ export const ANListItem = styled(ListItem)(() => ({
  transitionDelay: "calc(60ms * var(--delay))",
 }));
 
-export const ANButton = styled(StyledButton)(({}) => ({
+export const ANButton = styled(StyledButton)(() => ({
  margin: "0",
  height: "60px",
  width: "200px",
 }));
 
-export const ANButtonSmall = styled(ANButton)(({}) => ({
+export const ANButtonSmall = styled(ANButton)(() => ({
  width: "100%",
  height: "fit-content",
  margin: "0 auto 20px auto",
  fontSize: "12px",
 }));
 
-export const ANCategoryDiv = styled("div")(({}) => ({
+export const ANCategoryDiv = styled("div")(() => ({
  display: "flex",
  flexDirection: "row",
 }));
