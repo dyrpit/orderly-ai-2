@@ -229,11 +229,32 @@ export const useOrderAi = () => {
  };
 
  const getEmbedYTLink = (ytLink: string): string => {
-  const url = new URL(ytLink);
-  const ytId = url.searchParams.get("v");
-  if (!ytId) {
-   throw new Error("Not correct yt link");
+  let ytId: string | null = null;
+  // Check if the link is in the format https://youtu.be/VIDEO_ID?t=TIME
+  if (ytLink.match(/youtu.be\/([\w-]+)(\?t=\d+)?/)) {
+   const match = ytLink.match(/youtu.be\/([\w-]+)(\?t=\d+)?/);
+   if (match) {
+    ytId = match[1];
+   }
   }
+  // Check if the link is in the format https://www.youtube.com/watch?v=VIDEO_ID
+  if (!ytId) {
+   const match = ytLink.match(/youtube\.com\/watch\?v=([\w-]+)/);
+   if (match) {
+    ytId = match[1];
+   }
+  }
+  // Check if the link is in the format https://www.youtube.com/embed/VIDEO_ID
+  if (!ytId) {
+   const match = ytLink.match(/youtube\.com\/embed\/([\w-]+)/);
+   if (match) {
+    ytId = match[1];
+   }
+  }
+  if (!ytId) {
+   throw new Error("Not a correct YouTube link");
+  }
+
   return `https://www.youtube.com/embed/${ytId}`;
  };
 
