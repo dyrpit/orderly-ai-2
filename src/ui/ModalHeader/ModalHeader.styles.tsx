@@ -5,7 +5,6 @@ import { fontSizeVar } from "../../Theme/variables";
 export const ModalHeader = styled(Typography)(({ theme: theme }) => ({
  maxWidth: "278px",
  width: "100%",
- height: "60px",
  color: theme.palette.text.primary,
  fontSize: fontSizeVar.loginModalHeader,
  padding: "30px 0px 30px 0px",
