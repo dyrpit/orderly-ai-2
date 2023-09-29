@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { OrderAiContext } from "./ContextProvider";
 import { CategoryData, ProductData, User } from "./types";
-import { fetchDataAndSetState, toggleRole } from "./utils";
+import { toggleRole } from "./utils";
 import useDecrypt from "../Hooks/useDecrypt";
-import { categoriesPath, usersPath } from "../Data/paths";
+import { categoriesPath, usersPath } from "./paths";
 export const useOrderAi = () => {
  const [isModalOpen, setIsModalOpen] = useState(false);
  const [currentModal, setCurrentModal] = useState("none");
@@ -15,6 +15,7 @@ export const useOrderAi = () => {
  const [loggedUserEmail, setLoggedUserEmail] = useState("");
  const { parseJwtToken } = useDecrypt();
  const dataToUse = gptData || jsonData || categories || [];
+
  useEffect(() => {
   const token = parseJwtToken();
   if (!token) {
@@ -24,16 +25,33 @@ export const useOrderAi = () => {
   setLoggedUserRole(token.role);
  }, []);
 
- fetchDataAndSetState(categoriesPath, setCategories);
- fetchDataAndSetState(usersPath, ({ users }) => setUsers(users));
+ useEffect(() => {
+  fetch(categoriesPath)
+   .then((response) => response.json())
+   .then((data) => {
+    setCategories(data);
+   })
+   .catch((error) => {
+    console.error("Error fetching JSON data:", error);
+   });
+ }, []);
 
- //*Used to return categoryId by it's given name. Used in Add/Edit Item.
+ useEffect(() => {
+  fetch(usersPath)
+   .then((response) => response.json())
+   .then((data) => {
+    setUsers(data.users);
+   })
+   .catch((error) => {
+    console.error("Error fetching JSON data:", error);
+   });
+ }, []);
+
  const findCategoryId = (categoryName: string): number => {
   if (!dataToUse) return 0;
   return dataToUse.find((category) => category.name === categoryName)?.id || 0;
  };
 
- //*Used to return random Id to be used for category
  const findFreeCategoryId = (): number => {
   if (!dataToUse) return 0;
 
@@ -145,17 +163,15 @@ export const useOrderAi = () => {
    const sourceCategory = dataToUse.find((category) => category.products.some((p) => p.id === product.id));
 
    if (sourceCategory) {
-    // Remove the product from the source category
     sourceCategory.products = sourceCategory.products.filter((p) => p.id !== product.id);
 
     const targetCategory = dataToUse.find((category) => category.id === categoryId);
 
     if (targetCategory) {
-     // Add the product to the target category
      targetCategory.products.push(product);
 
      if (gptData) {
-      setGptData([...dataToUse]); // Update the state with the modified data
+      setGptData([...dataToUse]);
      } else if (jsonData) {
       setJsonData([...dataToUse]);
      } else if (categories) {
@@ -215,21 +231,18 @@ export const useOrderAi = () => {
 
  const getEmbedYTLink = (ytLink: string): string => {
   let ytId: string | null = null;
-  // Check if the link is in the format https://youtu.be/VIDEO_ID?t=TIME
   if (ytLink.match(/youtu.be\/([\w-]+)(\?t=\d+)?/)) {
    const match = ytLink.match(/youtu.be\/([\w-]+)(\?t=\d+)?/);
    if (match) {
     ytId = match[1];
    }
   }
-  // Check if the link is in the format https://www.youtube.com/watch?v=VIDEO_ID
   if (!ytId) {
    const match = ytLink.match(/youtube\.com\/watch\?v=([\w-]+)/);
    if (match) {
     ytId = match[1];
    }
   }
-  // Check if the link is in the format https://www.youtube.com/embed/VIDEO_ID
   if (!ytId) {
    const match = ytLink.match(/youtube\.com\/embed\/([\w-]+)/);
    if (match) {
