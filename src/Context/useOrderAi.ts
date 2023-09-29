@@ -146,35 +146,21 @@ export const useOrderAi = () => {
    const sourceCategory = dataToUse.find((category) => category.products.some((p) => p.id === product.id));
 
    if (sourceCategory) {
-    const updatedSourceCategory: CategoryData = {
-     ...sourceCategory,
-     products: sourceCategory.products.filter((p) => p.id !== product.id),
-    };
+    // Remove the product from the source category
+    sourceCategory.products = sourceCategory.products.filter((p) => p.id !== product.id);
 
     const targetCategory = dataToUse.find((category) => category.id === categoryId);
 
     if (targetCategory) {
-     const updatedTargetCategory: CategoryData = {
-      ...targetCategory,
-      products: [...targetCategory.products, product],
-     };
-
-     const updatedData: CategoryData[] = dataToUse.map((category) => {
-      if (category.id === updatedSourceCategory.id) {
-       return updatedSourceCategory;
-      } else if (category.id === updatedTargetCategory.id) {
-       return updatedTargetCategory;
-      } else {
-       return category;
-      }
-     });
+     // Add the product to the target category
+     targetCategory.products.push(product);
 
      if (gptData) {
-      setGptData(updatedData);
+      setGptData([...dataToUse]); // Update the state with the modified data
      } else if (jsonData) {
-      setJsonData(updatedData);
+      setJsonData([...dataToUse]);
      } else if (categories) {
-      setCategories(updatedData);
+      setCategories([...dataToUse]);
      }
     } else {
      console.error(`Category with ID ${categoryId} not found.`);
@@ -229,11 +215,32 @@ export const useOrderAi = () => {
  };
 
  const getEmbedYTLink = (ytLink: string): string => {
-  const url = new URL(ytLink);
-  const ytId = url.searchParams.get("v");
-  if (!ytId) {
-   throw new Error("Not correct yt link");
+  let ytId: string | null = null;
+  // Check if the link is in the format https://youtu.be/VIDEO_ID?t=TIME
+  if (ytLink.match(/youtu.be\/([\w-]+)(\?t=\d+)?/)) {
+   const match = ytLink.match(/youtu.be\/([\w-]+)(\?t=\d+)?/);
+   if (match) {
+    ytId = match[1];
+   }
   }
+  // Check if the link is in the format https://www.youtube.com/watch?v=VIDEO_ID
+  if (!ytId) {
+   const match = ytLink.match(/youtube\.com\/watch\?v=([\w-]+)/);
+   if (match) {
+    ytId = match[1];
+   }
+  }
+  // Check if the link is in the format https://www.youtube.com/embed/VIDEO_ID
+  if (!ytId) {
+   const match = ytLink.match(/youtube\.com\/embed\/([\w-]+)/);
+   if (match) {
+    ytId = match[1];
+   }
+  }
+  if (!ytId) {
+   throw new Error("Not a correct YouTube link");
+  }
+
   return `https://www.youtube.com/embed/${ytId}`;
  };
 

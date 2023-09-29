@@ -8,7 +8,6 @@ export const StyledAdminContentContainer = styled(Box)(({ theme }) => ({
   maxHeight: `calc(100vh - 250px)`,
   marginBottom: "30px",
   [theme.breakpoints.down("laptop")]: {
-    margin: "8px",
     marginBottom: "30px",
   },
 }));
@@ -76,39 +75,6 @@ export const ColorCircle = styled("div")({
     transform: "scale(1.1)",
   },
 });
-
-// export const StyledImageContainer = styled("div")({
-//  display: "flex",
-//  flexDirection: "column",
-//  justifyContent: "center",
-//  alignItems: "center",
-//  maxWidth: "100%",
-//  height: "260px",
-//  margin: "10px auto",
-// });
-
-// export const StyledImage = styled("img")({
-//  width: "auto",
-//  maxWidth: "100%",
-//  height: "auto",
-//  maxHeight: "100%",
-//  display: "block",
-//  margin: "10px auto",
-//  borderRadius: "10px",
-//  border: "2px solid #fff",
-// });
-
-// export const StyledImagePreview = styled("div")({
-//  height: "260px",
-//  display: "flex",
-//  flexDirection: "column",
-//  justifyContent: "center",
-//  alignItems: "center",
-//  width: "100%",
-//  margin: "10px auto",
-//  borderRadius: "10px",
-//  border: "2px solid #fff",
-// });
 
 export const StyledPreviewText = styled(Typography)(({ theme }) => ({
   color: theme.palette.info.dark,

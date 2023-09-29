@@ -7,15 +7,15 @@ const apiKey: string = import.meta.env.VITE_GPT_KEY as string;
 type SwitchProps = MUISwitchProps;
 
 export const Switch = (props: SwitchProps) => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+ const [isChecked, setIsChecked] = useState<boolean>(false);
 
-  const { callApi } = useApi(apiKey); 
+ const { callApi } = useApi(apiKey);
 
-  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newCheckedState = event.target.checked;
+ const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const newCheckedState = event.target.checked;
 
-    setIsChecked(newCheckedState);
-    const prompt = `
+  setIsChecked(newCheckedState);
+  const prompt = `
     Tworzę stronę, która ma być zbiorowiskiem innych stron oferujących gotowe rozwiązania AI. Potrzebuję pliku JSON, który zawierałby takie informacje.
     Stwórz 6 kategorię, do których można by przypisać strony.
     Do każdej kategorii przypisz 3 strony.
@@ -60,14 +60,14 @@ export const Switch = (props: SwitchProps) => {
     ]
   `;
 
-    if (newCheckedState) {
-      callApi(prompt);
-    }
-  };
+  if (newCheckedState) {
+   callApi(prompt);
+  }
+ };
 
-  return (
-    <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-      <StyledSwitch {...props} checked={isChecked} onChange={handleSwitchChange} />
-    </Box>
-  );
+ return (
+  <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+   <StyledSwitch {...props} checked={isChecked} onChange={handleSwitchChange} />
+  </Box>
+ );
 };

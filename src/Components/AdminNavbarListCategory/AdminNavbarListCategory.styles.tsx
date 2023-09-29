@@ -1,6 +1,5 @@
 import { Box, List, ListItem, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { fontSizeVar } from "../../Theme/variables";
 
 export const AdminNavbarListContainer = styled(Box)(() => ({
  padding: "0px 0 10px 0",
@@ -20,11 +19,11 @@ export const ANTitleContainer = styled(Box)(({ theme }) => ({
  cursor: "pointer",
 }));
 
-export const ANTitle = styled(Typography)(({ theme: theme }) => ({
+export const ANTitle = styled(Typography)(({ theme }) => ({
  cursor: "pointer",
  fontSize: theme.typography.fontSize,
  fontWeight: theme.typography.fontWeightLight,
- color: fontSizeVar.loginModalDefault,
+ color: theme.palette.text.primary,
  textAlign: "left",
  "&:hover": {
   borderRadius: "10px",
@@ -52,10 +51,9 @@ export const ANList = styled(List)(() => ({
  margin: "0px",
 }));
 
-export const ANListItemContainer = styled(Typography)(({ theme: theme }) => ({
+export const ANListItemContainer = styled(Typography)(({ theme }) => ({
  fontSize: theme.typography.fontSize,
  fontWeight: theme.typography.fontWeightLight,
- color: fontSizeVar.loginModalDefault,
 }));
 
 export const ANListItem = styled(ListItem)(() => ({

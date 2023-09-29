@@ -18,9 +18,14 @@ export function AdminNavbar() {
 
  return (
   <ANContainer>
-   <ANButton sx={{ height: "60px" }} onClick={toggleListVisibility}>
-    Categories/Items
-   </ANButton>
+   <div style={{ display: "flex", gap: "16px", flexDirection: "column", alignItems: "center", width: "100%" }}>
+    <Link to="/admin/edituser" style={{ textDecoration: "none" }}>
+     {isAdmin ? <ANButton>Edit Users</ANButton> : null}
+    </Link>
+    <ANButton sx={{ height: "60px" }} onClick={toggleListVisibility}>
+     Categories / Items
+    </ANButton>
+   </div>
    <Fade in={isListVisible} unmountOnExit>
     <ANList>
      <Link to="/admin/addcategory" style={{ textDecoration: "none" }}>
@@ -29,12 +34,11 @@ export function AdminNavbar() {
      <Link to="/admin/additem/" style={{ textDecoration: "none" }}>
       {isAdmin ? <ANButtonSmall>New Item</ANButtonSmall> : null}
      </Link>
-     {dataToUse.map((categoryData, index) => <AdminNavbarListCategory category={categoryData} key={index} />)}{" "}
+     {dataToUse.map((categoryData, index) => (
+      <AdminNavbarListCategory category={categoryData} key={index} />
+     ))}{" "}
     </ANList>
    </Fade>
-   <Link to="/admin/edituser" style={{ textDecoration: "none" }}>
-    {isAdmin ? <ANButton>Edit Users</ANButton> : null}
-   </Link>
   </ANContainer>
  );
 }

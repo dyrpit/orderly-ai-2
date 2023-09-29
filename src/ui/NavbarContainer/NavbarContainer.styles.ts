@@ -7,7 +7,7 @@ export const StyledNavBarContainer = styled(Box)(({ theme }) => ({
   height: "70px",
   backgroundColor: theme.palette.background.paper,
   display: "grid",
-  gridTemplateColumns: "1fr 4fr 1fr",
+  gridTemplateColumns: "1fr 2fr 1fr",
   justifyContent: "center",
   alignItems: "center",
   color: theme.palette.common.white,

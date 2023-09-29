@@ -6,8 +6,8 @@ import { StyledButton } from "../../ui";
 export const ANContainer = styled(Box)(({ theme: theme }) => ({
  backgroundColor: theme.palette.background.paper,
  width: "100%",
- maxWidth: "300px",
- height: `698px`,
+ height: "auto",
+ maxHeight: "660px",
  padding: "30px 0 30px 0",
  marginBottom: "30px",
  display: "flex",
@@ -16,11 +16,9 @@ export const ANContainer = styled(Box)(({ theme: theme }) => ({
  alignItems: "center",
  textAlign: "center",
  borderRadius: "15px",
- [theme.breakpoints.down("laptop")]: {
-  position: "absolute",
-  left: "0",
-  border: "1px solid #2f3238",
-  zIndex: "999",
+ [theme.breakpoints.down("tablet")]: {
+  flexDirection: "column",
+  justifyContent: "space-between",
  },
 }));
 
