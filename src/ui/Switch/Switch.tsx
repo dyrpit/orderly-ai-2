@@ -10,7 +10,7 @@ type SwitchProps = MUISwitchProps;
 export const Switch = (props: SwitchProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
-  const { callApi, isLoading } = useApi(apiKey); // Get isLoading from useApi
+  const { callApi, isLoading } = useApi(apiKey);
 
   const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCheckedState = event.target.checked;
@@ -69,7 +69,7 @@ export const Switch = (props: SwitchProps) => {
 
   return (
     <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-      {isLoading ? <LoadingAPI /> : null} {/* Conditionally render LoadingAPI */}
+      {isLoading ? <LoadingAPI /> : null}
       <StyledSwitch {...props} checked={isChecked} onChange={handleSwitchChange} />
     </Box>
   );
