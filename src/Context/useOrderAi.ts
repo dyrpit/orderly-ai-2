@@ -6,6 +6,7 @@ import useDecrypt from "../Hooks/useDecrypt";
 
 export const useOrderAi = () => {
  const [isModalOpen, setIsModalOpen] = useState(false);
+ const [isLoading, setIsLoading] = useState(false);
  const [currentModal, setCurrentModal] = useState("none");
  const [categories, setCategories] = useState<CategoryData[]>([]);
  const [jsonData, setJsonData] = useState<CategoryData[] | null>(null);
@@ -266,6 +267,7 @@ export const useOrderAi = () => {
  const handleModalClose = () => setIsModalOpen(false);
 
  return {
+  isLoading,
   isModalOpen,
   currentModal,
   categories,
@@ -274,6 +276,7 @@ export const useOrderAi = () => {
   users,
   loggedUserRole,
   loggedUserEmail,
+  setIsLoading,
   findCategoryId,
   findFreeCategoryId,
   addCategory,
